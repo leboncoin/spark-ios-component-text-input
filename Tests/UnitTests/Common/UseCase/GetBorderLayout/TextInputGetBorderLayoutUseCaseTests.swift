@@ -12,7 +12,11 @@ import XCTest
 
 final class TextInputGetBorderLayoutUseCaseTests: XCTestCase {
 
+    // MARK: - Properties
+
     private let theme = ThemeGeneratedMock.mocked()
+
+    // MARK: - Tests
 
     func test_isFocused() {
         // GIVEN

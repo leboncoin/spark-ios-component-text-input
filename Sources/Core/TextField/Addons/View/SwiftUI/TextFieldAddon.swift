@@ -11,9 +11,13 @@ import SwiftUI
 /// Single TextFieldAddon embedding a Content View
 public struct TextFieldAddon<Content: View>: View {
 
+    // MARK: - Properties
+
     let withPadding: Bool
     let layoutPriority: Double
     private let content: () -> Content
+
+    // MARK: - Initialization
 
     /// TextFieldAddon initializer
     /// - Parameters:
@@ -29,7 +33,9 @@ public struct TextFieldAddon<Content: View>: View {
         self.content = content
     }
 
+    // MARK: - View
+
     public var body: Content {
-        content()
+        self.content()
     }
 }

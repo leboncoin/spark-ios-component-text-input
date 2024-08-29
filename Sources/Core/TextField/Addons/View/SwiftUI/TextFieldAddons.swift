@@ -13,6 +13,8 @@ import SparkTheming
 /// A Spark TextField that can be surrounded by left and/or right addons
 public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, RightAddon: View>: View {
 
+    // MARK: - Properties
+
     @ScaledMetric private var scaleFactor: CGFloat = 1.0
     @ScaledMetric private var maxHeight: CGFloat = 44.0
     @ObservedObject private var viewModel: TextFieldAddonsViewModel
@@ -24,6 +26,8 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
     private var type: TextFieldViewType
     private let leftView: () -> LeftView
     private let rightView: () -> RightView
+
+    // MARK: - Initialization
 
     /// TextFieldAddons initializer
     /// - Parameters:
@@ -66,6 +70,8 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
         self.viewModel.textFieldViewModel.isUserInteractionEnabled = isReadOnly != true
     }
 
+    // MARK: - Getter
+
     private func getLeftAddonPadding(withPadding: Bool) -> EdgeInsets {
         guard withPadding else { return .init(all: 0) }
         return .init(
@@ -95,6 +101,8 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
         )
     }
 
+    // MARK: - View
+
     public var body: some View {
         ZStack {
             self.viewModel.backgroundColor.color
@@ -116,6 +124,8 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier(TextFieldAddonsAccessibilityIdentifier.view)
     }
+
+    // MARK: - ViewBuilder
 
     @ViewBuilder
     private func leftAddonIfNeeded() -> some View {

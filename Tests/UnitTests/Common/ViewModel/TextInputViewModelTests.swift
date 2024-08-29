@@ -18,6 +18,8 @@ import SparkTheming
 
 final class TextInputViewModelTests: XCTestCase {
 
+    // MARK: - Properties
+
     var theme: ThemeGeneratedMock!
     var publishers: TextFieldPublishers!
     var getColorsUseCase: TextInputGetColorsUseCasableGeneratedMock!
@@ -30,6 +32,8 @@ final class TextInputViewModelTests: XCTestCase {
     var expectedColors: TextFieldColors!
     var expectedBorderLayout: TextFieldBorderLayout!
     var expectedSpacings: TextFieldSpacings!
+
+    // MARK: - Setup
 
     override func setUp() {
         super.setUp()

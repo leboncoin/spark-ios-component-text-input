@@ -14,6 +14,8 @@ import SparkTheming
 /// A Spark TextField that can be surrounded by left and/or right addons
 public final class TextFieldAddonsUIView: UIControl {
 
+    // MARK: - Properties
+
     @ScaledUIMetric private var scaleFactor: CGFloat = 1.0
 
     /// Embbeded textField
@@ -60,6 +62,8 @@ public final class TextFieldAddonsUIView: UIControl {
         }
     }
 
+    // MARK: - Initialization
+
     /// TextFieldAddonsUIView  initializer
     /// - Parameters:
     ///   - theme: The textfield's current theme
@@ -89,6 +93,8 @@ public final class TextFieldAddonsUIView: UIControl {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Setup
 
     private func setupViews() {
         self.clipsToBounds = true
@@ -193,6 +199,8 @@ public final class TextFieldAddonsUIView: UIControl {
         }
     }
 
+    // MARK: - Setter
+
     private func setLeftSpacing(_ leftSpacing: CGFloat, borderWidth: CGFloat) {
         self.leadingConstraint.constant = (self.leftAddonContainer.isHidden ? leftSpacing : .zero) + borderWidth
     }
@@ -213,25 +221,6 @@ public final class TextFieldAddonsUIView: UIControl {
 
     private func setRightAddonCenterXConstant(borderWidth: CGFloat) {
         self.rightAddonCenterXConstraint.constant = borderWidth / 2.0
-    }
-
-    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            self.setBorderColor(from: self.viewModel.textFieldViewModel.borderColor)
-        }
-
-        guard previousTraitCollection?.preferredContentSizeCategory != self.traitCollection.preferredContentSizeCategory else { return }
-
-        self._scaleFactor.update(traitCollection: self.traitCollection)
-        self.setCornerRadius(self.viewModel.borderRadius * self.scaleFactor)
-        self.setBorderWidthAndRefreshAddonsXCenter(self.borderWidth)
-        self.setLeftSpacing(self.viewModel.leftSpacing, borderWidth: self.borderWidth)
-        self.setRightSpacing(self.viewModel.rightSpacing, borderWidth: self.borderWidth)
-        self.leftSeparatorWidthConstraint.constant = self.borderWidth
-        self.rightSeparatorWidthConstraint.constant = self.borderWidth
-        self.invalidateIntrinsicContentSize()
     }
 
     /// Set the textfield's left addon
@@ -284,5 +273,26 @@ public final class TextFieldAddonsUIView: UIControl {
         self.rightAddonContainer.isHidden = self.rightAddon == nil
         self.setRightAddonCenterXConstant(borderWidth: self.borderWidth)
         self.setRightSpacing(self.viewModel.rightSpacing, borderWidth: self.borderWidth)
+    }
+
+    // MARK: - Trait Collection
+
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            self.setBorderColor(from: self.viewModel.textFieldViewModel.borderColor)
+        }
+
+        guard previousTraitCollection?.preferredContentSizeCategory != self.traitCollection.preferredContentSizeCategory else { return }
+
+        self._scaleFactor.update(traitCollection: self.traitCollection)
+        self.setCornerRadius(self.viewModel.borderRadius * self.scaleFactor)
+        self.setBorderWidthAndRefreshAddonsXCenter(self.borderWidth)
+        self.setLeftSpacing(self.viewModel.leftSpacing, borderWidth: self.borderWidth)
+        self.setRightSpacing(self.viewModel.rightSpacing, borderWidth: self.borderWidth)
+        self.leftSeparatorWidthConstraint.constant = self.borderWidth
+        self.rightSeparatorWidthConstraint.constant = self.borderWidth
+        self.invalidateIntrinsicContentSize()
     }
 }

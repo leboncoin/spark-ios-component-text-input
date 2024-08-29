@@ -17,6 +17,9 @@ import SparkTheming
 @_spi(SI_SPI) import SparkThemingTesting
 
 final class TextFieldAddonsViewModelTests: XCTestCase {
+
+    // MARK: - Properties
+
     private var theme: ThemeGeneratedMock!
     private var publishers: TextFieldAddonsPublishers!
     private var getColorsUseCase: TextInputGetColorsUseCasableGeneratedMock!
@@ -29,6 +32,8 @@ final class TextFieldAddonsViewModelTests: XCTestCase {
     private var expectedColors: TextFieldColors!
     private var expectedBorderLayout: TextFieldBorderLayout!
     private var expectedSpacings: TextFieldSpacings!
+
+    // MARK: - Setup
 
     override func setUp() {
         super.setUp()
@@ -56,6 +61,8 @@ final class TextFieldAddonsViewModelTests: XCTestCase {
 
         self.setupPublishers()
     }
+
+    // MARK: - Tests
 
     func test_init() throws {
         // GIVEN / WHEN - Inits from setUp()

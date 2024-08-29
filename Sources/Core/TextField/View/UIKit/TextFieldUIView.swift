@@ -14,6 +14,8 @@ import SparkTheming
 /// Spark TextField, subclasses UITextField
 public final class TextFieldUIView: UITextField {
 
+    // MARK: - Properties
+
     private let viewModel: TextInputViewModel
     private var cancellables = Set<AnyCancellable>()
 
@@ -65,6 +67,8 @@ public final class TextFieldUIView: UITextField {
         }
     }
 
+    // MARK: - Initialization
+
     internal init(viewModel: TextInputViewModel) {
         self.viewModel = viewModel
         super.init(frame: .init(origin: .zero, size: .init(width: 0, height: 44)))
@@ -92,6 +96,8 @@ public final class TextFieldUIView: UITextField {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Setup
 
     private func setupView() {
         self.subscribeToViewModel()
@@ -170,6 +176,8 @@ public final class TextFieldUIView: UITextField {
         }
     }
 
+    // MARK: - Setter
+
     private func setAttributedPlaceholder(string: String, foregroundColor: UIColor, font: UIFont) {
         self.attributedPlaceholder = NSAttributedString(
             string: string,
@@ -188,19 +196,6 @@ public final class TextFieldUIView: UITextField {
         }
     }
 
-    public override func becomeFirstResponder() -> Bool {
-        let bool = super.becomeFirstResponder()
-        self.viewModel.isFocused = bool
-        return bool
-    }
-
-    public override func resignFirstResponder() -> Bool {
-        super.resignFirstResponder()
-        self.viewModel.isFocused = false
-        return true
-    }
-
-    // MARK: - Rects
     private func setInsets(forBounds bounds: CGRect) -> CGRect {
         var totalInsets = UIEdgeInsets(
             top: 0,
@@ -223,6 +218,8 @@ public final class TextFieldUIView: UITextField {
         }
         return bounds.inset(by: totalInsets)
     }
+
+    // MARK: - Override Methods
 
     public override func textRect(forBounds bounds: CGRect) -> CGRect {
         return self.setInsets(forBounds: bounds)
@@ -254,6 +251,22 @@ public final class TextFieldUIView: UITextField {
             .offsetBy(dx: -self.viewModel.rightSpacing, dy: 0)
     }
 
+    // MARK: - Responder
+
+    public override func becomeFirstResponder() -> Bool {
+        let bool = super.becomeFirstResponder()
+        self.viewModel.isFocused = bool
+        return bool
+    }
+
+    public override func resignFirstResponder() -> Bool {
+        super.resignFirstResponder()
+        self.viewModel.isFocused = false
+        return true
+    }
+
+    // MARK: - Trait Collection
+
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
@@ -269,6 +282,8 @@ public final class TextFieldUIView: UITextField {
         self.setBorderWidth(self.viewModel.borderWidth * self.scaleFactor)
         self.invalidateIntrinsicContentSize()
     }
+
+    // MARK: - Instrinsic Content Size
 
     public override var intrinsicContentSize: CGSize {
         return .init(

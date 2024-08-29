@@ -9,6 +9,9 @@
 import Foundation
 
 struct TextFieldSpacings: Equatable {
+
+    // MARK: - Properties
+
     let left: CGFloat
     let content: CGFloat
     let right: CGFloat

@@ -12,6 +12,8 @@ import SparkTheming
 /// A TextField that can be surrounded by left and/or right views
 public struct TextFieldView<LeftView: View, RightView: View>: View {
 
+    // MARK: - Properties
+
     private let titleKey: LocalizedStringKey
     private let text: Binding<String>
     private let type: TextFieldViewType
@@ -21,6 +23,8 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
 
     @Environment(\.isEnabled) private var isEnabled: Bool
     @FocusState private var isFocused: Bool
+
+    // MARK: - Initialization
 
     init(titleKey: LocalizedStringKey,
          text: Binding<String>,
@@ -68,6 +72,8 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
             rightView: rightView
         )
     }
+
+    // MARK: - View
 
     public var body: some View {
         TextFieldViewInternal(

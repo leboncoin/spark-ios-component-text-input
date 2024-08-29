@@ -12,6 +12,8 @@ import SparkTheming
 
 struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
 
+    // MARK: - Properties
+
     @ScaledMetric private var height: CGFloat = 44
     @ScaledMetric private var scaleFactor: CGFloat = 1.0
 
@@ -23,6 +25,8 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
 
     private let leftView: () -> LeftView
     private let rightView: () -> RightView
+
+    // MARK: - Initialization
 
     init(titleKey: LocalizedStringKey,
          text: Binding<String>,
@@ -37,6 +41,8 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
         self.leftView = leftView
         self.rightView = rightView
     }
+
+    // MARK: - View
 
     var body: some View {
         ZStack {
@@ -54,7 +60,8 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
         .opacity(self.viewModel.dim)
     }
 
-    // MARK: - Content
+    // MARK: - ViewBuilder
+
     @ViewBuilder
     private func contentView() -> some View {
         HStack(spacing: self.viewModel.contentSpacing) {
@@ -65,7 +72,6 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
         .padding(EdgeInsets(top: .zero, leading: self.viewModel.leftSpacing, bottom: .zero, trailing: self.viewModel.rightSpacing))
     }
 
-    // MARK: - TextField
     @ViewBuilder
     private func textField() -> some View {
         Group {
@@ -82,6 +88,8 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
         .foregroundStyle(self.viewModel.textColor.color)
         .accessibilityIdentifier(TextFieldAccessibilityIdentifier.view)
     }
+
+    // MARK: - Update
 
     func update(isEnabled: Bool, isFocused: Bool) -> some View {
         DispatchQueue.main.async {

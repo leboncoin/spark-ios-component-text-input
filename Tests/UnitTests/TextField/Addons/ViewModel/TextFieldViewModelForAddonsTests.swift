@@ -19,8 +19,12 @@ import SparkTheming
 
 final class TextInputViewModelForAddonsTests: XCTestCase {
 
+    // MARK: - Properties
+
     private let superTests: TextInputViewModelTests = .init()
     private var viewModel: TextInputViewModelForAddons!
+
+    // MARK: - Setup
 
     override func setUp() {
         super.setUp()
@@ -34,6 +38,8 @@ final class TextInputViewModelForAddonsTests: XCTestCase {
             getSpacingsUseCase: self.superTests.getSpacingsUseCase
         )
     }
+
+    // MARK: - Tests
 
     func test_backgroundColor() {
         self.superTests.publishers.reset()

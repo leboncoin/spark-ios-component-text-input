@@ -13,7 +13,11 @@ import SparkTheming
 
 final class TextInputGetColorsUseCaseTests: XCTestCase {
 
+    // MARK: - Properties
+
     private let theme = ThemeGeneratedMock.mocked()
+
+    // MARK: - Tests
 
     func test_isFocused_isEnabled_isUserInteractionEnabled() {
         let intentAndExpectedBorderColorArray: [(intent: TextInputIntent, expectedBorderColor: any ColorToken)] = [

@@ -14,6 +14,8 @@ import SparkTheming
 
 class TextInputViewModel: ObservableObject {
 
+    // MARK: - Published Properties
+
     // Colors
     @Published private(set) var textColor: any ColorToken
     @Published private(set) var placeholderColor: any ColorToken
@@ -32,6 +34,8 @@ class TextInputViewModel: ObservableObject {
     @Published var dim: CGFloat
 
     @Published private(set) var font: any TypographyFontToken
+
+    // MARK: - Properties
 
     let getColorsUseCase: any TextInputGetColorsUseCasable
     let getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCasable
@@ -76,11 +80,15 @@ class TextInputViewModel: ObservableObject {
         }
     }
 
-    init(theme: Theme,
-         intent: TextInputIntent,
-         getColorsUseCase: any TextInputGetColorsUseCasable = TextInputGetColorsUseCase(),
-         getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCasable = TextInputGetBorderLayoutUseCase(),
-         getSpacingsUseCase: any TextInputGetSpacingsUseCasable = TextInputGetSpacingsUseCase()) {
+    // MARK: - Initialization
+
+    init(
+        theme: Theme,
+        intent: TextInputIntent,
+        getColorsUseCase: any TextInputGetColorsUseCasable = TextInputGetColorsUseCase(),
+        getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCasable = TextInputGetBorderLayoutUseCase(),
+        getSpacingsUseCase: any TextInputGetSpacingsUseCasable = TextInputGetSpacingsUseCase()
+    ) {
         self.theme = theme
         self.intent = intent
 
@@ -118,6 +126,8 @@ class TextInputViewModel: ObservableObject {
 
         self.font = theme.typography.body1
     }
+
+    // MARK: - Setter
 
     func setColors() {
         // Colors

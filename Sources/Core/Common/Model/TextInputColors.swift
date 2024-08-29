@@ -10,10 +10,15 @@ import Foundation
 import SparkTheming
 
 struct TextFieldColors: Equatable {
+
+    // MARK: - Properties
+
     let text: any ColorToken
     let placeholder: any ColorToken
     let border: any ColorToken
     let background: any ColorToken
+
+    // MARK: - Equatable
 
     static func == (lhs: TextFieldColors, rhs: TextFieldColors) -> Bool {
         return lhs.text.equals(rhs.text) &&

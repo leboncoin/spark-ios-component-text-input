@@ -9,6 +9,9 @@
 import Foundation
 
 struct TextFieldBorderLayout: Equatable {
+
+    // MARK: - Properties
+
     let radius: CGFloat
     let width: CGFloat
 }

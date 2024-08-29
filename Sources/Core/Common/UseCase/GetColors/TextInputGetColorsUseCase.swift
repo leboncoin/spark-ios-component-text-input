@@ -11,19 +11,26 @@ import SparkTheming
 
 // sourcery: AutoMockable
 protocol TextInputGetColorsUseCasable {
-    func execute(theme: Theme,
-                 intent: TextInputIntent,
-                 isFocused: Bool,
-                 isEnabled: Bool,
-                 isUserInteractionEnabled: Bool) -> TextFieldColors
+    func execute(
+        theme: Theme,
+        intent: TextInputIntent,
+        isFocused: Bool,
+        isEnabled: Bool,
+        isUserInteractionEnabled: Bool
+    ) -> TextFieldColors
 }
 
 struct TextInputGetColorsUseCase: TextInputGetColorsUseCasable {
-    func execute(theme: Theme,
-                 intent: TextInputIntent,
-                 isFocused: Bool,
-                 isEnabled: Bool,
-                 isUserInteractionEnabled: Bool) -> TextFieldColors {
+
+    // MARK: - Methods
+
+    func execute(
+        theme: Theme,
+        intent: TextInputIntent,
+        isFocused: Bool,
+        isEnabled: Bool,
+        isUserInteractionEnabled: Bool
+    ) -> TextFieldColors {
         let text = theme.colors.base.onSurface
         let placeholder = theme.colors.base.onSurface.opacity(theme.dims.dim1)
 

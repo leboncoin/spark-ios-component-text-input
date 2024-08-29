@@ -15,6 +15,9 @@ protocol TextInputGetBorderLayoutUseCasable {
 }
 
 final class TextInputGetBorderLayoutUseCase: TextInputGetBorderLayoutUseCasable {
+
+    // MARK: - Methods
+
     func execute(theme: Theme, isFocused: Bool) -> TextFieldBorderLayout {
         return .init(
             radius: theme.border.radius.large,
