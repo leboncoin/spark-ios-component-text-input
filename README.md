@@ -1,61 +1,152 @@
+# Introduction
 
-# ___COMPONENT_NAME___
+This repository contains two close components: TextField & TextView.
 
-TODO: 
+# TextField & TextFieldAddons
+
+The TextField component allows users to write in the space provided for the content.  
+It has optional embedded left and right views.
+
+The TextFieldAddons adds a left and right addons management on top of the TextField.
+
+At most you could have
+`[Left Addon, [Left View, TextField, Right View], Right Addon]`
 
 ## Specifications
 
-The ___component_name___ specifications on Zeroheight is [here](TODO:).
+The TextField specifications on Zeroheight are [here](https://zeroheight.com/1186e1705/v/latest/p/773c60-input--text-field).
 
-![Figma anatomy](https://github.com/adevinta/___REPOSITORY_NAME___/blob/main/.github/assets/anatomy.png)
+![Figma anatomy](https://github.com/adevinta/spark-ios-component-text-input/blob/main/.github/assets/anatomy-textfield.png)
 
-## Usage
+## UIKit
 
-___COMPONENT_NAME___ is available both in UIKit and SwiftUI.
+### `TextFieldUIView`
 
-### UIKit
+`TextFieldUIView` is a subclass of the native `UITextField` so you can use it as usual.
 
-### Usage
-
-#### Subviews
-
-* `TODO`: TODO.
-
-#### Properties
-
-* `TODO`: TODO.
-
-#### Published Properties
-
-* `TODO`: TODO.
-
-#### Initialization
+To access left and right views, use
 
 ```swift
-let ___component_name___ = ___COMPONENT_NAME___UIView(
-    TODO: TODO
+    var leftView: UIView? { get set }
+    var rightView: UIView? { get set }
+```
+
+Do note that when setting left and/or right views, the TextField needs to be refreshed (as it is for UITextField)
+
+### `TextFieldAddonsUIView`
+
+`TextFieldAddonsUIView` is a `UIControl` that embbeds a `TextFieldUIView` inbetween a `leftAddon: UIView?` and a `rightAddon: UIView?`.
+
+To access left and right addons, use
+
+```swift
+    var leftAddon: UIView? { get }
+    var rightAddon: UIView? { get }
+
+    func setLeftAddon(_ leftAddon: UIView?, withPadding: Bool) {}
+    func setRightAddon(_ leftAddon: UIView?, withPadding: Bool) {}
+```
+
+## SwiftUI
+
+### `TextFieldView`
+
+`TextFieldView` emulates the equivalent of `TextFieldUIView` in SwiftUI with a leftView and a rightView.
+
+To set these views, `TextFieldView` has two parameters with generic types `LeftView` and `RightView`. Default values are `EmptyView()`.
+
+```swift
+public struct TextFieldView<LeftView: View, RightView: View>: View
+
+/// TextFieldView initializer
+/// - Parameters:
+///   - titleKey: The textfield's current placeholder
+///   - text: The textfield's text binding
+///   - theme: The textfield's current theme
+///   - intent: The textfield's current intent
+///   - type: The type of field with its associated callback(s), default is `.standard()`
+///   - isReadOnly: Set this to true if you want the textfield to be readOnly, default is `false`
+///   - leftView: The TextField's left view, default is `EmptyView`
+///   - rightView: The TextField's right view, default is `EmptyView`
+public init(_ titleKey: LocalizedStringKey,
+            text: Binding<String>,
+            theme: Theme,
+            intent: TextInputIntent,
+            type: TextFieldViewType,
+            isReadOnly: Bool = false,
+            leftView: @escaping () -> LeftView,
+            rightView: @escaping () -> RightView
 )
 ```
 
-#### Getter / Setter
-
-TODO
-
-
-### SwiftUI
-
-#### Initialization
+To handle the fallbacks, there is a `type: TextFieldViewType` variable in the initializer.
 
 ```swift
-let ___component_name___ = ___COMPONENT_NAME___View(
-    TODO: TODO
+/// A TextField type with its associated callback(s)
+public enum TextFieldViewType {
+    case secure(onCommit: () -> Void = {})
+    case standard(onEditingChanged: (Bool) -> Void = { _ in }, onCommit: () -> Void = {})
+}
+```
+
+### `TextFieldAddon`
+
+`TextFieldAddon` is a view containing a user-defined content. It allows padding and layout priority management.
+
+```swift
+public struct TextFieldAddon<Content: View>: View
+
+/// TextFieldAddon initializer
+/// - Parameters:
+///   - withPadding: Add addon padding if `true`, default is `false`
+///   - layoutPriority: Set addon .layoutPriority(), default is `1.0`
+///   - content: Addon's content View
+public init(
+        withPadding: Bool,
+        layoutPriority: Double,
+        content: @escaping () -> Content
 )
 ```
 
-#### Modifier
+### `TextFieldAddons`
 
-TODO
+`TextFieldAddons` is a view containing a TextField and optionals left and right addons.
 
+To set these addons, use the `leftAddon` and `rightAddon` parameters in the initializer.
+
+```swift
+public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, RightAddon: View>: View
+
+/// TextFieldAddons initializer
+/// - Parameters:
+///   - titleKey: The textfield's current placeholder
+///   - text: The textfield's text binding
+///   - theme: The textfield's current theme
+///   - intent: The textfield's current intent
+///   - type: The type of field with its associated callback(s), default is `.standard()`
+///   - isReadOnly: Set this to true if you want the textfield to be readOnly, default is `false`
+///   - leftView: The TextField's left view, default is `EmptyView`
+///   - rightView: The TextField's right view, default is `EmptyView`
+///   - leftAddon: The TextField's left addon, default is `EmptyView`
+///   - rightAddon: The TextField's right addon, default is `EmptyView`
+public init(
+    _ titleKey: LocalizedStringKey,
+    text: Binding<String>,
+    theme: Theme,
+    intent: TextInputIntent,
+    type: TextFieldViewType,
+    isReadOnly: Bool,
+    leftView: @escaping (() -> LeftView),
+    rightView: @escaping (() -> RightView),
+    leftAddon: @escaping (() -> TextFieldAddon<LeftAddon>),
+    rightAddon: @escaping (() -> TextFieldAddon<RightAddon>)
+)
+```
+
+## Properties
+
+- `theme`: The textfield's current theme
+- `intent`: The textfield's current intent
 
 ## License
 
