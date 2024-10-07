@@ -17,7 +17,7 @@ protocol TextInputGetSpacingsUseCasable {
 final class TextInputGetSpacingsUseCase: TextInputGetSpacingsUseCasable {
 
     // MARK: - Methods
-    
+
     func execute(theme: Theme) -> TextFieldSpacings {
         return .init(
             left: theme.layout.spacing.large,
