@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// The intent of the input (textField & textEditor).
 public enum TextInputIntent: CaseIterable {
     case error
     case alert

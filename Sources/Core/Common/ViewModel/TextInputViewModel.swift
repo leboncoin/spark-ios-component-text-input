@@ -59,7 +59,7 @@ class TextInputViewModel: ObservableObject {
 
     var isFocused: Bool = false {
         didSet {
-            guard oldValue != self.isFocused else { return }
+            guard oldValue != self.isFocused && !self.isReadOnly else { return }
             self.setColors()
             self.setBorderLayout()
         }
@@ -73,9 +73,9 @@ class TextInputViewModel: ObservableObject {
         }
     }
 
-    var isUserInteractionEnabled: Bool = true {
+    var isReadOnly: Bool = false {
         didSet {
-            guard oldValue != self.isUserInteractionEnabled else { return }
+            guard oldValue != self.isReadOnly else { return }
             self.setColors()
         }
     }
@@ -102,7 +102,7 @@ class TextInputViewModel: ObservableObject {
             intent: intent,
             isFocused: self.isFocused,
             isEnabled: self.isEnabled,
-            isUserInteractionEnabled: self.isUserInteractionEnabled
+            isReadOnly: self.isReadOnly
         )
         self.textColor = colors.text
         self.placeholderColor = colors.placeholder
@@ -136,7 +136,7 @@ class TextInputViewModel: ObservableObject {
             intent: self.intent,
             isFocused: self.isFocused,
             isEnabled: self.isEnabled,
-            isUserInteractionEnabled: self.isUserInteractionEnabled
+            isReadOnly: self.isReadOnly
         )
         self.textColor = colors.text
         self.placeholderColor = colors.placeholder
@@ -164,7 +164,7 @@ class TextInputViewModel: ObservableObject {
         self.dim = self.isEnabled ? self.theme.dims.none : self.theme.dims.dim3
     }
 
-    private func setFont() {
+    func setFont() {
         self.font = self.theme.typography.body1
     }
 }
