@@ -69,19 +69,19 @@ final class TextInputViewModelTests: XCTestCase {
         XCTAssertIdentical(self.viewModel.theme as? ThemeGeneratedMock, self.theme, "Wrong theme")
         XCTAssertEqual(self.viewModel.intent, self.intent, "Wrong intent")
         XCTAssertTrue(self.viewModel.isEnabled, "Wrong isEnabled")
-        XCTAssertTrue(self.viewModel.isUserInteractionEnabled, "Wrong isUserInteractionEnabled")
+        XCTAssertFalse(self.viewModel.isReadOnly, "Wrong isReadOnly")
         XCTAssertFalse(self.viewModel.isFocused, "Wrong isFocused")
         XCTAssertEqual(self.viewModel.dim, self.theme.dims.none, "Wrong dim")
         XCTAssertIdentical(self.viewModel.font as? TypographyFontTokenGeneratedMock, self.theme.typography.body1 as? TypographyFontTokenGeneratedMock, "Wrong font")
 
         // THEN - Colors
-        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabled should have been called once")
-        let getColorsReceivedArguments = try XCTUnwrap(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledReceivedArguments, "Couldn't unwrap getColorsReceivedArguments")
+        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnly should have been called once")
+        let getColorsReceivedArguments = try XCTUnwrap(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReceivedArguments, "Couldn't unwrap getColorsReceivedArguments")
         XCTAssertIdentical(getColorsReceivedArguments.theme as? ThemeGeneratedMock, self.theme, "Wrong getColorsReceivedArguments.theme")
         XCTAssertEqual(getColorsReceivedArguments.intent, self.intent, "Wrong getColorsReceivedArguments.intent")
         XCTAssertFalse(getColorsReceivedArguments.isFocused, "Wrong getColorsReceivedArguments.isFocused")
         XCTAssertTrue(getColorsReceivedArguments.isEnabled, "Wrong getColorsReceivedArguments.isEnabled")
-        XCTAssertTrue(getColorsReceivedArguments.isUserInteractionEnabled, "Wrong getColorsReceivedArguments.isUserInteractionEnabled")
+        XCTAssertFalse(getColorsReceivedArguments.isReadOnly, "Wrong getColorsReceivedArguments.isReadOnly")
         XCTAssertTrue(self.viewModel.textColor.equals(self.expectedColors.text), "Wrong textColor")
         XCTAssertTrue(self.viewModel.placeholderColor.equals(self.expectedColors.placeholder), "Wrong placeholderColor")
         XCTAssertTrue(self.viewModel.borderColor.equals(self.expectedColors.border), "Wrong borderColor")
@@ -135,7 +135,7 @@ final class TextInputViewModelTests: XCTestCase {
             border: .green(),
             background: .red()
         )
-        self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledReturnValue = newExpectedColors
+        self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReturnValue = newExpectedColors
 
         let newExpectedBorderLayout = TextFieldBorderLayout.mocked(radius: 20.0, width: 100.0)
         self.getBorderLayoutUseCase.executeWithThemeAndIsFocusedReturnValue = newExpectedBorderLayout
@@ -150,8 +150,8 @@ final class TextInputViewModelTests: XCTestCase {
         XCTAssertIdentical(self.viewModel.theme as? ThemeGeneratedMock, newTheme, "Wrong theme")
 
         // THEN - Colors
-        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabled should have been called once")
-        let getColorsReceivedArguments = try XCTUnwrap(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledReceivedArguments, "Couldn't unwrap getColorsReceivedArguments")
+        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnly should have been called once")
+        let getColorsReceivedArguments = try XCTUnwrap(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReceivedArguments, "Couldn't unwrap getColorsReceivedArguments")
         XCTAssertIdentical(getColorsReceivedArguments.theme as? ThemeGeneratedMock, newTheme, "Wrong getColorsReceivedArguments.theme")
         XCTAssertTrue(self.viewModel.textColor.equals(newExpectedColors.text), "Wrong textColor")
         XCTAssertTrue(self.viewModel.placeholderColor.equals(newExpectedColors.placeholder), "Wrong placeholderColor")
@@ -199,7 +199,7 @@ final class TextInputViewModelTests: XCTestCase {
         self.viewModel.intent = self.intent
 
         // THEN - Colors
-        XCTAssertFalse(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledCalled, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabled should not have been called")
+        XCTAssertFalse(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyCalled, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnly should not have been called")
 
         // THEN - Border Layout
         XCTAssertFalse(self.getBorderLayoutUseCase.executeWithThemeAndIsFocusedCalled, "getBorderLayoutUseCase.executeWithThemeAndIsFocused should not have been called")
@@ -236,14 +236,14 @@ final class TextInputViewModelTests: XCTestCase {
             border: .green(),
             background: .red()
         )
-        self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledReturnValue = newExpectedColors
+        self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReturnValue = newExpectedColors
 
         // WHEN
         self.viewModel.intent = .neutral
 
         // THEN - Colors
-        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabled should have been called once")
-        let getColorsReceivedArguments = try XCTUnwrap(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledReceivedArguments, "Couldn't unwrap getColorsReceivedArguments")
+        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnly should have been called once")
+        let getColorsReceivedArguments = try XCTUnwrap(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReceivedArguments, "Couldn't unwrap getColorsReceivedArguments")
         XCTAssertEqual(getColorsReceivedArguments.intent, .neutral, "Wrong getColorsReceivedArguments.intent")
         XCTAssertTrue(self.viewModel.textColor.equals(newExpectedColors.text), "Wrong textColor")
         XCTAssertTrue(self.viewModel.placeholderColor.equals(newExpectedColors.placeholder), "Wrong placeholderColor")
@@ -283,7 +283,7 @@ final class TextInputViewModelTests: XCTestCase {
         self.viewModel.isFocused = false
 
         // THEN - Colors
-        XCTAssertFalse(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledCalled, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabled should not have been called")
+        XCTAssertFalse(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyCalled, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnly should not have been called")
 
         // THEN - Border Layout
         XCTAssertFalse(self.getBorderLayoutUseCase.executeWithThemeAndIsFocusedCalled, "getBorderLayoutUseCase.executeWithThemeAndIsFocused should not have been called")
@@ -319,7 +319,7 @@ final class TextInputViewModelTests: XCTestCase {
             border: .green(),
             background: .red()
         )
-        self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledReturnValue = newExpectedColors
+        self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReturnValue = newExpectedColors
 
         let newExpectedBorderLayout = TextFieldBorderLayout.mocked(radius: 20.0, width: 100.0)
         self.getBorderLayoutUseCase.executeWithThemeAndIsFocusedReturnValue = newExpectedBorderLayout
@@ -328,8 +328,8 @@ final class TextInputViewModelTests: XCTestCase {
         self.viewModel.isFocused = true
 
         // THEN - Colors
-        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabled should have been called once")
-        let getColorsReceivedArguments = try XCTUnwrap(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledReceivedArguments, "Couldn't unwrap getColorsReceivedArguments")
+        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnly should have been called once")
+        let getColorsReceivedArguments = try XCTUnwrap(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReceivedArguments, "Couldn't unwrap getColorsReceivedArguments")
         XCTAssertIdentical(getColorsReceivedArguments.theme as? ThemeGeneratedMock, self.theme, "Wrong getColorsReceivedArguments.theme")
         XCTAssertEqual(getColorsReceivedArguments.intent, self.intent, "Wrong getColorsReceivedArguments.intent")
         XCTAssertTrue(getColorsReceivedArguments.isFocused, "Wrong getColorsReceivedArguments.isFocused")
@@ -375,7 +375,7 @@ final class TextInputViewModelTests: XCTestCase {
         self.viewModel.isEnabled = true
 
         // THEN - Colors
-        XCTAssertFalse(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledCalled, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabled should not have been called")
+        XCTAssertFalse(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyCalled, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnly should not have been called")
 
         // THEN - Border Layout
         XCTAssertFalse(self.getBorderLayoutUseCase.executeWithThemeAndIsFocusedCalled, "getBorderLayoutUseCase.executeWithThemeAndIsFocused should not have been called")
@@ -412,14 +412,14 @@ final class TextInputViewModelTests: XCTestCase {
             border: .green(),
             background: .red()
         )
-        self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledReturnValue = newExpectedColors
+        self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReturnValue = newExpectedColors
 
         // WHEN
         self.viewModel.isEnabled = true
 
         // THEN - Colors
-        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabled should have been called once")
-        let getColorsReceivedArguments = try XCTUnwrap(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledReceivedArguments, "Couldn't unwrap getColorsReceivedArguments")
+        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnly should have been called once")
+        let getColorsReceivedArguments = try XCTUnwrap(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReceivedArguments, "Couldn't unwrap getColorsReceivedArguments")
         XCTAssertIdentical(getColorsReceivedArguments.theme as? ThemeGeneratedMock, self.theme, "Wrong getColorsReceivedArguments.theme")
         XCTAssertEqual(getColorsReceivedArguments.intent, self.intent, "Wrong getColorsReceivedArguments.intent")
         XCTAssertTrue(getColorsReceivedArguments.isEnabled, "Wrong getColorsReceivedArguments.isEnabledd")
@@ -451,17 +451,17 @@ final class TextInputViewModelTests: XCTestCase {
         XCTAssertFalse(self.publishers.font.sinkCalled, "$font should not have been called")
     }
 
-    // MARK: - Is User Interaction Enabled
-    func test_isUserInteractionEnabled_didSet_equal() throws {
+    // MARK: - Is  Read Only
+    func test_isReadOnly_didSet_equal() throws {
         // GIVEN - Inits from setUp()
         self.resetUseCases() // Removes execute from init
         self.publishers.reset() // Removes publishes from init
 
         // WHEN
-        self.viewModel.isUserInteractionEnabled = true
+        self.viewModel.isReadOnly = false
 
         // THEN - Colors
-        XCTAssertFalse(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledCalled, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabled should not have been called")
+        XCTAssertFalse(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyCalled, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnly should not have been called")
 
         // THEN - Border Layout
         XCTAssertFalse(self.getBorderLayoutUseCase.executeWithThemeAndIsFocusedCalled, "getBorderLayoutUseCase.executeWithThemeAndIsFocused should not have been called")
@@ -486,7 +486,7 @@ final class TextInputViewModelTests: XCTestCase {
         XCTAssertFalse(self.publishers.font.sinkCalled, "$font should not have been called")
     }
 
-    func test_isUserInteractionEnabled_didSet_notEqual() throws {
+    func test_isReadOnly_didSet_notEqual() throws {
         // GIVEN - Inits from setUp()
         self.resetUseCases() // Removes execute from init
         self.publishers.reset() // Removes publishes from init
@@ -497,17 +497,17 @@ final class TextInputViewModelTests: XCTestCase {
             border: .green(),
             background: .red()
         )
-        self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledReturnValue = newExpectedColors
+        self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReturnValue = newExpectedColors
 
         // WHEN
-        self.viewModel.isUserInteractionEnabled = false
+        self.viewModel.isReadOnly = true
 
         // THEN - Colors
-        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabled should have been called once")
-        let getColorsReceivedArguments = try XCTUnwrap(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledReceivedArguments, "Couldn't unwrap getColorsReceivedArguments")
+        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnly should have been called once")
+        let getColorsReceivedArguments = try XCTUnwrap(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReceivedArguments, "Couldn't unwrap getColorsReceivedArguments")
         XCTAssertIdentical(getColorsReceivedArguments.theme as? ThemeGeneratedMock, self.theme, "Wrong getColorsReceivedArguments.theme")
         XCTAssertEqual(getColorsReceivedArguments.intent, self.intent, "Wrong getColorsReceivedArguments.intent")
-        XCTAssertFalse(getColorsReceivedArguments.isUserInteractionEnabled, "Wrong getColorsReceivedArguments.isUserInteractionEnabled")
+        XCTAssertTrue(getColorsReceivedArguments.isReadOnly, "Wrong getColorsReceivedArguments.isReadOnly")
         XCTAssertTrue(self.viewModel.textColor.equals(newExpectedColors.text), "Wrong textColor")
         XCTAssertTrue(self.viewModel.placeholderColor.equals(newExpectedColors.placeholder), "Wrong placeholderColor")
         XCTAssertTrue(self.viewModel.borderColor.equals(newExpectedColors.border), "Wrong borderColor")

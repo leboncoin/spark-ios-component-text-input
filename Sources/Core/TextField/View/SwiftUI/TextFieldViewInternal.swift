@@ -14,7 +14,7 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
 
     // MARK: - Properties
 
-    @ScaledMetric private var height: CGFloat = 44
+    @ScaledMetric private var height: CGFloat = TextInputConstants.height
     @ScaledMetric private var scaleFactor: CGFloat = 1.0
 
     @ObservedObject private var viewModel: TextInputViewModel
@@ -50,7 +50,7 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
             contentView()
         }
         .tint(self.viewModel.textColor.color)
-        .allowsHitTesting(self.viewModel.isUserInteractionEnabled)
+        .allowsHitTesting(!self.viewModel.isReadOnly)
         .border(
             width: self.viewModel.borderWidth * self.scaleFactor,
             radius: self.viewModel.borderRadius * self.scaleFactor,

@@ -15,8 +15,8 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
 
     // MARK: - Properties
 
+    @ScaledMetric private var maxHeight: CGFloat = TextInputConstants.height
     @ScaledMetric private var scaleFactor: CGFloat = 1.0
-    @ScaledMetric private var maxHeight: CGFloat = 44.0
     @ObservedObject private var viewModel: TextFieldAddonsViewModel
     private let leftAddon: () -> TextFieldAddon<LeftAddon>
     private let rightAddon: () -> TextFieldAddon<RightAddon>
@@ -67,7 +67,7 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
         self.leftAddon = leftAddon
         self.rightAddon = rightAddon
 
-        self.viewModel.textFieldViewModel.isUserInteractionEnabled = isReadOnly != true
+        self.viewModel.textFieldViewModel.isReadOnly = isReadOnly
     }
 
     // MARK: - Getter
@@ -114,7 +114,7 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
             }
         }
         .frame(maxHeight: maxHeight)
-        .allowsHitTesting(self.viewModel.textFieldViewModel.isUserInteractionEnabled)
+        .allowsHitTesting(!self.viewModel.textFieldViewModel.isReadOnly)
         .border(
             width: self.viewModel.borderWidth * self.scaleFactor,
             radius: self.viewModel.borderRadius * self.scaleFactor,

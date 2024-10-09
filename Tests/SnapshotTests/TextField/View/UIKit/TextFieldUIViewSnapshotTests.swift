@@ -56,7 +56,7 @@ final class TextFieldUIViewSnapshotTests: UIKitComponentSnapshotTestCase {
                                 intent: intent
                             )
                             viewModel.isEnabled = states.isEnabled
-                            viewModel.isUserInteractionEnabled = states.isReadOnly != true
+                            viewModel.isReadOnly = states.isReadOnly
                             viewModel.isFocused = states.isFocused
                             let textField = TextFieldUIView(viewModel: viewModel)
                             textField.text = text.text

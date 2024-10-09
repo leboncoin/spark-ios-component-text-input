@@ -16,7 +16,7 @@ protocol TextInputGetColorsUseCasable {
         intent: TextInputIntent,
         isFocused: Bool,
         isEnabled: Bool,
-        isUserInteractionEnabled: Bool
+        isReadOnly: Bool
     ) -> TextFieldColors
 }
 
@@ -29,14 +29,14 @@ struct TextInputGetColorsUseCase: TextInputGetColorsUseCasable {
         intent: TextInputIntent,
         isFocused: Bool,
         isEnabled: Bool,
-        isUserInteractionEnabled: Bool
+        isReadOnly: Bool
     ) -> TextFieldColors {
         let text = theme.colors.base.onSurface
         let placeholder = theme.colors.base.onSurface.opacity(theme.dims.dim1)
 
         let border: any ColorToken
         let background: any ColorToken
-        if isEnabled, isUserInteractionEnabled {
+        if isEnabled, !isReadOnly {
             switch intent {
             case .error:
                 border = theme.colors.feedback.error

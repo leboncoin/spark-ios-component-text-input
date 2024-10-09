@@ -12,7 +12,7 @@ import Foundation
 extension TextInputGetColorsUseCasableGeneratedMock {
     static func mocked(returnedColors: TextFieldColors) -> TextInputGetColorsUseCasableGeneratedMock {
         let mock = TextInputGetColorsUseCasableGeneratedMock()
-        mock.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabledReturnValue = returnedColors
+        mock.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReturnValue = returnedColors
         return mock
     }
 }

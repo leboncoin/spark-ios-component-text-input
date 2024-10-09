@@ -19,7 +19,7 @@ final class TextInputGetColorsUseCaseTests: XCTestCase {
 
     // MARK: - Tests
 
-    func test_isFocused_isEnabled_isUserInteractionEnabled() {
+    func test_isFocused_isEnabled_isNotReadOnly() {
         let intentAndExpectedBorderColorArray: [(intent: TextInputIntent, expectedBorderColor: any ColorToken)] = [
             (intent: .success, self.theme.colors.feedback.success),
             (intent: .error, self.theme.colors.feedback.error),
@@ -29,18 +29,18 @@ final class TextInputGetColorsUseCaseTests: XCTestCase {
         XCTAssertEqual(intentAndExpectedBorderColorArray.count, TextInputIntent.allCases.count, "Wrong intentAndExpectedBorderColorArray count")
 
         intentAndExpectedBorderColorArray.forEach {
-            self._test_isFocused_isEnabled_isUserInteractionEnabled(with: $0.intent, expectedBorderColor: $0.expectedBorderColor)
+            self._test_isFocused_isEnabled_isNotReadOnly(with: $0.intent, expectedBorderColor: $0.expectedBorderColor)
         }
     }
 
-    private func _test_isFocused_isEnabled_isUserInteractionEnabled(
+    private func _test_isFocused_isEnabled_isNotReadOnly(
         with intent: TextInputIntent,
         expectedBorderColor: any ColorToken
     ) {
         // GIVEN
         let isFocused = true
         let isEnabled = true
-        let isUserInteractionEnabled = true
+        let isReadOnly = false
         let useCase = TextInputGetColorsUseCase()
 
         // WHEN
@@ -49,7 +49,7 @@ final class TextInputGetColorsUseCaseTests: XCTestCase {
             intent: intent,
             isFocused: isFocused,
             isEnabled: isEnabled,
-            isUserInteractionEnabled: isUserInteractionEnabled
+            isReadOnly: isReadOnly
         )
 
         // THEN
@@ -59,7 +59,7 @@ final class TextInputGetColorsUseCaseTests: XCTestCase {
         XCTAssertTrue(colors.background.equals(self.theme.colors.base.surface), "Wrong background color for intent: \(intent)")
     }
 
-    func test_isNotFocused_isEnabled_isUserInteractionEnabled() {
+    func test_isNotFocused_isEnabled_isNotReadOnly() {
         let intentAndExpectedBorderColorArray: [(intent: TextInputIntent, expectedBorderColor: any ColorToken)] = [
             (intent: .success, self.theme.colors.feedback.success),
             (intent: .error, self.theme.colors.feedback.error),
@@ -69,18 +69,18 @@ final class TextInputGetColorsUseCaseTests: XCTestCase {
         XCTAssertEqual(intentAndExpectedBorderColorArray.count, TextInputIntent.allCases.count, "Wrong intentAndExpectedBorderColorArray count")
 
         intentAndExpectedBorderColorArray.forEach {
-            self._test_isNotFocused_isEnabled_isUserInteractionEnabled(with: $0.intent, expectedBorderColor: $0.expectedBorderColor)
+            self._test_isNotFocused_isEnabled_isNotReadOnly(with: $0.intent, expectedBorderColor: $0.expectedBorderColor)
         }
     }
 
-    private func _test_isNotFocused_isEnabled_isUserInteractionEnabled(
+    private func _test_isNotFocused_isEnabled_isNotReadOnly(
         with intent: TextInputIntent,
         expectedBorderColor: any ColorToken
     ) {
         // GIVEN
         let isFocused = false
         let isEnabled = true
-        let isUserInteractionEnabled = true
+        let isReadOnly = false
         let useCase = TextInputGetColorsUseCase()
 
         // WHEN
@@ -89,7 +89,7 @@ final class TextInputGetColorsUseCaseTests: XCTestCase {
             intent: intent,
             isFocused: isFocused,
             isEnabled: isEnabled,
-            isUserInteractionEnabled: isUserInteractionEnabled
+            isReadOnly: isReadOnly
         )
 
         // THEN
@@ -99,7 +99,7 @@ final class TextInputGetColorsUseCaseTests: XCTestCase {
         XCTAssertTrue(colors.background.equals(self.theme.colors.base.surface), "Wrong background color for intent: \(intent)")
     }
 
-    func test_isNotFocused_isEnabled_isUserInteractionNotEnabled() {
+    func test_isNotFocused_isEnabled_isReadOnly() {
         let intentAndExpectedBorderColorArray: [(intent: TextInputIntent, expectedBorderColor: any ColorToken)] = [
             (intent: .success, self.theme.colors.base.outline),
             (intent: .error, self.theme.colors.base.outline),
@@ -109,18 +109,18 @@ final class TextInputGetColorsUseCaseTests: XCTestCase {
         XCTAssertEqual(intentAndExpectedBorderColorArray.count, TextInputIntent.allCases.count, "Wrong intentAndExpectedBorderColorArray count")
 
         intentAndExpectedBorderColorArray.forEach {
-            self._test_isNotFocused_isEnabled_isUserInteractionNotEnabled(with: $0.intent, expectedBorderColor: $0.expectedBorderColor)
+            self._test_isNotFocused_isEnabled_isReadOnly(with: $0.intent, expectedBorderColor: $0.expectedBorderColor)
         }
     }
 
-    private func _test_isNotFocused_isEnabled_isUserInteractionNotEnabled(
+    private func _test_isNotFocused_isEnabled_isReadOnly(
         with intent: TextInputIntent,
         expectedBorderColor: any ColorToken
     ) {
         // GIVEN
         let isFocused = false
         let isEnabled = true
-        let isUserInteractionEnabled = false
+        let isReadOnly = true
         let useCase = TextInputGetColorsUseCase()
 
         // WHEN
@@ -129,7 +129,7 @@ final class TextInputGetColorsUseCaseTests: XCTestCase {
             intent: intent,
             isFocused: isFocused,
             isEnabled: isEnabled,
-            isUserInteractionEnabled: isUserInteractionEnabled
+            isReadOnly: isReadOnly
         )
 
         // THEN
@@ -139,7 +139,7 @@ final class TextInputGetColorsUseCaseTests: XCTestCase {
         XCTAssertTrue(colors.background.equals(self.theme.colors.base.onSurface.opacity(theme.dims.dim5)), "Wrong background color for intent: \(intent)")
     }
 
-    func test_isFocused_isNotEnabled_isUserInteractionEnabled() {
+    func test_isFocused_isNotEnabled_isNotReadOnly() {
         let intentAndExpectedBorderColorArray: [(intent: TextInputIntent, expectedBorderColor: any ColorToken)] = [
             (intent: .success, self.theme.colors.base.outline),
             (intent: .error, self.theme.colors.base.outline),
@@ -149,18 +149,18 @@ final class TextInputGetColorsUseCaseTests: XCTestCase {
         XCTAssertEqual(intentAndExpectedBorderColorArray.count, TextInputIntent.allCases.count, "Wrong intentAndExpectedBorderColorArray count")
 
         intentAndExpectedBorderColorArray.forEach {
-            self._test_isFocused_isNotEnabled_isUserInteractionEnabled(with: $0.intent, expectedBorderColor: $0.expectedBorderColor)
+            self._test_isFocused_isNotEnabled_isNotReadOnly(with: $0.intent, expectedBorderColor: $0.expectedBorderColor)
         }
     }
 
-    private func _test_isFocused_isNotEnabled_isUserInteractionEnabled(
+    private func _test_isFocused_isNotEnabled_isNotReadOnly(
         with intent: TextInputIntent,
         expectedBorderColor: any ColorToken
     ) {
         // GIVEN
         let isFocused = true
         let isEnabled = false
-        let isUserInteractionEnabled = true
+        let isReadOnly = false
         let useCase = TextInputGetColorsUseCase()
 
         // WHEN
@@ -169,7 +169,7 @@ final class TextInputGetColorsUseCaseTests: XCTestCase {
             intent: intent,
             isFocused: isFocused,
             isEnabled: isEnabled,
-            isUserInteractionEnabled: isUserInteractionEnabled
+            isReadOnly: isReadOnly
         )
 
         // THEN

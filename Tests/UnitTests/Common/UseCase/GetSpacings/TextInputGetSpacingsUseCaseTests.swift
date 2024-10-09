@@ -19,7 +19,7 @@ final class TextInputGetSpacingsUseCaseTests: XCTestCase {
 
     // MARK: - Tests
 
-    func text_execute() {
+    func test_execute() {
         // GIVEN
         let useCase = TextInputGetSpacingsUseCase()
 
@@ -29,8 +29,8 @@ final class TextInputGetSpacingsUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(spacings.content, self.themeMock.layout.spacing.large)
-        XCTAssertEqual(spacings.left, self.themeMock.layout.spacing.medium)
+        XCTAssertEqual(spacings.left, self.themeMock.layout.spacing.large)
+        XCTAssertEqual(spacings.content, self.themeMock.layout.spacing.medium)
         XCTAssertEqual(spacings.right, self.themeMock.layout.spacing.large)
     }
 }
