@@ -40,6 +40,33 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
         self.rightView = rightView
     }
 
+    init(
+        _ titleKey: LocalizedStringKey,
+        text: Binding<String>,
+        theme: Theme,
+        intent: TextFieldIntent,
+        borderStyle: TextInputBorderStyle,
+        type: TextFieldViewType,
+        isReadOnly: Bool,
+        leftView: @escaping (() -> LeftView),
+        rightView: @escaping (() -> RightView)
+    ) {
+        let viewModel = TextInputViewModel(
+            theme: theme,
+            intent: intent,
+            borderStyle: borderStyle
+        )
+        viewModel.isReadOnly = isReadOnly
+        self.init(
+            titleKey: titleKey,
+            text: text,
+            viewModel: viewModel,
+            type: type,
+            leftView: leftView,
+            rightView: rightView
+        )
+    }
+
     /// TextFieldView initializer
     /// - Parameters:
     ///   - titleKey: The textfield's current placeholder
@@ -58,16 +85,14 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
                 isReadOnly: Bool = false,
                 leftView: @escaping () -> LeftView = { EmptyView() },
                 rightView: @escaping () -> RightView = { EmptyView() }) {
-        let viewModel = TextInputViewModel(
-            theme: theme,
-            intent: intent
-        )
-        viewModel.isReadOnly = isReadOnly
         self.init(
-            titleKey: titleKey,
+            titleKey,
             text: text,
-            viewModel: viewModel,
+            theme: theme,
+            intent: intent,
+            borderStyle: .roundedRect,
             type: type,
+            isReadOnly: isReadOnly,
             leftView: leftView,
             rightView: rightView
         )

@@ -28,10 +28,11 @@ final class TextFieldAddonsViewModelTests: XCTestCase {
     private var viewModel: TextFieldAddonsViewModel!
 
     private let intent = TextInputIntent.success
+    private let borderStyle = TextInputBorderStyle.roundedRect
 
     private var expectedColors: TextFieldColors!
-    private var expectedBorderLayout: TextFieldBorderLayout!
-    private var expectedSpacings: TextFieldSpacings!
+    private var expectedBorderLayout: TextInputBorderLayout!
+    private var expectedSpacings: TextInputSpacings!
 
     // MARK: - Setup
 
@@ -68,7 +69,7 @@ final class TextFieldAddonsViewModelTests: XCTestCase {
         // GIVEN / WHEN - Inits from setUp()
 
         // THEN - Colors
-        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnly should have been called once")
+        XCTAssertEqual(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyCallsCount, 1, "getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsUserInteractionEnabled should have been called once")
         let getColorsReceivedArguments = try XCTUnwrap(self.getColorsUseCase.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReceivedArguments, "Couldn't unwrap getColorsReceivedArguments")
         XCTAssertIdentical(getColorsReceivedArguments.theme as? ThemeGeneratedMock, self.theme, "Wrong getColorsReceivedArguments.theme")
         XCTAssertEqual(getColorsReceivedArguments.intent, self.intent, "Wrong getColorsReceivedArguments.intent")
@@ -78,16 +79,19 @@ final class TextFieldAddonsViewModelTests: XCTestCase {
         XCTAssertTrue(self.viewModel.backgroundColor.equals(self.expectedColors.background), "Wrong backgroundColor")
 
         // THEN - Border Layout
-        XCTAssertEqual(self.getBorderLayoutUseCase.executeWithThemeAndIsFocusedCallsCount, 2, "getBorderLayoutUseCase.executeWithThemeAndIsFocused should have been called twice (one for textfield, one for addons)")
-        let getBorderLayoutReceivedArguments = try XCTUnwrap(self.getBorderLayoutUseCase.executeWithThemeAndIsFocusedReceivedArguments, "Couldn't unwrap getBorderLayoutReceivedArguments")
+        XCTAssertEqual(self.getBorderLayoutUseCase.executeWithThemeAndBorderStyleAndIsFocusedCallsCount, 2, "getBorderLayoutUseCase.executeWithThemeAndBorderStyleAndIsFocused should have been called twice (one for textfield, one for addons)")
+        let getBorderLayoutReceivedArguments = try XCTUnwrap(self.getBorderLayoutUseCase.executeWithThemeAndBorderStyleAndIsFocusedReceivedArguments, "Couldn't unwrap getBorderLayoutReceivedArguments")
         XCTAssertIdentical(getBorderLayoutReceivedArguments.theme as? ThemeGeneratedMock, self.theme, "Wrong getBorderLayoutReceivedArguments.theme")
+        XCTAssertEqual(getBorderLayoutReceivedArguments.borderStyle, .roundedRect, "Wrong getBorderLayoutReceivedArguments.borderStyle")
         XCTAssertFalse(getBorderLayoutReceivedArguments.isFocused, "Wrong getBorderLayoutReceivedArguments.isFocused")
         XCTAssertEqual(self.viewModel.borderWidth, self.expectedBorderLayout.width, "Wrong borderWidth")
         XCTAssertEqual(self.viewModel.borderRadius, self.expectedBorderLayout.radius, "Wrong borderRadius")
 
         // THEN - Spacings
-        XCTAssertEqual(self.getSpacingsUseCase.executeWithThemeCallsCount, 2, "getSpacingsUseCase.executeWithTheme should have been called twice (one for textfield, one for addons)")
-        XCTAssertIdentical(self.getSpacingsUseCase.executeWithThemeReceivedTheme as? ThemeGeneratedMock, self.theme, "Wrong getSpacingsUseCase theme")
+        XCTAssertEqual(self.getSpacingsUseCase.executeWithThemeAndBorderStyleCallsCount, 2, "getSpacingsUseCase.executeWithThemeAndBorderStyle should have been called twice (one for textfield, one for addons)")
+        let getSpacingsUseCaseReceivedArguments = try XCTUnwrap(self.getSpacingsUseCase.executeWithThemeAndBorderStyleReceivedArguments, "Couldn't unwrap getSpacingsUseCaseReceivedArguments")
+        XCTAssertIdentical(getSpacingsUseCaseReceivedArguments.theme as? ThemeGeneratedMock, self.theme, "Wrong getSpacingsUseCaseReceivedArguments.theme")
+        XCTAssertEqual(getSpacingsUseCaseReceivedArguments.borderStyle, .roundedRect, "Wrong getSpacingsUseCaseReceivedArguments.borderStyle")
         XCTAssertEqual(self.viewModel.leftSpacing, self.expectedSpacings.left, "Wrong leftSpacing")
         XCTAssertEqual(self.viewModel.contentSpacing, self.expectedSpacings.content, "Wrong contentSpacing")
         XCTAssertEqual(self.viewModel.rightSpacing, self.expectedSpacings.right, "Wrong rightSpacing")
@@ -127,8 +131,8 @@ final class TextFieldAddonsViewModelTests: XCTestCase {
         self.publishers.reset() // Removes publishes from init
 
         // GIVEN
-        let newValue = TextFieldBorderLayout(radius: -1, width: -2)
-        self.getBorderLayoutUseCase.executeWithThemeAndIsFocusedReturnValue = newValue
+        let newValue = TextInputBorderLayout(radius: -1, width: -2)
+        self.getBorderLayoutUseCase.executeWithThemeAndBorderStyleAndIsFocusedReturnValue = newValue
 
         // WHEN
         self.viewModel.textFieldViewModel.setBorderLayout()
@@ -145,8 +149,8 @@ final class TextFieldAddonsViewModelTests: XCTestCase {
         self.publishers.reset() // Removes publishes from init
 
         // GIVEN
-        let newValue = TextFieldSpacings(left: -1, content: -2, right: -3)
-        self.getSpacingsUseCase.executeWithThemeReturnValue = newValue
+        let newValue = TextInputSpacings(left: -1, content: -2, right: -3)
+        self.getSpacingsUseCase.executeWithThemeAndBorderStyleReturnValue = newValue
 
         // WHEN
         self.viewModel.textFieldViewModel.setSpacings()

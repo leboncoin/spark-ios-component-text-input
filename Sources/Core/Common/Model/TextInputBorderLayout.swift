@@ -1,5 +1,5 @@
 //
-//  TextFieldBorderLayout.swift
+//  TextInputBorderLayout.swift
 //  SparkTextField
 //
 //  Created by louis.borlee on 25/09/2023.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TextFieldBorderLayout: Equatable {
+struct TextInputBorderLayout: Equatable {
 
     // MARK: - Properties
 

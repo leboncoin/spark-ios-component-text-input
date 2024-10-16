@@ -1,5 +1,5 @@
 //
-//  TextInputViewModelForAddons.swift
+//  TextFieldViewModelForAddons.swift
 //  SparkTextField
 //
 //  Created by louis.borlee on 14/02/2024.
@@ -10,7 +10,7 @@ import UIKit
 import Combine
 import SparkTheming
 
-final class TextInputViewModelForAddons: TextInputViewModel {
+final class TextFieldViewModelForAddons: TextInputViewModel {
 
     override var backgroundColor: any ColorToken {
         get {
@@ -38,9 +38,9 @@ final class TextInputViewModelForAddons: TextInputViewModel {
     @Published private(set) var addonsRightSpacing: CGFloat = .zero
     @Published private(set) var addonsDim: CGFloat = 1.0
 
-    override init(
+    init(
         theme: Theme,
-        intent: TextInputIntent,
+        intent: TextFieldIntent,
         getColorsUseCase: TextInputGetColorsUseCasable = TextInputGetColorsUseCase(),
         getBorderLayoutUseCase: TextInputGetBorderLayoutUseCasable = TextInputGetBorderLayoutUseCase(),
         getSpacingsUseCase: TextInputGetSpacingsUseCasable = TextInputGetSpacingsUseCase()
@@ -48,10 +48,10 @@ final class TextInputViewModelForAddons: TextInputViewModel {
         super.init(
             theme: theme,
             intent: intent,
+            borderStyle: .none,
             getColorsUseCase: getColorsUseCase,
             getBorderLayoutUseCase: getBorderLayoutUseCase,
-            getSpacingsUseCase: getSpacingsUseCase
-        )
+            getSpacingsUseCase: getSpacingsUseCase)
 
         self.addonsBackgroundColor = super.backgroundColor
         self.setBorderLayout()
@@ -62,8 +62,8 @@ final class TextInputViewModelForAddons: TextInputViewModel {
     override func setBorderLayout() {
         let borderLayout = self.getBorderLayoutUseCase.execute(
             theme: self.theme,
-            isFocused: self.isFocused
-        )
+            borderStyle: .roundedRect,
+            isFocused: self.isFocused)
 
         self.addonsBorderWidth = borderLayout.width
         self.addonsBorderRadius = borderLayout.radius
@@ -71,8 +71,8 @@ final class TextInputViewModelForAddons: TextInputViewModel {
 
     override func setSpacings() {
         let spacings = self.getSpacingsUseCase.execute(
-            theme: self.theme
-        )
+            theme: self.theme,
+            borderStyle: .roundedRect)
         self.addonsLeftSpacing = spacings.left
         self.addonsContentSpacing = spacings.content
         self.addonsRightSpacing = spacings.right

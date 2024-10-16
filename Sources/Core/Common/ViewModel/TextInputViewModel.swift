@@ -50,10 +50,19 @@ class TextInputViewModel: ObservableObject {
             self.setFont()
         }
     }
+
     var intent: TextInputIntent {
         didSet {
             guard oldValue != self.intent else { return }
             self.setColors()
+        }
+    }
+
+    var borderStyle: TextInputBorderStyle {
+        didSet {
+            guard oldValue != self.borderStyle else { return }
+            self.setBorderLayout()
+            self.setSpacings()
         }
     }
 
@@ -85,12 +94,14 @@ class TextInputViewModel: ObservableObject {
     init(
         theme: Theme,
         intent: TextInputIntent,
+        borderStyle: TextInputBorderStyle,
         getColorsUseCase: any TextInputGetColorsUseCasable = TextInputGetColorsUseCase(),
         getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCasable = TextInputGetBorderLayoutUseCase(),
         getSpacingsUseCase: any TextInputGetSpacingsUseCasable = TextInputGetSpacingsUseCase()
     ) {
         self.theme = theme
         self.intent = intent
+        self.borderStyle = borderStyle
 
         self.getColorsUseCase = getColorsUseCase
         self.getBorderLayoutUseCase = getBorderLayoutUseCase
@@ -112,12 +123,13 @@ class TextInputViewModel: ObservableObject {
         // BorderLayout
         let borderLayout = getBorderLayoutUseCase.execute(
             theme: theme,
+            borderStyle: borderStyle,
             isFocused: self.isFocused)
         self.borderWidth = borderLayout.width
         self.borderRadius = borderLayout.radius
 
         // Spacings
-        let spacings = getSpacingsUseCase.execute(theme: theme)
+        let spacings = getSpacingsUseCase.execute(theme: theme, borderStyle: borderStyle)
         self.leftSpacing = spacings.left
         self.contentSpacing = spacings.content
         self.rightSpacing = spacings.right
@@ -147,6 +159,7 @@ class TextInputViewModel: ObservableObject {
     func setBorderLayout() {
         let borderLayout = self.getBorderLayoutUseCase.execute(
             theme: self.theme,
+            borderStyle: self.borderStyle, // .none
             isFocused: self.isFocused
         )
         self.borderWidth = borderLayout.width
@@ -154,7 +167,7 @@ class TextInputViewModel: ObservableObject {
     }
 
     func setSpacings() {
-        let spacings = self.getSpacingsUseCase.execute(theme: self.theme)
+        let spacings = self.getSpacingsUseCase.execute(theme: self.theme, borderStyle: self.borderStyle)
         self.leftSpacing = spacings.left
         self.contentSpacing = spacings.content
         self.rightSpacing = spacings.right

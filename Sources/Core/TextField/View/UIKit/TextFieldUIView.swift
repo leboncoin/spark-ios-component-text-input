@@ -47,7 +47,7 @@ public final class TextFieldUIView: UITextField {
     public override var borderStyle: UITextField.BorderStyle {
         @available(*, unavailable)
         set {}
-        get { return .roundedRect }
+        get { return .init(self.viewModel.borderStyle) }
     }
 
     /// The textfield's current theme.
@@ -79,6 +79,20 @@ public final class TextFieldUIView: UITextField {
         self.setupView()
     }
 
+    internal convenience init(
+        theme: Theme,
+        intent: TextFieldIntent,
+        borderStyle: TextInputBorderStyle
+    ) {
+        self.init(
+            viewModel: .init(
+                theme: theme,
+                intent: intent,
+                borderStyle: borderStyle
+            )
+        )
+    }
+
     /// TextFieldUIView initializer
     /// - Parameters:
     ///   - theme: The textfield's current theme
@@ -90,7 +104,8 @@ public final class TextFieldUIView: UITextField {
         self.init(
             viewModel: .init(
                 theme: theme,
-                intent: intent
+                intent: intent,
+                borderStyle: .roundedRect
             )
         )
     }

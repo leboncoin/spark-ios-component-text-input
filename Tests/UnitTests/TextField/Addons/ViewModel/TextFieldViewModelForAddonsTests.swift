@@ -17,12 +17,12 @@ import SwiftUI
 import SparkTheming
 @_spi(SI_SPI) import SparkThemingTesting
 
-final class TextInputViewModelForAddonsTests: XCTestCase {
+final class TextFieldViewModelForAddonsTests: XCTestCase {
 
     // MARK: - Properties
 
     private let superTests: TextInputViewModelTests = .init()
-    private var viewModel: TextInputViewModelForAddons!
+    private var viewModel: TextFieldViewModelForAddons!
 
     // MARK: - Setup
 
@@ -40,6 +40,12 @@ final class TextInputViewModelForAddonsTests: XCTestCase {
     }
 
     // MARK: - Tests
+
+    func test_init_borderStyle() {
+        XCTAssertEqual(self.viewModel.borderStyle, .none, "Wrong borderStyle")
+        XCTAssertTrue(self.viewModel.backgroundColor.equals(ColorTokenDefault.clear), "Wrong backgroundColor")
+        XCTAssertEqual(self.viewModel.dim, 1, "Wrong dim")
+    }
 
     func test_backgroundColor() {
         self.superTests.publishers.reset()
@@ -75,8 +81,8 @@ final class TextInputViewModelForAddonsTests: XCTestCase {
         self.superTests.publishers.reset()
         self.superTests.resetUseCases()
 
-        let newExpectedBorderLayout: TextFieldBorderLayout = .mocked(radius: 40, width: 40)
-        self.superTests.getBorderLayoutUseCase.executeWithThemeAndIsFocusedReturnValue = newExpectedBorderLayout
+        let newExpectedBorderLayout: TextInputBorderLayout = .mocked(radius: 40, width: 40)
+        self.superTests.getBorderLayoutUseCase.executeWithThemeAndBorderStyleAndIsFocusedReturnValue = newExpectedBorderLayout
 
         // WHEN
         self.viewModel.setBorderLayout()
@@ -88,9 +94,10 @@ final class TextInputViewModelForAddonsTests: XCTestCase {
         XCTAssertEqual(self.viewModel.borderWidth, self.superTests.expectedBorderLayout.width, "Wrong viewModel.borderRadius")
         XCTAssertEqual(self.viewModel.borderRadius, self.superTests.expectedBorderLayout.radius, "Wrong viewModel.borderWidth")
 
-        XCTAssertEqual(self.superTests.getBorderLayoutUseCase.executeWithThemeAndIsFocusedCallsCount, 1, "getBorderLayoutUseCase.executeWithThemeAndIsFocused should have been called once")
-        let getBorderLayoutReceivedArguments = try XCTUnwrap(self.superTests.getBorderLayoutUseCase.executeWithThemeAndIsFocusedReceivedArguments, "Couldn't unwrap getBorderLayoutReceivedArguments")
+        XCTAssertEqual(self.superTests.getBorderLayoutUseCase.executeWithThemeAndBorderStyleAndIsFocusedCallsCount, 1, "getBorderLayoutUseCase.executeWithThemeAndBorderStyleAndIsFocused should have been called once")
+        let getBorderLayoutReceivedArguments = try XCTUnwrap(self.superTests.getBorderLayoutUseCase.executeWithThemeAndBorderStyleAndIsFocusedReceivedArguments, "Couldn't unwrap getBorderLayoutReceivedArguments")
         XCTAssertIdentical(getBorderLayoutReceivedArguments.theme as? ThemeGeneratedMock, self.superTests.theme, "Wrong getBorderLayoutReceivedArguments.theme")
+        XCTAssertEqual(getBorderLayoutReceivedArguments.borderStyle, .roundedRect, "Wrong getBorderLayoutReceivedArguments.borderStyle")
         XCTAssertFalse(getBorderLayoutReceivedArguments.isFocused, "Wrong getBorderLayoutReceivedArguments.isFocused")
 
         XCTAssertFalse(self.superTests.publishers.borderWidth.sinkCalled, "$borderWidth should not have been called")
@@ -101,8 +108,8 @@ final class TextInputViewModelForAddonsTests: XCTestCase {
         self.superTests.publishers.reset()
         self.superTests.resetUseCases()
 
-        let newExpectedSpacings = TextFieldSpacings.mocked(left: 2, content: 4, right: 3)
-        self.superTests.getSpacingsUseCase.executeWithThemeReturnValue = newExpectedSpacings
+        let newExpectedSpacings = TextInputSpacings.mocked(left: 2, content: 4, right: 3)
+        self.superTests.getSpacingsUseCase.executeWithThemeAndBorderStyleReturnValue = newExpectedSpacings
 
         // WHEN
         self.viewModel.setSpacings()
@@ -117,8 +124,10 @@ final class TextInputViewModelForAddonsTests: XCTestCase {
         XCTAssertEqual(self.viewModel.contentSpacing, self.superTests.expectedSpacings.content)
         XCTAssertEqual(self.viewModel.rightSpacing, self.superTests.expectedSpacings.right)
 
-        XCTAssertEqual(self.superTests.getSpacingsUseCase.executeWithThemeCallsCount, 1, "getSpacingsUseCase.executeWithTheme should have been called once")
-        XCTAssertIdentical(self.superTests.getSpacingsUseCase.executeWithThemeReceivedTheme as? ThemeGeneratedMock, self.superTests.theme, "Wrong getSpacingsUseCase theme")
+        XCTAssertEqual(self.superTests.getSpacingsUseCase.executeWithThemeAndBorderStyleCallsCount, 1, "getSpacingsUseCase.executeWithThemeAndBorderStyle should have been called once")
+        let getSpacingsUseCaseReceivedArguments = try XCTUnwrap(self.superTests.getSpacingsUseCase.executeWithThemeAndBorderStyleReceivedArguments, "Couldn't unwrap getSpacingsUseCaseReceivedArguments")
+        XCTAssertIdentical(getSpacingsUseCaseReceivedArguments.theme as? ThemeGeneratedMock, self.superTests.theme, "Wrong getSpacingsUseCaseReceivedArguments.theme")
+        XCTAssertEqual(getSpacingsUseCaseReceivedArguments.borderStyle, .roundedRect, "Wrong getSpacingsUseCaseReceivedArguments.borderStyle")
 
         XCTAssertFalse(self.superTests.publishers.leftSpacing.sinkCalled, "$leftSpacing should not have been called")
         XCTAssertFalse(self.superTests.publishers.contentSpacing.sinkCalled, "$contentSpacing should not have been called")
