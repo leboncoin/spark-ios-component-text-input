@@ -68,7 +68,7 @@ public final class TextEditorUIView: UITextView {
             if !newValue {
                 self.accessibilityTraits.insert(.notEnabled)
                 if self.isFirstResponder {
-                    self.resignFirstResponder()
+                    _ = self.resignFirstResponder()
                 }
             } else {
                 self.accessibilityTraits.remove(.notEnabled)
