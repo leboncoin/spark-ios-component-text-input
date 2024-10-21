@@ -58,6 +58,22 @@ public final class TextEditorUIView: UITextView {
         }
     }
 
+    /// The textview's isEnabled.
+    public var isEnabled: Bool {
+        get {
+            return self.viewModel.isEnabled
+        }
+        set {
+            self.viewModel.isEnabled = newValue
+            if !newValue {
+                self.accessibilityTraits.insert(.notEnabled)
+                self.resignFirstResponder()
+            } else {
+                self.accessibilityTraits.remove(.notEnabled)
+            }
+        }
+    }
+
     // MARK: - Override Properties
 
     /// The textview's text.
@@ -71,18 +87,6 @@ public final class TextEditorUIView: UITextView {
     public override var attributedText: NSAttributedString! {
         didSet {
             self.viewModel.contentChanged(with: self.text) // The attributedText set the text too.
-        }
-    }
-
-    /// The textview's userInteractionEnabled.
-    public override var isUserInteractionEnabled: Bool {
-        didSet {
-            self.viewModel.isEnabled = self.isUserInteractionEnabled
-            if !self.isUserInteractionEnabled {
-                self.accessibilityTraits.insert(.notEnabled)
-            } else {
-                self.accessibilityTraits.remove(.notEnabled)
-            }
         }
     }
 
@@ -355,6 +359,10 @@ public final class TextEditorUIView: UITextView {
     }
 
     // MARK: - Responder
+
+    public override var canBecomeFirstResponder: Bool {
+        return self.isEnabled ? super.canBecomeFirstResponder : false
+    }
 
     public override func becomeFirstResponder() -> Bool {
         let bool = super.becomeFirstResponder()
