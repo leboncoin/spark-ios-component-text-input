@@ -10,9 +10,9 @@ import Foundation
 @testable import SparkTextInput
 
 extension TextInputGetSpacingsUseCasableGeneratedMock {
-    static func mocked(returnedSpacings: TextFieldSpacings) -> TextInputGetSpacingsUseCasableGeneratedMock {
+    static func mocked(returnedSpacings: TextInputSpacings) -> TextInputGetSpacingsUseCasableGeneratedMock {
         let mock = TextInputGetSpacingsUseCasableGeneratedMock()
-        mock.executeWithThemeReturnValue = returnedSpacings
+        mock.executeWithThemeAndBorderStyleReturnValue = returnedSpacings
         return mock
     }
 }

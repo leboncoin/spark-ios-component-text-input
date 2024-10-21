@@ -77,9 +77,11 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
         Group {
             switch type {
             case .secure(let onCommit):
+                // TODO: add prompt for the placeholder like the TextEditor
                 SecureField(titleKey, text: $text, onCommit: onCommit)
                     .font(self.viewModel.font.font)
             case .standard(let onEditingChanged, let onCommit):
+                // TODO: add prompt for the placeholder like the TextEditor
                 TextField(titleKey, text: $text, onEditingChanged: onEditingChanged, onCommit: onCommit)
                     .font(self.viewModel.font.font)
             }

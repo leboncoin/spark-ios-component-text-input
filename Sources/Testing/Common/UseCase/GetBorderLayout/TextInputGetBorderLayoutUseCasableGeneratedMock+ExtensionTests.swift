@@ -11,9 +11,9 @@ import Foundation
 
 extension TextInputGetBorderLayoutUseCasableGeneratedMock {
 
-    static func mocked(returnedBorderLayout: TextFieldBorderLayout) -> TextInputGetBorderLayoutUseCasableGeneratedMock {
+    static func mocked(returnedBorderLayout: TextInputBorderLayout) -> TextInputGetBorderLayoutUseCasableGeneratedMock {
         let mock = TextInputGetBorderLayoutUseCasableGeneratedMock()
-        mock.executeWithThemeAndIsFocusedReturnValue = returnedBorderLayout
+        mock.executeWithThemeAndBorderStyleAndIsFocusedReturnValue = returnedBorderLayout
         return mock
     }
 }

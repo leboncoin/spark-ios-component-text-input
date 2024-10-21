@@ -53,7 +53,8 @@ final class TextFieldUIViewSnapshotTests: UIKitComponentSnapshotTestCase {
                         for rightContent in scenario.rightContents {
                             let viewModel = TextInputViewModel(
                                 theme: self.theme,
-                                intent: intent
+                                intent: intent,
+                                borderStyle: .roundedRect
                             )
                             viewModel.isEnabled = states.isEnabled
                             viewModel.isReadOnly = states.isReadOnly

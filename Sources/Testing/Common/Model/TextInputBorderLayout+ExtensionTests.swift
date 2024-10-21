@@ -1,5 +1,5 @@
 //
-//  TextFieldBorderLayout+ExtensionTests.swift
+//  TextInputBorderLayout+ExtensionTests.swift
 //  SparkTextFieldUnitTests
 //
 //  Created by louis.borlee on 01/02/2024.
@@ -9,8 +9,8 @@
 import Foundation
 @testable import SparkTextInput
 
-extension TextFieldBorderLayout {
-    static func mocked(radius: CGFloat, width: CGFloat) -> TextFieldBorderLayout {
+extension TextInputBorderLayout {
+    static func mocked(radius: CGFloat, width: CGFloat) -> TextInputBorderLayout {
         return .init(radius: radius, width: width)
     }
 }

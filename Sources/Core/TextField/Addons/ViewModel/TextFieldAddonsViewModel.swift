@@ -28,14 +28,14 @@ final class TextFieldAddonsViewModel: ObservableObject, Updateable {
 
     @Published private(set) var dim: CGFloat
 
-    var textFieldViewModel: TextInputViewModelForAddons
+    var textFieldViewModel: TextFieldViewModelForAddons
 
     init(theme: Theme,
          intent: TextInputIntent,
          getColorsUseCase: TextInputGetColorsUseCasable = TextInputGetColorsUseCase(),
          getBorderLayoutUseCase: TextInputGetBorderLayoutUseCasable = TextInputGetBorderLayoutUseCase(),
          getSpacingsUseCase: TextInputGetSpacingsUseCasable = TextInputGetSpacingsUseCase()) {
-        let viewModel = TextInputViewModelForAddons(
+        let viewModel = TextFieldViewModelForAddons(
             theme: theme,
             intent: intent,
             getColorsUseCase: getColorsUseCase,

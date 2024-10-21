@@ -1,5 +1,5 @@
 //
-//  TextFieldSpacings.swift
+//  TextInputSpacings.swift
 //  SparkTextField
 //
 //  Created by louis.borlee on 25/09/2023.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TextFieldSpacings: Equatable {
+struct TextInputSpacings: Equatable {
 
     // MARK: - Properties
 
