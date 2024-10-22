@@ -67,7 +67,9 @@ public final class TextEditorUIView: UITextView {
             self.viewModel.isEnabled = newValue
             if !newValue {
                 self.accessibilityTraits.insert(.notEnabled)
-                self.resignFirstResponder()
+                if self.isFirstResponder {
+                    self.resignFirstResponder()
+                }
             } else {
                 self.accessibilityTraits.remove(.notEnabled)
             }
@@ -371,9 +373,8 @@ public final class TextEditorUIView: UITextView {
     }
 
     public override func resignFirstResponder() -> Bool {
-        super.resignFirstResponder()
         self.viewModel.isFocused = false
-        return true
+        return super.resignFirstResponder()
     }
 
     // MARK: - Layout Subview
