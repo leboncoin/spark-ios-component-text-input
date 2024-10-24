@@ -41,7 +41,7 @@ final class TextEditorUIViewSnapshotTests: UIKitComponentSnapshotTestCase {
                 )
                 textEditor.placeholder = configuration.placeholder.text ?? configuration.content.text
                 textEditor.text = configuration.content.text
-                textEditor.isUserInteractionEnabled = configuration.state.isEnabled
+                textEditor.isEnabled = configuration.state.isEnabled
                 textEditor.isEditable = configuration.state.isEditable
                 textEditor.isScrollEnabled = configuration.height.isScrollEnabled
                 if let height = configuration.height.value {
