@@ -20,11 +20,15 @@ let package = Package(
         )
     ],
     dependencies: [
-       .package(
-           url: "https://github.com/adevinta/spark-ios-common.git",
-           // path: "../spark-ios-common"
-           /*version*/ "0.0.1"..."999.999.999"
-       ),
+        .package(
+            url: "https://github.com/adevinta/spark-ios-common.git",
+            branch: "snapshots"
+        ),
+//       .package(
+//           url: "https://github.com/adevinta/spark-ios-common.git",
+//           // path: "../spark-ios-common"
+//           /*version*/ "0.0.1"..."999.999.999"
+//       ),
        .package(
            url: "https://github.com/adevinta/spark-ios-theming.git",
            // path: "../spark-ios-theming"
