@@ -10,6 +10,6 @@ import Foundation
 
 enum TextEditorSnapshotConstants {
     static let width: CGFloat = 240
-    static let fixedHeight: CGFloat = 160
+    static let fixedHeight: CGFloat = 260
     static let padding: CGFloat = 12
 }

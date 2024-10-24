@@ -63,6 +63,10 @@ final class TextEditorUIViewSnapshotTests: UIKitComponentSnapshotTestCase {
                     insets: .init(all: Constants.padding)
                 )
 
+                if configuration.isFocused {
+                    _ = textEditor.becomeFirstResponder()
+                }
+
                 self.assertSnapshot(
                     matching: backgroundView,
                     modes: configuration.modes,
