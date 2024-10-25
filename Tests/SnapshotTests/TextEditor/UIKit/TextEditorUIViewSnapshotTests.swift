@@ -50,27 +50,29 @@ final class TextEditorUIViewSnapshotTests: UIKitComponentSnapshotTestCase {
                     ])
                 }
 
-                let backgroundView = UIView()
-                backgroundView.backgroundColor = .systemBackground
-                backgroundView.translatesAutoresizingMaskIntoConstraints = false
                 NSLayoutConstraint.activate([
-                    backgroundView.widthAnchor.constraint(equalToConstant: Constants.width)
+                    textEditor.widthAnchor.constraint(equalToConstant: Constants.width)
                 ])
-                backgroundView.addSubview(textEditor)
-                NSLayoutConstraint.stickEdges(
-                    from: textEditor,
-                    to: backgroundView,
-                    insets: .init(all: Constants.padding)
-                )
+
+//                let backgroundView = UIView()
+//                backgroundView.backgroundColor = .systemBackground
+//                backgroundView.translatesAutoresizingMaskIntoConstraints = false
+//                NSLayoutConstraint.activate([
+//                    backgroundView.widthAnchor.constraint(equalToConstant: Constants.width)
+//                ])          
+//                backgroundView.addSubview(textEditor)
+//                NSLayoutConstraint.stickEdges(
+//                    from: textEditor,
+//                    to: backgroundView,
+//                    insets: .init(all: Constants.padding)
+//                )
 
                 if configuration.isFocused {
                     _ = textEditor.becomeFirstResponder()
                 }
 
-                textEditor.sizeToFit()
-
                 self.assertSnapshot(
-                    matching: backgroundView,
+                    matching: textEditor,
                     modes: configuration.modes,
                     sizes: configuration.sizes,
                     testName: configuration.testName()

@@ -4,7 +4,5 @@ on:
     types: [ opened, edited, synchronize ]
 
 jobs:
-  linter:
-    uses: adevinta/spark-ios-common/.github/workflows/linter.yml@main
   buildAndTest:
     uses: adevinta/spark-ios-common/.github/workflows/buildAndTest.yml@main
