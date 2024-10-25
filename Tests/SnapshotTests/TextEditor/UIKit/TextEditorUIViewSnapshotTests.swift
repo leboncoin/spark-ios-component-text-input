@@ -67,6 +67,8 @@ final class TextEditorUIViewSnapshotTests: UIKitComponentSnapshotTestCase {
                     _ = textEditor.becomeFirstResponder()
                 }
 
+                textEditor.sizeToFit()
+
                 self.assertSnapshot(
                     matching: backgroundView,
                     modes: configuration.modes,

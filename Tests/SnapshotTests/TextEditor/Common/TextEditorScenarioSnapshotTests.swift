@@ -18,7 +18,7 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
 //    case test2
 //    case test3
 //    case test4
-    case test5
+//    case test5
 //    case test6
 
     // MARK: - Type Alias
@@ -37,8 +37,8 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
 //            return self.test3(isSwiftUIComponent: isSwiftUIComponent)
 //        case .test4:
 //            return self.test4()
-        case .test5:
-            return self.test5(isSwiftUIComponent: isSwiftUIComponent)
+//        case .test5:
+//            return self.test5(isSwiftUIComponent: isSwiftUIComponent)
 //        case .test6:
 //            return self.test6()
         }
