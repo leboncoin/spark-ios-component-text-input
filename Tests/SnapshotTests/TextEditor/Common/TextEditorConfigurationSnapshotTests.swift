@@ -21,12 +21,13 @@ struct TextEditorConfigurationSnapshotTests {
 
     let scenario: TextEditorScenarioSnapshotTests
 
-    let intent: TextEditorIntent = .neutral
+    let intent: TextEditorIntent
 
     let state: TextEditorState
     let content: TextEditorContentResilience
     let placeholder: TextEditorPlaceholder
     let height: TextEditorHeight
+    let isFocused: Bool
 
     let modes: [ComponentSnapshotTestMode]
     let sizes: [UIContentSizeCategory]
@@ -35,18 +36,22 @@ struct TextEditorConfigurationSnapshotTests {
 
     init(
         scenario: TextEditorScenarioSnapshotTests,
+        intent: TextEditorIntent,
         state: TextEditorState,
         content: TextEditorContentResilience,
         placeholder: TextEditorPlaceholder,
         height: TextEditorHeight,
+        isFocused: Bool,
         modes: [ComponentSnapshotTestMode] = Constants.Modes.default,
         sizes: [UIContentSizeCategory] = Constants.Sizes.default
     ) {
         self.scenario = scenario
+        self.intent = intent
         self.state = state
         self.content = content
         self.placeholder = placeholder
         self.height = height
+        self.isFocused = isFocused
         self.modes = modes
         self.sizes = sizes
     }
@@ -61,7 +66,10 @@ struct TextEditorConfigurationSnapshotTests {
             "\(self.content)" + "Content",
             "\(self.placeholder)" + "Placeholder",
             "\(self.height)" + "Height",
-        ].joined(separator: "-")
+            self.isFocused ? "isFocused" : nil,
+        ]
+            .compactMap { $0 }
+            .joined(separator: "-")
     }
 }
 

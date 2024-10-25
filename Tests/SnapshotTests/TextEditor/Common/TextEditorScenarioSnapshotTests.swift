@@ -19,6 +19,7 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     case test3
     case test4
     case test5
+    case test6
 
     // MARK: - Type Alias
 
@@ -38,6 +39,8 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
             return self.test4()
         case .test5:
             return self.test5(isSwiftUIComponent: isSwiftUIComponent)
+        case .test6:
+            return self.test6()
         }
     }
 
@@ -54,6 +57,8 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     /// - mode : default
     /// - height : flexible
     /// - placeholder: none
+    /// - intent: neutral
+    /// - focus: none
     private func test1(isSwiftUIComponent: Bool) -> [TextEditorConfigurationSnapshotTests] {
         let states = TextEditorState.allCases(isSwiftUIComponent: isSwiftUIComponent)
         let contentResiliences = TextEditorContentResilience.allCases
@@ -62,10 +67,12 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
             contentResiliences.map { contentResilience in
                 return .init(
                     scenario: self,
+                    intent: .neutral,
                     state: state,
                     content: contentResilience,
                     placeholder: .empty,
-                    height: .flexible
+                    height: .flexible,
+                    isFocused: false
                 )
             }
         }
@@ -82,16 +89,20 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     /// - mode : default
     /// - **height : all**
     /// - placeholder: none
+    /// - intent: neutral
+    /// - focus: none
     private func test2(isSwiftUIComponent: Bool) -> [TextEditorConfigurationSnapshotTests] {
         let heights = TextEditorHeight.allCases
 
         return heights.map { height -> TextEditorConfigurationSnapshotTests in
                 .init(
                     scenario: self,
+                    intent: .neutral,
                     state: .enabled,
                     content: isSwiftUIComponent ? .multilineText : .smallText,
                     placeholder: .empty,
                     height: height,
+                    isFocused: false,
                     sizes: Constants.Sizes.all
                 )
         }
@@ -108,16 +119,20 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     /// - mode : dark
     /// - height : flexible
     /// - placeholder: none
+    /// - intent: neutral
+    /// - focus: none
     private func test3(isSwiftUIComponent: Bool) -> [TextEditorConfigurationSnapshotTests] {
         let states = TextEditorState.allCases(isSwiftUIComponent: isSwiftUIComponent)
 
         return states.map { state -> TextEditorConfigurationSnapshotTests in
                 .init(
                     scenario: self,
+                    intent: .neutral,
                     state: state,
                     content: .smallText,
                     placeholder: .empty,
                     height: .flexible,
+                    isFocused: false,
                     modes: [.dark]
                 )
         }
@@ -134,6 +149,8 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     /// - mode : default
     /// - **height : all**
     /// - placeholder: none
+    /// - intent: neutral
+    /// - focus: none
     private func test4() -> [TextEditorConfigurationSnapshotTests] {
         let contentResiliences = TextEditorContentResilience.allCases
         let heights = TextEditorHeight.allCases
@@ -142,10 +159,12 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
             heights.map { height in
                 return .init(
                     scenario: self,
+                    intent: .neutral,
                     state: .enabled,
                     content: contentResilience,
                     placeholder: .empty,
-                    height: height
+                    height: height,
+                    isFocused: false
                 )
             }
         }
@@ -162,6 +181,8 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     /// - mode : default
     /// - height : flexible
     /// - **placeholder: all**
+    /// - intent: neutral
+    /// - focus: none
     private func test5(isSwiftUIComponent: Bool) -> [TextEditorConfigurationSnapshotTests] {
         let states = TextEditorState.allCases(isSwiftUIComponent: isSwiftUIComponent)
         let placeholders = TextEditorPlaceholder.allCases
@@ -170,12 +191,43 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
             placeholders.map { placeholder in
                 return .init(
                     scenario: self,
+                    intent: .neutral,
                     state: state,
                     content: .empty,
                     placeholder: placeholder,
-                    height: .flexible
+                    height: .flexible,
+                    isFocused: false
                 )
             }
+        }
+    }
+
+    /// Test 6
+    ///
+    /// Description: To test all intents with focus state
+    ///
+    /// Content:
+    /// - states : enabled
+    /// - content resilience : small
+    /// - a11y sizes : default
+    /// - mode : default
+    /// - height : flexible
+    /// - placeholder: all
+    /// - **intent: all**
+    /// - **focus: enabled**
+    private func test6() -> [TextEditorConfigurationSnapshotTests] {
+        let intents = TextEditorIntent.allCases
+
+        return intents.map { intent in
+            return .init(
+                scenario: self,
+                intent: intent,
+                state: .enabled,
+                content: .smallText,
+                placeholder: .empty,
+                height: .flexible,
+                isFocused: true
+            )
         }
     }
 }
