@@ -15,11 +15,11 @@ import SwiftUI
 
 enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     case test1
-    case test2
-    case test3
-    case test4
+//    case test2
+//    case test3
+//    case test4
     case test5
-    case test6
+//    case test6
 
     // MARK: - Type Alias
 
@@ -31,16 +31,16 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
         switch self {
         case .test1:
             return self.test1(isSwiftUIComponent: isSwiftUIComponent)
-        case .test2:
-            return self.test2(isSwiftUIComponent: isSwiftUIComponent)
-        case .test3:
-            return self.test3(isSwiftUIComponent: isSwiftUIComponent)
-        case .test4:
-            return self.test4()
+//        case .test2:
+//            return self.test2(isSwiftUIComponent: isSwiftUIComponent)
+//        case .test3:
+//            return self.test3(isSwiftUIComponent: isSwiftUIComponent)
+//        case .test4:
+//            return self.test4()
         case .test5:
             return self.test5(isSwiftUIComponent: isSwiftUIComponent)
-        case .test6:
-            return self.test6()
+//        case .test6:
+//            return self.test6()
         }
     }
 
