@@ -1,6 +1,6 @@
 # Introduction
 
-This repository contains two close components: TextField & TextView.
+This repository contains two close components: TextField & TextEditor.
 
 # TextField & TextFieldAddons
 
@@ -147,6 +147,48 @@ public init(
 
 - `theme`: The textfield's current theme
 - `intent`: The textfield's current intent
+
+# TextEditor
+
+A text area lets users enter long form text which spans over multiple lines.
+
+## Specifications
+
+The TextEditor specifications on Zeroheight is [here](https://spark.adevinta.com/1186e1705/p/365c2e-text-area--text-view).
+
+![Figma anatomy](https://github.com/adevinta/spark-ios-component-text-input/blob/main/.github/assets/anatomy-textview.png)
+
+## Usage
+
+TextEditor is available in UIKit.
+
+### TextEditorUIView
+
+### Usage
+
+The TextEditorUIView inherits from **UITextView**.
+
+So all **public variables, functions and delegate** in the UITextView are also available in the TextEditorUIView.
+Read the Apple documentation [here](https://developer.apple.com/documentation/uikit/uitextview) to see more information.
+
+**Note**: You can use TextEditor with Formfield to support title, helper message and the text counter.
+
+#### Properties
+
+- `theme`: The current Spark-Theme. [You can always define your own theme.](https://github.com/adevinta/spark-ios/wiki/Theming#your-own-theming)
+- `intent`: The intent of the TextEditor, e.g. neutral, success
+- `placeholder`: The placeholder of the TextEditor.
+- `isEnabled`: The status of the TextEditor. Default value is 'true'. If the value is `false`, no interaction is available.
+
+#### Init
+
+```swift
+let textEditor = TextEditorUIView(
+    theme: MyTheme(),
+    intent: .neutral
+)
+view.addSubview(textEditor)
+```
 
 ## License
 
