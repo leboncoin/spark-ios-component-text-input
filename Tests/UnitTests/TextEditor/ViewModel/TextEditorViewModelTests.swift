@@ -56,7 +56,7 @@ final class TextEditorViewModelTests: XCTestCase {
         TextEditorViewModelPublisherTest.XCTAssert(
             shouldShowPlaceholder: stub.shouldShowPlaceholderPublisherMock,
             expectedNumberOfSinks: 1,
-            expectedValue: false
+            expectedValue: true
         )
         // **
 
