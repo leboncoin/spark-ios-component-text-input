@@ -14,7 +14,7 @@ final class TextEditorViewModel: TextInputViewModel {
 
     // MARK: - Published Properties
 
-    @Published private(set) var shouldShowPlaceholder: Bool = false
+    @Published private(set) var shouldShowPlaceholder: Bool = true
     @Published private(set) var updateVerticalSpacingCounter: Int = 0
 
     // MARK: - Private Properties
