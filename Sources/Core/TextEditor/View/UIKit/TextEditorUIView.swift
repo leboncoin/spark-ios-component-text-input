@@ -213,7 +213,10 @@ public final class TextEditorUIView: UITextView {
     // MARK: - Subscribe
 
     private func setupSubscriptions() {
-        self.viewModel.$textColor.subscribe(in: &self.cancellables) { [weak self] textColor in
+        self.viewModel.$textColor.removeDuplicates(by: { lhs, rhs in
+            lhs.equals(rhs)
+        })
+        .subscribe(in: &self.cancellables) { [weak self] textColor in
             guard let self else { return }
             self.textColor = textColor.uiColor
             self.tintColor = textColor.uiColor
