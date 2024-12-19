@@ -93,11 +93,13 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
 
     // MARK: - Update
 
-    func update(isEnabled: Bool, isFocused: Bool) -> some View {
-        DispatchQueue.main.async {
-            self.viewModel.isEnabled = isEnabled
-            self.viewModel.isFocused = isFocused
-        }
+    func isEnabled(_ isEnabled: Bool) -> Self {
+        self.viewModel.isEnabled = isEnabled
+        return self
+    }
+
+    func isFocused(_ isFocused: Bool) -> Self {
+        self.viewModel.isFocused = isFocused
         return self
     }
 }

@@ -109,11 +109,8 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
             leftView: self.leftView,
             rightView: self.rightView
         )
-        .update(
-            isEnabled: self.isEnabled,
-            isFocused: self.isFocused
-        )
-        .focused($isFocused)
+        .isEnabled(self.isEnabled)
+        .isFocused(self.isFocused)
+        .focused(self.$isFocused)
     }
-
 }
