@@ -160,34 +160,84 @@ The TextEditor specifications on Zeroheight is [here](https://spark.adevinta.com
 
 ## Usage
 
-TextEditor is available in UIKit.
+TextEditor is available both in UIKit and SwiftUI.
 
 ### TextEditorUIView
 
 ### Usage
 
-The TextEditorUIView inherits from **UITextView**.
-
-So all **public variables, functions and delegate** in the UITextView are also available in the TextEditorUIView.
-Read the Apple documentation [here](https://developer.apple.com/documentation/uikit/uitextview) to see more information.
-
-**Note**: You can use TextEditor with Formfield to support title, helper message and the text counter.
-
 #### Properties
+
+Parameters:
 
 - `theme`: The current Spark-Theme. [You can always define your own theme.](https://github.com/adevinta/spark-ios/wiki/Theming#your-own-theming)
 - `intent`: The intent of the TextEditor, e.g. neutral, success
-- `placeholder`: The placeholder of the TextEditor.
-- `isEnabled`: The status of the TextEditor. Default value is 'true'. If the value is `false`, no interaction is available.
 
-#### Init
+**Note**: You can use TextEditor with Formfield to support title, helper message and counter.
+
+#### Published Properties
+
+- `theme`: The current Spark-Theme. [You can always define your own theme.](https://github.com/adevinta/spark-ios/wiki/Theming#your-own-theming)
+- `intent`: The intent of the TextEditor, e.g. neutral, success
+- `text`: The text of the TextEditor, it is native textview's text property.
+- `attributedText`: The attributedText of the TextEditor, it is native textview's attributedText property.
+- `placeholder`: The placeholder of the TextEditor, it is native textview's placeholder property.
+- `isEnabled`: Default value is 'true', disables user interaction. If It is set with 'isReadOnly' property, priorty will support `isEnabled` property.
+- `isReadOnly`: Default value is 'false', disables edit mode of component. User can scroll and copy text.
+- `isScrollEnabled`: Default value is 'true', disables scrollable feature of component. Set this property as an 'false' to provide dynamic height and don't give static height.
+
+#### Example
 
 ```swift
 let textEditor = TextEditorUIView(
-    theme: MyTheme(),
-    intent: .neutral
+    theme: Theme,
+    intent: TextEditorIntent
 )
 view.addSubview(textEditor)
+
+self.textEditor.widthAnchor.constraint(equalToConstant: 300).isActive = true
+self.textEditor.heightAnchor.constraint(equalToConstant: 100).isActive = true
+
+/// To support dynamic height, minimum height is 40px If it isn't set. You can change minimum height.
+self.textEditor.isScrollEnabled = false
+self.textEditor.widthAnchor.constraint(equalToConstant: 300).isActive = true
+self.textEditor.heightAnchor.constraint(greaterThanOrEqualTo: 70).isActive = true
+```
+
+### TextEditor
+
+### Usage
+
+#### Properties
+
+Parameters:
+
+- `theme`: The current Spark-Theme. [You can always define your own theme.](https://github.com/adevinta/spark-ios/wiki/Theming#your-own-theming)
+- `intent`: The intent of the TextEditor, e.g. neutral, success
+- `text`: The text of the TextEditor.
+- `title`: The placeholder of the TextEditor.
+
+**Note**: You can use TextEditor with Formfield to support title, helper message and counter.
+
+#### Example
+
+```swift
+@State private var theme: Theme = Theme
+@State private var intent: TextEditorIntent = .neutral
+@State private var text: String = ""
+@FocusState private var isFocused: Bool
+
+ var body: some View {
+        TextEditor(
+            "Placeholder",
+            text: self.$text,
+            theme: self.theme,
+            intent: self.intent
+        )
+        .focused(self.$isFocused)
+        .disabled(false)
+        .frame(width: 300, height: 100) /// set this modifier to provide static height. It will be scrollable automaticly.
+}
 ```
 
 ## License
