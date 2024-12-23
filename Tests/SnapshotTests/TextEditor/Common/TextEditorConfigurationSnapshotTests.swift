@@ -112,10 +112,6 @@ enum TextEditorContentResilience: String, CaseIterable {
     case smallText
     case multilineText
 
-    static func allCases(isSwiftUIComponent: Bool) -> [Self] {
-        isSwiftUIComponent ? [.empty, .smallText] : Self.allCases
-    }
-
     var text: String {
         switch self {
         case .empty: ""
@@ -155,10 +151,6 @@ enum TextEditorPlaceholder: String, CaseIterable {
     case empty
     case small
     case multiline
-
-    static func allCases(isSwiftUIComponent: Bool) -> [Self] {
-        isSwiftUIComponent ? [.empty, .small] : Self.allCases
-    }
 
     var text: String? {
         switch self {
