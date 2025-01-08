@@ -57,7 +57,7 @@ internal struct TextEditorInternalView: View {
 
     // MARK: - View
 
-    public var body: some View {
+    var body: some View {
         ZStack {
             TextEditor(text: .constant(self.title))
                 .foregroundStyle(self.viewModel.placeholderColor.color)
