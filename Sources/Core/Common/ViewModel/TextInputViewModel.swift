@@ -19,8 +19,8 @@ class TextInputViewModel: ObservableObject {
     // Colors
     @Published private(set) var textColor: any ColorToken
     @Published private(set) var placeholderColor: any ColorToken
-    @Published var borderColor: any ColorToken
-    @Published var backgroundColor: any ColorToken
+    @Published private(set) var borderColor: any ColorToken
+    @Published private(set) var backgroundColor: any ColorToken
 
     // BorderLayout
     @Published private(set) var borderRadius: CGFloat
@@ -139,9 +139,9 @@ class TextInputViewModel: ObservableObject {
         self.font = theme.typography.body1
     }
 
-    // MARK: - Setter
+    // MARK: - Private & Internal Setter
 
-    func setColors() {
+    private func setColors() {
         // Colors
         let colors = self.getColorsUseCase.execute(
             theme: self.theme,
@@ -156,7 +156,7 @@ class TextInputViewModel: ObservableObject {
         self.backgroundColor = colors.background
     }
 
-    func setBorderLayout() {
+    internal func setBorderLayout() {
         let borderLayout = self.getBorderLayoutUseCase.execute(
             theme: self.theme,
             borderStyle: self.borderStyle, // .none
@@ -166,18 +166,18 @@ class TextInputViewModel: ObservableObject {
         self.borderRadius = borderLayout.radius
     }
 
-    func setSpacings() {
+    internal func setSpacings() {
         let spacings = self.getSpacingsUseCase.execute(theme: self.theme, borderStyle: self.borderStyle)
         self.leftSpacing = spacings.left
         self.contentSpacing = spacings.content
         self.rightSpacing = spacings.right
     }
 
-    func setDim() {
+    private func setDim() {
         self.dim = self.isEnabled ? self.theme.dims.none : self.theme.dims.dim3
     }
 
-    func setFont() {
+    internal func setFont() {
         self.font = self.theme.typography.body1
     }
 }
