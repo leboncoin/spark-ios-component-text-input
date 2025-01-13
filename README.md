@@ -156,7 +156,7 @@ A text area lets users enter long form text which spans over multiple lines.
 
 The TextEditor specifications on Zeroheight is [here](https://spark.adevinta.com/1186e1705/p/365c2e-text-area--text-view).
 
-![Figma anatomy](https://github.com/adevinta/spark-ios-component-text-input/blob/main/.github/assets/anatomy-textview.png)
+![Figma anatomy](https://github.com/adevinta/spark-ios-component-text-input/blob/main/.github/assets/anatomy-texteditor.png)
 
 ## Usage
 
