@@ -19,8 +19,8 @@ class TextInputViewModel: ObservableObject {
     // Colors
     @Published private(set) var textColor: any ColorToken
     @Published private(set) var placeholderColor: any ColorToken
-    @Published private(set) var borderColor: any ColorToken
-    @Published private(set) var backgroundColor: any ColorToken
+    @Published var borderColor: any ColorToken
+    @Published var backgroundColor: any ColorToken
 
     // BorderLayout
     @Published private(set) var borderRadius: CGFloat
