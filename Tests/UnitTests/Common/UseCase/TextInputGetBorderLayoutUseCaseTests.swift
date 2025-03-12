@@ -3,7 +3,7 @@
 //  SparkTextInputUnitTests
 //
 //  Created by louis.borlee on 01/02/2024.
-//  Copyright © 2024 Adevinta. All rights reserved.
+//  Copyright © 2024 Leboncoin. All rights reserved.
 //
 
 import XCTest

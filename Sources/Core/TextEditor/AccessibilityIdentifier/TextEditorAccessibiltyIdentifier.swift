@@ -3,7 +3,7 @@
 //  SparkEditor
 //
 //  Created by alican.aycil on 29.05.24.
-//  Copyright © 2024 Adevinta. All rights reserved.
+//  Copyright © 2024 Leboncoin. All rights reserved.
 //
 
 import Foundation
