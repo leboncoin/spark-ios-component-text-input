@@ -3,7 +3,7 @@
 //  SparkTextField
 //
 //  Created by Quentin.richard on 22/09/2023.
-//  Copyright © 2023 Adevinta. All rights reserved.
+//  Copyright © 2023 Leboncoin. All rights reserved.
 //
 
 import Foundation

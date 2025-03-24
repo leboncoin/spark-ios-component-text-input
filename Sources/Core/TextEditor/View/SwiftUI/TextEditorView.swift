@@ -3,7 +3,7 @@
 //  SparkEditor
 //
 //  Created by robin.lemaire on 05/09/2024.
-//  Copyright © 2024 Adevinta. All rights reserved.
+//  Copyright © 2024 Leboncoin. All rights reserved.
 //
 
 import SwiftUI

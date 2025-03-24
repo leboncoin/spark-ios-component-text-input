@@ -3,7 +3,7 @@
 //  SparkTextField
 //
 //  Created by louis.borlee on 02/04/2024.
-//  Copyright © 2024 Adevinta. All rights reserved.
+//  Copyright © 2024 Leboncoin. All rights reserved.
 //
 
 /// A TextField type with its associated callback(s)
