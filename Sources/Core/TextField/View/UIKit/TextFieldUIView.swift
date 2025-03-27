@@ -38,15 +38,9 @@ public final class TextFieldUIView: UITextField {
         }
     }
 
-    /// A boolean value indicating whether the field is in a read-only state. Default value is ``false``.
-    public var isReadOnly: Bool {
-        get { return self.viewModel.isReadOnly }
-        set {
-            if newValue, self.isFirstResponder {
-                self.resignFirstResponder()
-            }
-            self.viewModel.isReadOnly = newValue
-            self.isUserInteractionEnabled = newValue != true
+    public override var isUserInteractionEnabled: Bool {
+        didSet {
+            self.viewModel.isReadOnly = !self.isUserInteractionEnabled
         }
     }
 
