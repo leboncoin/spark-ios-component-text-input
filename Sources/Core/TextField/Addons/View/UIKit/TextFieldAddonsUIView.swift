@@ -53,10 +53,10 @@ public final class TextFieldAddonsUIView: UIControl {
         }
     }
 
-    public override var isUserInteractionEnabled: Bool {
-        didSet {
-            self.textField.isUserInteractionEnabled = self.isUserInteractionEnabled
-        }
+    /// A boolean value indicating whether the field is in a read-only state. Default value is ``false``.
+    public var isReadOnly: Bool {
+        get { return self.textField.isReadOnly }
+        set { self.textField.isReadOnly = newValue }
     }
 
     // MARK: - Initialization
