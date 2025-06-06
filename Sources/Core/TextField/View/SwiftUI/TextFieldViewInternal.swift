@@ -20,6 +20,10 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
     @ObservedObject private var viewModel: TextInputViewModel
     @Binding private var text: String
 
+    @State var textFieldID: String = UUID().uuidString
+    @FocusState private var isFocused: Bool
+    @Environment(\.textFieldClearButtonMode) private var clearButtonMode
+
     private let titleKey: LocalizedStringKey
     private var type: TextFieldViewType
 
@@ -64,12 +68,57 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
 
     @ViewBuilder
     private func contentView() -> some View {
+        let showClearButton = self.clearButtonMode.showClearButton(isFocused: self.isFocused)
+
         HStack(spacing: self.viewModel.contentSpacing) {
-            leftView()
-            textField()
-            rightView()
+            // Left View
+            self.leftView()
+
+            HStack(spacing: showClearButton ? .zero : self.viewModel.contentSpacing) {
+                // TextField
+                self.textField()
+                    .focused(self.$isFocused)
+                    .id(self.textFieldID)
+
+                // Clear Button
+                if showClearButton {
+                    Button {
+                        self.text = ""
+                        self.textFieldID = UUID().uuidString
+                    } label: {
+                        Image(systemName: Constants.clearButtonImageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .scaledFrame(
+                                width: Constants.clearButtonSize,
+                                height: Constants.clearButtonSize,
+                                relativeTo: .body
+                            )
+                            .foregroundColor(Color(uiColor: .tertiaryLabel))
+                            .frame(maxHeight: .infinity)
+                            .scaledFrame(width: TextInputConstants.height)
+                            .aspectRatio(1, contentMode: .fit)
+                    }
+                    .accessibilityLabel(.init(Constants.clearButtonLabelKey, bundle: .current))
+                    .accessibilityIdentifier(TextFieldAccessibilityIdentifier.clearButton)
+                    .accessibilityShowsLargeContentViewer {
+                        Image(systemName: Constants.clearButtonImageName)
+                        Text(Constants.clearButtonLabelKey, bundle: .current)
+                    }
+                    .dynamicTypeSize(...DynamicTypeSize.accessibility3)
+                    .accessibilityAddTraits(.isButton)
+                } else {
+                    // Right View
+                    self.rightView()
+                }
+            }
         }
-        .padding(EdgeInsets(top: .zero, leading: self.viewModel.leftSpacing, bottom: .zero, trailing: self.viewModel.rightSpacing))
+        .padding(.init(
+            top: .zero,
+            leading: self.viewModel.leftSpacing,
+            bottom: .zero,
+            trailing: showClearButton ? .zero : self.viewModel.rightSpacing
+        ))
     }
 
     @ViewBuilder
@@ -78,11 +127,11 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
             switch type {
             case .secure(let onCommit):
                 // TODO: add prompt for the placeholder like the TextEditor
-                SecureField(titleKey, text: $text, onCommit: onCommit)
+                SecureField(titleKey, text: self.$text, onCommit: onCommit)
                     .font(self.viewModel.font.font)
             case .standard(let onEditingChanged, let onCommit):
                 // TODO: add prompt for the placeholder like the TextEditor
-                TextField(titleKey, text: $text, onEditingChanged: onEditingChanged, onCommit: onCommit)
+                TextField(titleKey, text: self.$text, onEditingChanged: onEditingChanged, onCommit: onCommit)
                     .font(self.viewModel.font.font)
             }
         }
@@ -102,4 +151,12 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
         self.viewModel.isFocused = isFocused
         return self
     }
+}
+
+// MARK: - Constants
+
+private enum Constants {
+    static let clearButtonSize: CGFloat = 17
+    static let clearButtonImageName = "multiply.circle.fill"
+    static let clearButtonLabelKey: LocalizedStringKey = "accessibility_clear_button_label"
 }

@@ -43,7 +43,7 @@ public final class TextFieldUIView: UITextField {
         get { return self.viewModel.isReadOnly }
         set {
             if newValue, self.isFirstResponder {
-                self.resignFirstResponder()
+                _ = self.resignFirstResponder()
             }
             self.viewModel.isReadOnly = newValue
             self.isUserInteractionEnabled = newValue != true
