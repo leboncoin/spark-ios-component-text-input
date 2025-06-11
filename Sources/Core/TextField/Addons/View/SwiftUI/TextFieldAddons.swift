@@ -21,6 +21,9 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
     private let leftAddon: () -> TextFieldAddon<LeftAddon>
     private let rightAddon: () -> TextFieldAddon<RightAddon>
 
+    @Environment(\.textFieldClearButtonMode) private var clearButtonMode
+    @State private var isFocused: Bool = false
+
     private let titleKey: LocalizedStringKey
     @Binding private var text: String
     private var type: TextFieldViewType
@@ -93,11 +96,12 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
     }
 
     private func getTextFieldPadding() -> EdgeInsets {
+        let showClearButton = self.clearButtonMode.showClearButton(isFocused: self.isFocused)
         return EdgeInsets(
             top: .zero,
             leading: self.viewModel.leftSpacing,
             bottom: .zero,
-            trailing: self.viewModel.rightSpacing
+            trailing: showClearButton ? .zero : self.viewModel.rightSpacing
         )
     }
 
@@ -123,6 +127,9 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
         .opacity(self.viewModel.dim)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier(TextFieldAddonsAccessibilityIdentifier.view)
+        .onPreferenceChange(TextFieldFocusPreferenceKey.self) { value in
+            self.isFocused = value
+        }
     }
 
     // MARK: - ViewBuilder

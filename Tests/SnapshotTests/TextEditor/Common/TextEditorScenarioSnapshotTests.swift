@@ -60,8 +60,8 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     /// - intent: neutral
     /// - focus: none
     private func test1(isSwiftUIComponent: Bool) -> [TextEditorConfigurationSnapshotTests] {
-        let states = TextEditorState.allCases(isSwiftUIComponent: isSwiftUIComponent)
-        let contentResiliences = TextEditorContentResilience.allCases(isSwiftUIComponent: isSwiftUIComponent)
+        let states = TextInputState.allCases(isSwiftUIComponent: isSwiftUIComponent)
+        let contentResiliences = TextInputContentResilience.allCases(isSwiftUIComponent: isSwiftUIComponent)
 
         return states.flatMap { state in
             contentResiliences.map { contentResilience in
@@ -122,7 +122,7 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     /// - intent: neutral
     /// - focus: none
     private func test3(isSwiftUIComponent: Bool) -> [TextEditorConfigurationSnapshotTests] {
-        let states = TextEditorState.allCases(isSwiftUIComponent: isSwiftUIComponent)
+        let states = TextInputState.allCases(isSwiftUIComponent: isSwiftUIComponent)
 
         return states.map { state -> TextEditorConfigurationSnapshotTests in
                 .init(
@@ -152,7 +152,7 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     /// - intent: neutral
     /// - focus: none
     private func test4(isSwiftUIComponent: Bool) -> [TextEditorConfigurationSnapshotTests] {
-        let contentResiliences = TextEditorContentResilience.allCases(isSwiftUIComponent: isSwiftUIComponent)
+        let contentResiliences = TextInputContentResilience.allCases(isSwiftUIComponent: isSwiftUIComponent)
         let heights = TextEditorHeight.allCases
 
         return contentResiliences.flatMap { contentResilience in
@@ -184,8 +184,8 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     /// - intent: neutral
     /// - focus: none
     private func test5(isSwiftUIComponent: Bool) -> [TextEditorConfigurationSnapshotTests] {
-        let states = TextEditorState.allCases(isSwiftUIComponent: isSwiftUIComponent)
-        let placeholders = TextEditorPlaceholder.allCases(isSwiftUIComponent: isSwiftUIComponent)
+        let states = TextInputState.allCases(isSwiftUIComponent: isSwiftUIComponent)
+        let placeholders = TextInputPlaceholder.allCases(isSwiftUIComponent: isSwiftUIComponent)
 
         return states.flatMap { state in
             placeholders.map { placeholder in

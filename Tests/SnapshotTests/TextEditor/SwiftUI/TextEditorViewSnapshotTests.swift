@@ -16,7 +16,6 @@ import SparkTheming
 import SparkTheme
 import SwiftUI
 
-@available(iOS 16.0, *)
 final class TextEditorViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
     // MARK: - Type Alias

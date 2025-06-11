@@ -26,12 +26,14 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
 
     // MARK: - Initialization
 
-    init(titleKey: LocalizedStringKey,
-         text: Binding<String>,
-         viewModel: TextInputViewModel,
-         type: TextFieldViewType,
-         leftView: @escaping (() -> LeftView),
-         rightView: @escaping (() -> RightView)) {
+    init(
+        titleKey: LocalizedStringKey,
+        text: Binding<String>,
+        viewModel: TextInputViewModel,
+        type: TextFieldViewType,
+        leftView: @escaping (() -> LeftView),
+        rightView: @escaping (() -> RightView)
+    ) {
         self.titleKey = titleKey
         self.text = text
         self.viewModel = viewModel
@@ -77,14 +79,16 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
     ///   - isReadOnly: Set this to true if you want the textfield to be readOnly, default is `false`
     ///   - leftView: The TextField's left view, default is `EmptyView`
     ///   - rightView: The TextField's right view, default is `EmptyView`
-    public init(_ titleKey: LocalizedStringKey,
-                text: Binding<String>,
-                theme: Theme,
-                intent: TextFieldIntent,
-                type: TextFieldViewType = .standard(),
-                isReadOnly: Bool = false,
-                leftView: @escaping () -> LeftView = { EmptyView() },
-                rightView: @escaping () -> RightView = { EmptyView() }) {
+    public init(
+        _ titleKey: LocalizedStringKey,
+        text: Binding<String>,
+        theme: Theme,
+        intent: TextFieldIntent,
+        type: TextFieldViewType = .standard(),
+        isReadOnly: Bool = false,
+        leftView: @escaping () -> LeftView = { EmptyView() },
+        rightView: @escaping () -> RightView = { EmptyView() }
+    ) {
         self.init(
             titleKey,
             text: text,
@@ -101,16 +105,19 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
     // MARK: - View
 
     public var body: some View {
-        TextFieldViewInternal(
-            titleKey: self.titleKey,
-            text: self.text,
-            viewModel: self.viewModel,
-            type: self.type,
-            leftView: self.leftView,
-            rightView: self.rightView
-        )
-        .isEnabled(self.isEnabled)
-        .isFocused(self.isFocused)
-        .focused(self.$isFocused)
+        VStack(spacing: 0) {
+            TextFieldViewInternal(
+                titleKey: self.titleKey,
+                text: self.text,
+                viewModel: self.viewModel,
+                type: self.type,
+                leftView: self.leftView,
+                rightView: self.rightView
+            )
+            .isEnabled(self.isEnabled)
+            .isFocused(self.isFocused)
+            .focused(self.$isFocused)
+            .preference(key: TextFieldFocusPreferenceKey.self, value: self.isFocused)
+        }
     }
 }

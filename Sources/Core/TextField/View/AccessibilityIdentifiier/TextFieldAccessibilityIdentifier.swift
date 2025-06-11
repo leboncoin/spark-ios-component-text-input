@@ -13,4 +13,6 @@ public enum TextFieldAccessibilityIdentifier {
 
     /// The textfield accessibility identifier.
     public static let view = "spark-textfield"
+    /// The textfield clear button accessibility identifier.
+    public static let clearButton = "spark-textfield-clear-button"
 }
