@@ -22,7 +22,7 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
 
     @State var textFieldID: String = UUID().uuidString
     @FocusState private var isFocused: Bool
-    @Environment(\.textFieldClearButtonMode) private var clearButtonMode
+    @Environment(\.textFieldClearMode) private var clearMode
 
     private let titleKey: LocalizedStringKey
     private var type: TextFieldViewType
@@ -68,7 +68,7 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
 
     @ViewBuilder
     private func contentView() -> some View {
-        let showClearButton = self.clearButtonMode.showClearButton(isFocused: self.isFocused)
+        let showClearButton = self.clearMode.showClearButton(isFocused: self.isFocused)
 
         HStack(spacing: self.viewModel.contentSpacing) {
             // Left View

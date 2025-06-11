@@ -39,7 +39,7 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
             for configuration in configurations {
                 let view = self.textField(from: configuration)
                     .disabled(!configuration.state.isEnabled)
-                    .textFieldClearButtonMode(configuration.isClearButton ? .always : .never)
+                    .textFieldClearMode(configuration.isClearButton ? .always : .never)
                     .background(.background)
                     .frame(width: Constants.width)
                     .padding(Constants.padding)
