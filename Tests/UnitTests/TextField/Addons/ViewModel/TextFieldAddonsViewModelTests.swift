@@ -30,7 +30,7 @@ final class TextFieldAddonsViewModelTests: XCTestCase {
     private let intent = TextInputIntent.success
     private let borderStyle = TextInputBorderStyle.roundedRect
 
-    private var expectedColors: TextFieldColors!
+    private var expectedColors: TextInputColors!
     private var expectedBorderLayout: TextInputBorderLayout!
     private var expectedSpacings: TextInputSpacings!
 

@@ -22,6 +22,7 @@ public enum TextFieldClearMode: CaseIterable {
 
     // MARK: - Methods
 
+    @available(*, deprecated, message: "Please use TextFieldGetIsClearButtonUseCase instead.")
     internal func showClearButton(isFocused: Bool) -> Bool {
         switch self {
         case .never:

@@ -16,30 +16,14 @@ class TextInputViewModel: ObservableObject {
 
     // MARK: - Published Properties
 
-    // Colors
-    @Published private(set) var textColor: any ColorToken
-    @Published private(set) var placeholderColor: any ColorToken
-    @Published var borderColor: any ColorToken
-    @Published var backgroundColor: any ColorToken
-
-    // BorderLayout
-    @Published private(set) var borderRadius: CGFloat
-    @Published private(set) var borderWidth: CGFloat
-
-    // Spacings
-    @Published private(set) var leftSpacing: CGFloat
-    @Published private(set) var contentSpacing: CGFloat
-    @Published private(set) var rightSpacing: CGFloat
-
-    @Published var dim: CGFloat
-
+    @Published private(set) var borderLayout: TextInputBorderLayout
+    @Published private(set) var colors: TextInputColors
+    @Published private(set) var dim: CGFloat
     @Published private(set) var font: any TypographyFontToken
+    @Published private(set) var isClearButton: Bool
+    @Published private(set) var spacings: TextInputSpacings
 
     // MARK: - Properties
-
-    let getColorsUseCase: any TextInputGetColorsUseCasable
-    let getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCasable
-    let getSpacingsUseCase: any TextInputGetSpacingsUseCasable
 
     var theme: Theme {
         didSet {
@@ -51,14 +35,14 @@ class TextInputViewModel: ObservableObject {
         }
     }
 
-    var intent: TextInputIntent {
+    var intent: TextInputIntent = .default {
         didSet {
             guard oldValue != self.intent else { return }
             self.setColors()
         }
     }
 
-    var borderStyle: TextInputBorderStyle {
+    var borderStyle: TextInputBorderStyle = .default {
         didSet {
             guard oldValue != self.borderStyle else { return }
             self.setBorderLayout()
@@ -66,15 +50,23 @@ class TextInputViewModel: ObservableObject {
         }
     }
 
-    var isFocused: Bool = false {
+    var clearMode: TextFieldClearMode = .default {
         didSet {
-            guard oldValue != self.isFocused && !self.isReadOnly else { return }
-            self.setColors()
-            self.setBorderLayout()
+            guard oldValue != self.clearMode else { return }
+            self.setIsClearButton()
         }
     }
 
-    var isEnabled: Bool = true {
+    var isFocused: Bool = false { // TODO: put in constant
+        didSet {
+            guard oldValue != self.isFocused else { return }
+            self.setColors()
+            self.setBorderLayout()
+            self.setIsClearButton()
+        }
+    }
+
+    var isEnabled: Bool = true { // TODO: put in constant
         didSet {
             guard oldValue != self.isEnabled else { return }
             self.setColors()
@@ -82,102 +74,115 @@ class TextInputViewModel: ObservableObject {
         }
     }
 
-    var isReadOnly: Bool = false {
+    var isReadOnly: Bool = false { // TODO: put in constant
         didSet {
             guard oldValue != self.isReadOnly else { return }
             self.setColors()
         }
     }
 
+    // MARK: - Use Case Properties
+
+    private let getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCasable
+    private let getColorsUseCase: any TextInputGetColorsUseCasable
+    private let getDimUseCase: any TextInputGetDimUseCaseable
+    private let getFontUseCase: any TextInputGetFontUseCaseable
+    private let getIsClearButtonUseCase: any TextFieldGetIsClearButtonUseCaseable
+    private let getSpacingsUseCase: any TextInputGetSpacingsUseCasable
+
     // MARK: - Initialization
 
     init(
         theme: Theme,
-        intent: TextInputIntent,
-        borderStyle: TextInputBorderStyle,
-        getColorsUseCase: any TextInputGetColorsUseCasable = TextInputGetColorsUseCase(),
         getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCasable = TextInputGetBorderLayoutUseCase(),
+        getColorsUseCase: any TextInputGetColorsUseCasable = TextInputGetColorsUseCase(),
+        getDimUseCase: any TextInputGetDimUseCaseable = TextInputGetDimUseCase(),
+        getFontUseCase: any TextInputGetFontUseCaseable = TextInputGetFontUseCase(),
+        getIsClearButtonUseCase: any TextFieldGetIsClearButtonUseCaseable = TextFieldGetIsClearButtonUseCase(),
         getSpacingsUseCase: any TextInputGetSpacingsUseCasable = TextInputGetSpacingsUseCase()
     ) {
         self.theme = theme
-        self.intent = intent
-        self.borderStyle = borderStyle
 
-        self.getColorsUseCase = getColorsUseCase
         self.getBorderLayoutUseCase = getBorderLayoutUseCase
+        self.getColorsUseCase = getColorsUseCase
+        self.getDimUseCase = getDimUseCase
+        self.getFontUseCase = getFontUseCase
+        self.getIsClearButtonUseCase = getIsClearButtonUseCase
         self.getSpacingsUseCase = getSpacingsUseCase
 
-        // Colors
-        let colors = getColorsUseCase.execute(
+        self.borderLayout = getBorderLayoutUseCase.execute(
+            theme: theme,
+            borderStyle: self.borderStyle,
+            isFocused: self.isFocused)
+
+        self.colors = getColorsUseCase.execute(
             theme: theme,
             intent: intent,
             isFocused: self.isFocused,
             isEnabled: self.isEnabled,
             isReadOnly: self.isReadOnly
         )
-        self.textColor = colors.text
-        self.placeholderColor = colors.placeholder
-        self.borderColor = colors.border
-        self.backgroundColor = colors.background
 
-        // BorderLayout
-        let borderLayout = getBorderLayoutUseCase.execute(
+        self.dim = getDimUseCase.execute(
             theme: theme,
-            borderStyle: borderStyle,
-            isFocused: self.isFocused)
-        self.borderWidth = borderLayout.width
-        self.borderRadius = borderLayout.radius
+            isEnabled: self.isEnabled
+        )
 
-        // Spacings
-        let spacings = getSpacingsUseCase.execute(theme: theme, borderStyle: borderStyle)
-        self.leftSpacing = spacings.left
-        self.contentSpacing = spacings.content
-        self.rightSpacing = spacings.right
+        self.font = getFontUseCase.execute(theme: theme)
 
-        self.dim = theme.dims.none
+        self.isClearButton = getIsClearButtonUseCase.execute(
+            clearMode: self.clearMode,
+            isFocused: self.isFocused
+        )
 
-        self.font = theme.typography.body1
+        self.spacings = getSpacingsUseCase.execute(
+            theme: theme,
+            borderStyle: self.borderStyle
+        )
     }
 
     // MARK: - Private & Internal Setter
 
     private func setColors() {
-        // Colors
-        let colors = self.getColorsUseCase.execute(
+        self.colors = self.getColorsUseCase.execute(
             theme: self.theme,
             intent: self.intent,
             isFocused: self.isFocused,
             isEnabled: self.isEnabled,
             isReadOnly: self.isReadOnly
         )
-        self.textColor = colors.text
-        self.placeholderColor = colors.placeholder
-        self.borderColor = colors.border
-        self.backgroundColor = colors.background
     }
 
-    internal func setBorderLayout() {
-        let borderLayout = self.getBorderLayoutUseCase.execute(
+    private func setBorderLayout() {
+        self.borderLayout = self.getBorderLayoutUseCase.execute(
             theme: self.theme,
-            borderStyle: self.borderStyle, // .none
+            borderStyle: self.borderStyle,
             isFocused: self.isFocused
         )
-        self.borderWidth = borderLayout.width
-        self.borderRadius = borderLayout.radius
     }
 
-    internal func setSpacings() {
-        let spacings = self.getSpacingsUseCase.execute(theme: self.theme, borderStyle: self.borderStyle)
-        self.leftSpacing = spacings.left
-        self.contentSpacing = spacings.content
-        self.rightSpacing = spacings.right
+    private func setIsClearButton() {
+        self.isClearButton = self.getIsClearButtonUseCase.execute(
+            clearMode: self.clearMode,
+            isFocused: self.isFocused
+        )
+    }
+
+    private func setSpacings() {
+        self.spacings = self.getSpacingsUseCase.execute(
+            theme: self.theme,
+            borderStyle: self.borderStyle
+        )
     }
 
     private func setDim() {
-        self.dim = self.isEnabled ? self.theme.dims.none : self.theme.dims.dim3
+        self.dim = self.getDimUseCase.execute(
+            theme: self.theme,
+            isEnabled: self.isEnabled
+        )
     }
 
-    internal func setFont() {
-        self.font = self.theme.typography.body1
+    private func setFont() {
+        self.font = self.getFontUseCase.execute(theme: self.theme)
     }
 }

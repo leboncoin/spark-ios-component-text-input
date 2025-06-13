@@ -10,7 +10,7 @@ import Foundation
 import SparkTheming
 
 // sourcery: AutoPublisherTest, AutoViewModelStub
-final class TextEditorViewModel: TextInputViewModel {
+final class TextEditorViewModel: TextInputViewModelDeprecated {
 
     // MARK: - Published Properties
 

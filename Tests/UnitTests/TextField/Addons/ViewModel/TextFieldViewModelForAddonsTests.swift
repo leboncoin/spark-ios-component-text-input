@@ -1,5 +1,5 @@
 //
-//  TextInputViewModelTests.swift
+//  TextFieldViewModelForAddonsTests.swift
 //  SparkTextFieldUnitTests
 //
 //  Created by louis.borlee on 01/02/2024.
@@ -21,7 +21,7 @@ final class TextFieldViewModelForAddonsTests: XCTestCase {
 
     // MARK: - Properties
 
-    private let superTests: TextInputViewModelTests = .init()
+    private let superTests: TextInputViewModelDeprecatedTests = .init()
     private var viewModel: TextFieldViewModelForAddons!
 
     // MARK: - Setup

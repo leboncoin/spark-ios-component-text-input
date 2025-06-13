@@ -12,6 +12,12 @@ enum TextInputBorderStyle: CaseIterable {
     case roundedRect
     case none
 
+    // MARK: - Properties
+
+    static var `default` = Self.roundedRect // TODO: test
+
+    // MARK: - Initialization
+
     init(_ borderStyle: UITextField.BorderStyle) {
         switch borderStyle {
         case .roundedRect:
@@ -23,6 +29,9 @@ enum TextInputBorderStyle: CaseIterable {
 }
 
 extension UITextField.BorderStyle {
+
+    // MARK: - Initialization
+
     init(_ borderStyle: TextInputBorderStyle) {
         switch borderStyle {
         case .roundedRect:

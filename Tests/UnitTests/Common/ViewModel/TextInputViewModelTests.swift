@@ -1,5 +1,5 @@
 //
-//  TextInputViewModelTests.swift
+//  TextInputViewModelDeprecatedTests.swift
 //  SparkTextFieldUnitTests
 //
 //  Created by louis.borlee on 01/02/2024.
@@ -16,7 +16,7 @@ import SwiftUI
 @_spi(SI_SPI) import SparkThemingTesting
 import SparkTheming
 
-final class TextInputViewModelTests: XCTestCase {
+final class TextInputViewModelDeprecatedTests: XCTestCase {
 
     // MARK: - Properties
 
@@ -25,12 +25,12 @@ final class TextInputViewModelTests: XCTestCase {
     var getColorsUseCase: TextInputGetColorsUseCasableGeneratedMock!
     var getBorderLayoutUseCase: TextInputGetBorderLayoutUseCasableGeneratedMock!
     var getSpacingsUseCase: TextInputGetSpacingsUseCasableGeneratedMock!
-    private var viewModel: TextInputViewModel!
+    private var viewModel: TextInputViewModelDeprecated!
 
     let intent = TextInputIntent.success
     let borderStyle = TextInputBorderStyle.roundedRect
 
-    var expectedColors: TextFieldColors!
+    var expectedColors: TextInputColors!
     var expectedBorderLayout: TextInputBorderLayout!
     var expectedSpacings: TextInputSpacings!
 
@@ -135,7 +135,7 @@ final class TextInputViewModelTests: XCTestCase {
         self.resetUseCases() // Removes execute from init
         self.publishers.reset() // Removes publishes from init
 
-        let newExpectedColors = TextFieldColors.mocked(
+        let newExpectedColors = TextInputColors.mocked(
             text: .red(),
             placeholder: .blue(),
             border: .green(),
@@ -237,7 +237,7 @@ final class TextInputViewModelTests: XCTestCase {
         self.resetUseCases() // Removes execute from init
         self.publishers.reset() // Removes publishes from init
 
-        let newExpectedColors = TextFieldColors.mocked(
+        let newExpectedColors = TextInputColors.mocked(
             text: .red(),
             placeholder: .blue(),
             border: .green(),
@@ -404,7 +404,7 @@ final class TextInputViewModelTests: XCTestCase {
         self.resetUseCases() // Removes execute from init
         self.publishers.reset() // Removes publishes from init
 
-        let newExpectedColors = TextFieldColors.mocked(
+        let newExpectedColors = TextInputColors.mocked(
             text: .red(),
             placeholder: .blue(),
             border: .green(),
@@ -497,7 +497,7 @@ final class TextInputViewModelTests: XCTestCase {
         self.resetUseCases() // Removes execute from init
         self.publishers.reset() // Removes publishes from init
 
-        let newExpectedColors = TextFieldColors.mocked(
+        let newExpectedColors = TextInputColors.mocked(
             text: .red(),
             placeholder: .blue(),
             border: .green(),
@@ -582,7 +582,7 @@ final class TextInputViewModelTests: XCTestCase {
         self.resetUseCases() // Removes execute from init
         self.publishers.reset() // Removes publishes from init
 
-        let newExpectedColors = TextFieldColors.mocked(
+        let newExpectedColors = TextInputColors.mocked(
             text: .red(),
             placeholder: .blue(),
             border: .green(),

@@ -10,7 +10,7 @@ import Foundation
 @testable import SparkTextInput
 
 extension TextInputGetColorsUseCasableGeneratedMock {
-    static func mocked(returnedColors: TextFieldColors) -> TextInputGetColorsUseCasableGeneratedMock {
+    static func mocked(returnedColors: TextInputColors) -> TextInputGetColorsUseCasableGeneratedMock {
         let mock = TextInputGetColorsUseCasableGeneratedMock()
         mock.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReturnValue = returnedColors
         return mock

@@ -17,7 +17,7 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
     @ScaledMetric private var height: CGFloat = TextInputConstants.height
     @ScaledMetric private var scaleFactor: CGFloat = 1.0
 
-    @ObservedObject private var viewModel: TextInputViewModel
+    @ObservedObject private var viewModel: TextInputViewModelDeprecated
     @Binding private var text: String
 
     @State var textFieldID: String = UUID().uuidString
@@ -34,7 +34,7 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
 
     init(titleKey: LocalizedStringKey,
          text: Binding<String>,
-         viewModel: TextInputViewModel,
+         viewModel: TextInputViewModelDeprecated,
          type: TextFieldViewType,
          leftView: @escaping (() -> LeftView),
          rightView: @escaping (() -> RightView)) {
@@ -128,13 +128,13 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
             case .secure(let onCommit):
                 // TODO: add prompt for the placeholder like the TextEditor
                 SecureField(titleKey, text: self.$text, onCommit: onCommit)
-                    .font(self.viewModel.font.font)
             case .standard(let onEditingChanged, let onCommit):
                 // TODO: add prompt for the placeholder like the TextEditor
                 TextField(titleKey, text: self.$text, onEditingChanged: onEditingChanged, onCommit: onCommit)
-                    .font(self.viewModel.font.font)
+
             }
         }
+        .font(self.viewModel.font.font)
         .textFieldStyle(.plain)
         .foregroundStyle(self.viewModel.textColor.color)
         .accessibilityIdentifier(TextFieldAccessibilityIdentifier.view)
