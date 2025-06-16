@@ -3,6 +3,7 @@
 //  SparkTextInput
 //
 //  Created by robin.lemaire on 04/06/2025.
+//  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
 /// Constants that define when clear button appear in a **swiftUI** text field.

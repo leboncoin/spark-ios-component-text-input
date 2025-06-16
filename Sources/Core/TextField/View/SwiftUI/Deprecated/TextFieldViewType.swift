@@ -7,6 +7,7 @@
 //
 
 /// A TextField type with its associated callback(s)
+@available(*, deprecated, message: "Use SparkTextField instead")
 public enum TextFieldViewType {
     case secure(onCommit: () -> Void = {})
     case standard(onEditingChanged: (Bool) -> Void = { _ in }, onCommit: () -> Void = {})
