@@ -10,7 +10,7 @@ import Foundation
 @testable import SparkTextInput
 
 extension TextInputSpacings {
-    static func mocked(left: CGFloat, content: CGFloat, right: CGFloat) -> TextInputSpacings {
-        return .init(left: left, content: content, right: right)
+    static func mocked(horizontal: CGFloat, content: CGFloat) -> TextInputSpacings {
+        return .init(horizontal: horizontal, content: content)
     }
 }

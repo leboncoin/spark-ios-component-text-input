@@ -9,8 +9,6 @@
 import Foundation
 import SparkTheming
 
-// TODO: test
-
 // sourcery: AutoMockable
 protocol TextInputGetFontUseCaseable {
     func execute(theme: Theme) -> any TypographyFontToken

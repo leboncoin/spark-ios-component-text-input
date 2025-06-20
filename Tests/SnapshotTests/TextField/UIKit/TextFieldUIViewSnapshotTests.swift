@@ -88,7 +88,7 @@ final class TextFieldUIViewSnapshotTests: UIKitComponentSnapshotTestCase {
                 }
                 component.translatesAutoresizingMaskIntoConstraints = false
 
-                textField.isSecureTextEntry = configuration.isSecureMode
+                textField.isSecureTextEntry = configuration.isSecureEntry
 
                 let backgroundView = UIView()
                 backgroundView.backgroundColor = .systemBackground

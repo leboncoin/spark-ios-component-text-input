@@ -10,23 +10,22 @@ import Foundation
 import SparkTheming
 import SwiftUI
 
-// TODO: test
-
 // sourcery: AutoMockable
 protocol TextFieldGetContentPaddingUseCaseable {
-    func execute(spacings: TextInputSpacings, isClearButton: Bool) -> EdgeInsets
+    func execute(spacings: TextInputSpacings, isClearButton: Bool) -> TextFieldContentPadding
 }
 
 final class TextFieldGetContentPaddingUseCase: TextFieldGetContentPaddingUseCaseable {
 
     // MARK: - Methods
 
-    func execute(spacings: TextInputSpacings, isClearButton: Bool) -> EdgeInsets {
-        .init(
+    func execute(spacings: TextInputSpacings, isClearButton: Bool) -> TextFieldContentPadding {
+        return .init(
             top: .zero,
-            leading: spacings.left,
+            leading: spacings.horizontal,
             bottom: .zero,
-            trailing: isClearButton ? .zero : spacings.right
+            trailing: spacings.horizontal,
+            inputTrailing: isClearButton ? .zero : spacings.horizontal
         )
     }
 }

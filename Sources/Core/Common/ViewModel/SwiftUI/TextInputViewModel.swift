@@ -1,5 +1,5 @@
 //
-//  TextFieldViewModel.swift
+//  TextInputViewModel.swift
 //  SparkTextInput
 //
 //  Created by robin.lemaire on 16/06/2025.
@@ -11,25 +11,19 @@ import SwiftUI
 import SparkTheming
 
 /// UseCase only used by **SwiftUI** View.
-internal final class TextFieldViewModel: ObservableObject {
+internal class TextInputViewModel: ObservableObject {
 
     // MARK: - Published Properties
 
     @Published private(set) var borderLayout = TextInputBorderLayout()
-    @Published private(set) var colors = TextInputColorsTemp()
-    @Published private(set) var dim: CGFloat = 1 // TODO: Constant
-    @Published private(set) var font: Font = .body // TODO: constants
-    @Published private(set) var isClearButton: Bool = false { // TODO: constants
+    @Published private(set) var colors = TextInputColors()
+    @Published private(set) var dim: CGFloat = 1
+    @Published private(set) var font: Font = .body
+    @Published var spacings = TextInputSpacings() {
         didSet {
-            self.setContentPadding()
+            self.spacingDidUpdate()
         }
     }
-    @Published private(set) var spacings = TextInputSpacings() {
-        didSet {
-            self.setContentPadding()
-        }
-    }
-    @Published private(set) var contentPadding: EdgeInsets = .init()
 
     // MARK: - Properties
 
@@ -54,27 +48,11 @@ internal final class TextFieldViewModel: ObservableObject {
         }
     }
 
-    var borderStyle: TextInputBorderStyle? {
-        didSet {
-            guard oldValue != self.borderStyle, self.alreadyUpdateAll else { return }
-            self.setBorderLayout()
-            self.setSpacings()
-        }
-    }
-
-    var clearMode: TextFieldClearMode? {
-        didSet {
-            guard oldValue != self.clearMode, self.alreadyUpdateAll else { return }
-            self.setIsClearButton()
-        }
-    }
-
     var isFocused: Bool? {
         didSet {
             guard oldValue != self.isFocused, self.alreadyUpdateAll else { return }
             self.setColors()
             self.setBorderLayout()
-            self.setIsClearButton()
         }
     }
 
@@ -95,54 +73,43 @@ internal final class TextFieldViewModel: ObservableObject {
 
     // MARK: - Use Case Properties
 
-    private let getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCasable
-    private let getColorsUseCase: any TextInputGetColorsUseCasable
+    private let getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCaseable
+    private let getColorsUseCase: any TextInputGetColorsUseCaseable
     private let getDimUseCase: any TextInputGetDimUseCaseable
     private let getFontUseCase: any TextInputGetFontUseCaseable
-    private let getIsClearButtonUseCase: any TextFieldGetIsClearButtonUseCaseable
-    private let getSpacingsUseCase: any TextInputGetSpacingsUseCasable
-    private let getContentPaddingUseCase: any TextFieldGetContentPaddingUseCaseable
+    private let getSpacingsUseCase: any TextInputGetSpacingsUseCaseable
 
     // MARK: - Initialization
 
     init(
-        getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCasable = TextInputGetBorderLayoutUseCase(),
-        getColorsUseCase: any TextInputGetColorsUseCasable = TextInputGetColorsUseCase(),
+        getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCaseable = TextInputGetBorderLayoutUseCase(),
+        getColorsUseCase: any TextInputGetColorsUseCaseable = TextInputGetColorsUseCase(),
         getDimUseCase: any TextInputGetDimUseCaseable = TextInputGetDimUseCase(),
         getFontUseCase: any TextInputGetFontUseCaseable = TextInputGetFontUseCase(),
-        getIsClearButtonUseCase: any TextFieldGetIsClearButtonUseCaseable = TextFieldGetIsClearButtonUseCase(),
-        getSpacingsUseCase: any TextInputGetSpacingsUseCasable = TextInputGetSpacingsUseCase(),
-        getContentPaddingUseCase: any TextFieldGetContentPaddingUseCaseable = TextFieldGetContentPaddingUseCase()
+        getSpacingsUseCase: any TextInputGetSpacingsUseCaseable = TextInputGetSpacingsUseCase()
     ) {
         self.getBorderLayoutUseCase = getBorderLayoutUseCase
         self.getColorsUseCase = getColorsUseCase
         self.getDimUseCase = getDimUseCase
         self.getFontUseCase = getFontUseCase
-        self.getIsClearButtonUseCase = getIsClearButtonUseCase
         self.getSpacingsUseCase = getSpacingsUseCase
-        self.getContentPaddingUseCase = getContentPaddingUseCase
     }
 
     func updateAll(
         theme: Theme,
         intent: TextInputIntent,
-        borderStyle: TextInputBorderStyle,
         isReadOnly: Bool,
-        clearMode: TextFieldClearMode,
         isFocused: Bool,
         isEnabled: Bool
     ) {
         self.theme = theme
         self.intent = intent
-        self.borderStyle = borderStyle
         self.isReadOnly = isReadOnly
-        self.clearMode = clearMode
         self.isFocused = isFocused
         self.isEnabled = isEnabled
 
         self.setColors()
         self.setBorderLayout()
-        self.setIsClearButton()
         self.setSpacings()
         self.setDim()
         self.setFont()
@@ -167,47 +134,27 @@ internal final class TextFieldViewModel: ObservableObject {
             isFocused: isFocused,
             isEnabled: isEnabled,
             isReadOnly: isReadOnly
-        ).convert()
+        )
     }
 
     private func setBorderLayout() {
-        guard let theme, let borderStyle, let isFocused else {
+        guard let theme, let isFocused else {
             return
         }
 
         self.borderLayout = self.getBorderLayoutUseCase.execute(
             theme: theme,
-            borderStyle: borderStyle,
-            isFocused: isFocused
-        )
-    }
-
-    private func setIsClearButton() {
-        guard let clearMode, let isFocused else {
-            return
-        }
-
-        self.isClearButton = self.getIsClearButtonUseCase.execute(
-            clearMode: clearMode,
             isFocused: isFocused
         )
     }
 
     private func setSpacings() {
-        guard let theme, let borderStyle else {
+        guard let theme else {
             return
         }
 
         self.spacings = self.getSpacingsUseCase.execute(
             theme: theme,
-            borderStyle: borderStyle
-        )
-    }
-
-    private func setContentPadding() {
-        self.contentPadding = self.getContentPaddingUseCase.execute(
-            spacings: self.spacings,
-            isClearButton: self.isClearButton
         )
     }
 
@@ -228,5 +175,10 @@ internal final class TextFieldViewModel: ObservableObject {
         }
 
         self.font = self.getFontUseCase.execute(theme: theme).font
+    }
+
+    // MARK: - Update
+
+    func spacingDidUpdate() {
     }
 }

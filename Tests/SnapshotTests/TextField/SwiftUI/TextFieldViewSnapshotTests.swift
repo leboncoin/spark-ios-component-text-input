@@ -37,15 +37,34 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
             )
 
             for configuration in configurations {
-                let view = self.textField(from: configuration)
+                let view = SparkTextField(
+                    LocalizedStringKey(configuration.placeholder.text ?? ""),
+                    text: .constant(configuration.content.text),
+                    theme: self.theme,
+                    leftView: {
+                        self.sideView(from: configuration.leftContent)
+                    },
+                    rightView: {
+                        self.sideView(from: configuration.rightContent)
+                    },
+                    leftAddon: {
+                        self.sideView(from: configuration.leftAddonContent)
+                    },
+                    rightAddon: {
+                        self.sideView(from: configuration.rightAddonContent)
+                    }
+                )
+                    .sparkTextFieldIntent(configuration.intent)
+                    .sparkTextFieldReadOnly(configuration.state.isReadOnly)
+                    .sparkTextFieldClearMode(configuration.isClearButton ? .always : .never)
+                    .sparkTextFieldSecureEntry(configuration.isSecureEntry)
+                    .sparkTextFieldLeftAddonConfiguration(.init(configuration: configuration))
+                    .sparkTextFieldRightAddonConfiguration(.init(configuration: configuration))
                     .disabled(!configuration.state.isEnabled)
-                    .textFieldClearMode(configuration.isClearButton ? .always : .never)
                     .background(.background)
                     .frame(width: Constants.width)
                     .padding(Constants.padding)
                     .background(Color(uiColor: .secondarySystemBackground))
-
-                // TODO: add secure
 
                 self.assertSnapshot(
                     matching: view,
@@ -57,46 +76,7 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
         }
     }
 
-    // MARK: - Builder
-
-    @ViewBuilder
-    private func textField(from configuration: TextFieldConfigurationSnapshotTests) -> some View {
-        if configuration.isAddons {
-            TextFieldAddons(
-                LocalizedStringKey(configuration.placeholder.text ?? ""),
-                text: .constant(configuration.content.text),
-                theme: self.theme,
-                intent: configuration.intent,
-                type: .value(for: configuration),
-                isReadOnly: configuration.state.isReadOnly,
-                leftView: { self.sideView(from: configuration.leftContent) },
-                rightView: { self.sideView(from: configuration.rightContent) },
-                leftAddon: { TextFieldAddon(
-                    withPadding: configuration.isAddonsPadding,
-                    layoutPriority: 1) {
-                        self.sideView(from: configuration.leftAddonContent)
-                    }
-                },
-                rightAddon: { TextFieldAddon(
-                    withPadding: configuration.isAddonsPadding,
-                    layoutPriority: 1) {
-                        self.sideView(from: configuration.rightAddonContent)
-                    }
-                }
-            )
-        } else {
-            TextFieldView(
-                LocalizedStringKey(configuration.placeholder.text ?? ""),
-                text: .constant(configuration.content.text),
-                theme: self.theme,
-                intent: configuration.intent,
-                type: .value(for: configuration),
-                isReadOnly: configuration.state.isReadOnly,
-                leftView: { self.sideView(from: configuration.leftContent) },
-                rightView: { self.sideView(from: configuration.rightContent) }
-            )
-        }
-    }
+    // MARK: - View Builder
 
     @ViewBuilder
     private func sideView(from sideType: TextFieldSideViewType) -> some View {
@@ -113,13 +93,12 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
 // MARK: - Extension
 
-private extension TextFieldViewType {
+private extension TextFieldAddonConfiguration {
 
-    static func value(for configuration: TextFieldConfigurationSnapshotTests) -> Self {
-        if configuration.isSecureMode {
-            return .secure()
-        } else {
-            return .standard()
-        }
+    init(configuration: TextFieldConfigurationSnapshotTests) {
+        self.init(
+            hasPadding: configuration.isAddonsPadding,
+            hasSeparator: configuration.isAddons ? configuration.isAddonsSeparator : false
+        )
     }
 }

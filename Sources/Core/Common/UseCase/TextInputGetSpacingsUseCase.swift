@@ -10,28 +10,35 @@ import Foundation
 import SparkTheming
 
 // sourcery: AutoMockable
-protocol TextInputGetSpacingsUseCasable {
-    func execute(theme: Theme, borderStyle: TextInputBorderStyle) -> TextInputSpacings
+protocol TextInputGetSpacingsUseCaseable {
+    func execute(
+        theme: Theme,
+        borderStyle: TextInputBorderStyle
+    ) -> TextInputSpacings
+
+    func execute(theme: Theme) -> TextInputSpacings
 }
 
-final class TextInputGetSpacingsUseCase: TextInputGetSpacingsUseCasable {
+final class TextInputGetSpacingsUseCase: TextInputGetSpacingsUseCaseable {
 
     // MARK: - Methods
 
     func execute(theme: Theme, borderStyle: TextInputBorderStyle) -> TextInputSpacings {
-        switch borderStyle {
+        return switch borderStyle {
         case .none:
-            return .init(
-                left: theme.layout.spacing.none,
-                content: theme.layout.spacing.medium,
-                right: theme.layout.spacing.none
+            .init(
+                horizontal: theme.layout.spacing.none,
+                content: theme.layout.spacing.medium
             )
         case .roundedRect:
-            return .init(
-                left: theme.layout.spacing.large,
-                content: theme.layout.spacing.medium,
-                right: theme.layout.spacing.large
-            )
+            self.execute(theme: theme)
         }
+    }
+
+    func execute(theme: Theme) -> TextInputSpacings {
+        return .init(
+            horizontal: theme.layout.spacing.large,
+            content: theme.layout.spacing.medium
+        )
     }
 }

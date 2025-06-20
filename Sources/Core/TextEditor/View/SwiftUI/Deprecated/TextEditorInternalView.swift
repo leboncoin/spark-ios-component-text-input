@@ -9,7 +9,7 @@
 import SwiftUI
 import SparkTheming
 
-@available(iOS 16.0, *)
+@available(*, deprecated, message: "Use SparkTextEditor instead")
 internal struct TextEditorInternalView: View {
 
     // MARK: - Properties
@@ -22,14 +22,14 @@ internal struct TextEditorInternalView: View {
     @ScaledMetric private var horizontalPadding: CGFloat
     @ScaledMetric private var scaleFactor: CGFloat = 1.0
 
-    @ObservedObject private var viewModel: TextEditorViewModel
+    @ObservedObject private var viewModel: TextEditorViewModelDeprecated
 
     // MARK: - Initialization
 
     init(
         title: String,
         text: Binding<String>,
-        viewModel: TextEditorViewModel
+        viewModel: TextEditorViewModelDeprecated
     ) {
         self.title = title
         self._text = text
@@ -46,7 +46,7 @@ internal struct TextEditorInternalView: View {
     ) {
         self.title = title
         self._text = text
-        let viewModel = TextEditorViewModel(
+        let viewModel = TextEditorViewModelDeprecated(
             theme: theme,
             intent: intent
         )

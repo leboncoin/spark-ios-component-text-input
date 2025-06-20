@@ -18,7 +18,15 @@ public extension View {
     ///
     /// The standard clear button displays at the right side of the text field when the text field has contents, providing a way for the user to remove text quickly.
     /// This button appears automatically based on the value of this property. The default value for this property is *TextFieldClearMode.never*.
-    @ViewBuilder
+    func sparkTextFieldClearMode(_ mode: TextFieldClearMode) -> some View {
+        self.environment(\.textFieldClearMode, mode)
+    }
+
+    /// A mode that controls when the standard Clear button appears in the text field.
+    ///
+    /// The standard clear button displays at the right side of the text field when the text field has contents, providing a way for the user to remove text quickly.
+    /// This button appears automatically based on the value of this property. The default value for this property is *TextFieldClearMode.never*.
+    @available(*, deprecated, message: "Use sparkTextFieldClearMode instead !")
     func textFieldClearMode(_ mode: TextFieldClearMode) -> some View {
         self.environment(\.textFieldClearMode, mode)
     }

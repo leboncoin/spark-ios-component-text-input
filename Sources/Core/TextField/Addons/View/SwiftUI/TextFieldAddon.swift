@@ -9,6 +9,7 @@
 import SwiftUI
 
 /// Single TextFieldAddon embedding a Content View
+@available(*, deprecated, message: "With SparkTextField, this view key is no longer usefull.")
 public struct TextFieldAddon<Content: View>: View {
 
     // MARK: - Properties

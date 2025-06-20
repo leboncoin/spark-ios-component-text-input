@@ -17,8 +17,7 @@ public extension View {
     /// Set the **intent** on the``SparkTextField``.
     ///
     /// The default value for this property is *TextFieldIntent.neutral*.
-    @ViewBuilder
-    func textFieldIntent(_ intent: TextFieldIntent) -> some View {
+    func sparkTextFieldIntent(_ intent: TextFieldIntent) -> some View {
         self.environment(\.textFieldIntent, intent)
     }
 }

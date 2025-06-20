@@ -12,7 +12,6 @@ struct TextInputSpacings: Equatable {
 
     // MARK: - Properties
 
-    var left: CGFloat = 0
+    var horizontal: CGFloat = 0
     var content: CGFloat = 0
-    var right: CGFloat = 0
 }

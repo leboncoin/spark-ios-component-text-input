@@ -112,7 +112,7 @@ public final class TextEditorUIView: UITextView {
     private var placeholderCenterYAnchorConstraint: NSLayoutConstraint?
     private var placeholderCenterXAnchorConstraint: NSLayoutConstraint?
 
-    private let viewModel: TextEditorViewModel
+    private let viewModel: TextEditorViewModelDeprecated
 
     private var cancellables = Set<AnyCancellable>()
 

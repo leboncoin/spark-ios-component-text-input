@@ -41,9 +41,9 @@ final class TextFieldViewModelForAddons: TextInputViewModelDeprecated {
     init(
         theme: Theme,
         intent: TextFieldIntent,
-        getColorsUseCase: TextInputGetColorsUseCasable = TextInputGetColorsUseCase(),
-        getBorderLayoutUseCase: TextInputGetBorderLayoutUseCasable = TextInputGetBorderLayoutUseCase(),
-        getSpacingsUseCase: TextInputGetSpacingsUseCasable = TextInputGetSpacingsUseCase()
+        getColorsUseCase: TextInputGetColorsUseCaseable = TextInputGetColorsUseCase(),
+        getBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable = TextInputGetBorderLayoutUseCase(),
+        getSpacingsUseCase: TextInputGetSpacingsUseCaseable = TextInputGetSpacingsUseCase()
     ) {
         super.init(
             theme: theme,
@@ -73,8 +73,8 @@ final class TextFieldViewModelForAddons: TextInputViewModelDeprecated {
         let spacings = self.getSpacingsUseCase.execute(
             theme: self.theme,
             borderStyle: .roundedRect)
-        self.addonsLeftSpacing = spacings.left
+        self.addonsLeftSpacing = spacings.horizontal
         self.addonsContentSpacing = spacings.content
-        self.addonsRightSpacing = spacings.right
+        self.addonsRightSpacing = spacings.horizontal
     }
 }

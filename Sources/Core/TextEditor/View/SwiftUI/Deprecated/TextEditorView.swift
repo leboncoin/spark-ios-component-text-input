@@ -9,8 +9,8 @@
 import SwiftUI
 import SparkTheming
 
-@available(iOS 16.0, *)
 /// The SwiftUI version for the text editor.
+@available(*, deprecated, message: "Use SparkTextEditor instead")
 public struct TextEditorView: View {
 
     // MARK: - Properties

@@ -126,10 +126,8 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
         Group {
             switch type {
             case .secure(let onCommit):
-                // TODO: add prompt for the placeholder like the TextEditor
                 SecureField(titleKey, text: self.$text, onCommit: onCommit)
             case .standard(let onEditingChanged, let onCommit):
-                // TODO: add prompt for the placeholder like the TextEditor
                 TextField(titleKey, text: self.$text, onEditingChanged: onEditingChanged, onCommit: onCommit)
 
             }

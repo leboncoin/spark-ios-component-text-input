@@ -10,7 +10,7 @@ import Foundation
 import SparkTheming
 
 // sourcery: AutoMockable
-protocol TextInputGetColorsUseCasable {
+protocol TextInputGetColorsUseCaseable {
     func execute(
         theme: Theme,
         intent: TextInputIntent,
@@ -20,7 +20,7 @@ protocol TextInputGetColorsUseCasable {
     ) -> TextInputColors
 }
 
-struct TextInputGetColorsUseCase: TextInputGetColorsUseCasable {
+struct TextInputGetColorsUseCase: TextInputGetColorsUseCaseable {
 
     // MARK: - Methods
 

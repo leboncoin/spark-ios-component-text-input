@@ -37,9 +37,9 @@ class TextInputViewModelDeprecated: ObservableObject {
 
     // MARK: - Properties
 
-    let getColorsUseCase: any TextInputGetColorsUseCasable
-    let getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCasable
-    let getSpacingsUseCase: any TextInputGetSpacingsUseCasable
+    let getColorsUseCase: any TextInputGetColorsUseCaseable
+    let getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCaseable
+    let getSpacingsUseCase: any TextInputGetSpacingsUseCaseable
 
     var theme: Theme {
         didSet {
@@ -95,9 +95,9 @@ class TextInputViewModelDeprecated: ObservableObject {
         theme: Theme,
         intent: TextInputIntent,
         borderStyle: TextInputBorderStyle,
-        getColorsUseCase: any TextInputGetColorsUseCasable = TextInputGetColorsUseCase(),
-        getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCasable = TextInputGetBorderLayoutUseCase(),
-        getSpacingsUseCase: any TextInputGetSpacingsUseCasable = TextInputGetSpacingsUseCase()
+        getColorsUseCase: any TextInputGetColorsUseCaseable = TextInputGetColorsUseCase(),
+        getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCaseable = TextInputGetBorderLayoutUseCase(),
+        getSpacingsUseCase: any TextInputGetSpacingsUseCaseable = TextInputGetSpacingsUseCase()
     ) {
         self.theme = theme
         self.intent = intent
@@ -130,9 +130,9 @@ class TextInputViewModelDeprecated: ObservableObject {
 
         // Spacings
         let spacings = getSpacingsUseCase.execute(theme: theme, borderStyle: borderStyle)
-        self.leftSpacing = spacings.left
+        self.leftSpacing = spacings.horizontal
         self.contentSpacing = spacings.content
-        self.rightSpacing = spacings.right
+        self.rightSpacing = spacings.horizontal
 
         self.dim = theme.dims.none
 
@@ -168,9 +168,9 @@ class TextInputViewModelDeprecated: ObservableObject {
 
     internal func setSpacings() {
         let spacings = self.getSpacingsUseCase.execute(theme: self.theme, borderStyle: self.borderStyle)
-        self.leftSpacing = spacings.left
+        self.leftSpacing = spacings.horizontal
         self.contentSpacing = spacings.content
-        self.rightSpacing = spacings.right
+        self.rightSpacing = spacings.horizontal
     }
 
     private func setDim() {

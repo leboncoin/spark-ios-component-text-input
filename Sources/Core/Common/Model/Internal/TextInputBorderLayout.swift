@@ -12,6 +12,6 @@ struct TextInputBorderLayout: Equatable {
 
     // MARK: - Properties
 
-    var radius: CGFloat = 0// TODO: constants
-    var width: CGFloat = 0// TODO: constants
+    var radius: CGFloat = 0
+    var width: CGFloat = 0
 }

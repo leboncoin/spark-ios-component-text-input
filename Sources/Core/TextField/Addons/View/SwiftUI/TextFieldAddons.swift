@@ -11,6 +11,7 @@ import SwiftUI
 import SparkTheming
 
 /// A Spark TextField that can be surrounded by left and/or right addons
+@available(*, deprecated, message: "Use SparkTextField instead with addons parameter")
 public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, RightAddon: View>: View {
 
     // MARK: - Properties

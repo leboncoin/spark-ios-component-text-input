@@ -22,9 +22,9 @@ final class TextInputViewModelDeprecatedTests: XCTestCase {
 
     var theme: ThemeGeneratedMock!
     var publishers: TextFieldPublishers!
-    var getColorsUseCase: TextInputGetColorsUseCasableGeneratedMock!
-    var getBorderLayoutUseCase: TextInputGetBorderLayoutUseCasableGeneratedMock!
-    var getSpacingsUseCase: TextInputGetSpacingsUseCasableGeneratedMock!
+    var getColorsUseCase: TextInputGetColorsUseCaseableGeneratedMock!
+    var getBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseableGeneratedMock!
+    var getSpacingsUseCase: TextInputGetSpacingsUseCaseableGeneratedMock!
     private var viewModel: TextInputViewModelDeprecated!
 
     let intent = TextInputIntent.success
@@ -47,7 +47,7 @@ final class TextInputViewModelDeprecatedTests: XCTestCase {
             background: .purple()
         )
         self.expectedBorderLayout = .mocked(radius: 1, width: 2)
-        self.expectedSpacings = .mocked(left: 1, content: 2, right: 3)
+        self.expectedSpacings = .mocked(horizontal: 1, content: 2)
 
         self.getColorsUseCase = .mocked(returnedColors: self.expectedColors)
         self.getBorderLayoutUseCase = .mocked(returnedBorderLayout: self.expectedBorderLayout)
@@ -104,9 +104,9 @@ final class TextInputViewModelDeprecatedTests: XCTestCase {
         let getSpacingsUseCaseReceivedArguments = try XCTUnwrap(self.getSpacingsUseCase.executeWithThemeAndBorderStyleReceivedArguments, "Couldn't unwrap getSpacingsUseCaseReceivedArguments")
         XCTAssertIdentical(getSpacingsUseCaseReceivedArguments.theme as? ThemeGeneratedMock, self.theme, "Wrong getSpacingsUseCaseReceivedArguments.theme")
         XCTAssertEqual(getSpacingsUseCaseReceivedArguments.borderStyle, .roundedRect, "Wrong getSpacingsUseCaseReceivedArguments.borderStyle")
-        XCTAssertEqual(self.viewModel.leftSpacing, self.expectedSpacings.left, "Wrong leftSpacing")
+        XCTAssertEqual(self.viewModel.leftSpacing, self.expectedSpacings.horizontal, "Wrong horizontalSpacing")
         XCTAssertEqual(self.viewModel.contentSpacing, self.expectedSpacings.content, "Wrong contentSpacing")
-        XCTAssertEqual(self.viewModel.rightSpacing, self.expectedSpacings.right, "Wrong rightSpacing")
+        XCTAssertEqual(self.viewModel.rightSpacing, self.expectedSpacings.horizontal, "Wrong horizontalSpacing")
 
         // THEN - Publishers
         XCTAssertEqual(self.publishers.textColor.sinkCount, 1, "$textColor should have been called once")
@@ -146,7 +146,7 @@ final class TextInputViewModelDeprecatedTests: XCTestCase {
         let newExpectedBorderLayout = TextInputBorderLayout.mocked(radius: 20.0, width: 100.0)
         self.getBorderLayoutUseCase.executeWithThemeAndBorderStyleAndIsFocusedReturnValue = newExpectedBorderLayout
 
-        let newExpectedSpacings = TextInputSpacings.mocked(left: 10, content: 20, right: 30)
+        let newExpectedSpacings = TextInputSpacings.mocked(horizontal: 10, content: 20)
         self.getSpacingsUseCase.executeWithThemeAndBorderStyleReturnValue = newExpectedSpacings
 
         // WHEN
@@ -175,9 +175,9 @@ final class TextInputViewModelDeprecatedTests: XCTestCase {
         XCTAssertEqual(self.getSpacingsUseCase.executeWithThemeAndBorderStyleCallsCount, 1, "getSpacingsUseCase.executeWithThemeAndBorderStyle should have been called once")
         let getSpacingsUseCaseReceivedArguments = try XCTUnwrap(self.getSpacingsUseCase.executeWithThemeAndBorderStyleReceivedArguments, "Couldn't unwrap getSpacingsUseCaseReceivedArguments")
         XCTAssertIdentical(getSpacingsUseCaseReceivedArguments.theme as? ThemeGeneratedMock, newTheme, "Wrong getSpacingsUseCaseReceivedArguments.theme")
-        XCTAssertEqual(self.viewModel.leftSpacing, newExpectedSpacings.left, "Wrong leftSpacing")
+        XCTAssertEqual(self.viewModel.leftSpacing, newExpectedSpacings.horizontal, "Wrong horizontalSpacing")
         XCTAssertEqual(self.viewModel.contentSpacing, newExpectedSpacings.content, "Wrong contentSpacing")
-        XCTAssertEqual(self.viewModel.rightSpacing, newExpectedSpacings.right, "Wrong rightSpacing")
+        XCTAssertEqual(self.viewModel.rightSpacing, newExpectedSpacings.horizontal, "Wrong horizontalSpacing")
 
         // THEN - Publishers
         XCTAssertEqual(self.publishers.textColor.sinkCount, 1, "$textColor should have been called once")
@@ -323,7 +323,7 @@ final class TextInputViewModelDeprecatedTests: XCTestCase {
         let newExpectedBorderLayout = TextInputBorderLayout.mocked(radius: 20.0, width: 100.0)
         self.getBorderLayoutUseCase.executeWithThemeAndBorderStyleAndIsFocusedReturnValue = newExpectedBorderLayout
 
-        let newExpectedSpacings = TextInputSpacings.mocked(left: 10, content: 20, right: 30)
+        let newExpectedSpacings = TextInputSpacings.mocked(horizontal: 10, content: 20)
         self.getSpacingsUseCase.executeWithThemeAndBorderStyleReturnValue = newExpectedSpacings
 
         // WHEN
@@ -343,9 +343,9 @@ final class TextInputViewModelDeprecatedTests: XCTestCase {
         XCTAssertEqual(self.getSpacingsUseCase.executeWithThemeAndBorderStyleCallsCount, 1, "getSpacingsUseCase.executeWithThemeAndBorderStyle should have been called once")
         let getSpacingsUseCaseReceivedArguments = try XCTUnwrap(self.getSpacingsUseCase.executeWithThemeAndBorderStyleReceivedArguments, "Couldn't unwrap getSpacingsUseCaseReceivedArguments")
         XCTAssertEqual(getSpacingsUseCaseReceivedArguments.borderStyle, .none, "Wrong getSpacingsUseCaseReceivedArguments.borderStyle")
-        XCTAssertEqual(self.viewModel.leftSpacing, newExpectedSpacings.left, "Wrong leftSpacing")
+        XCTAssertEqual(self.viewModel.leftSpacing, newExpectedSpacings.horizontal, "Wrong horizontalSpacing")
         XCTAssertEqual(self.viewModel.contentSpacing, newExpectedSpacings.content, "Wrong contentSpacing")
-        XCTAssertEqual(self.viewModel.rightSpacing, newExpectedSpacings.right, "Wrong rightSpacing")
+        XCTAssertEqual(self.viewModel.rightSpacing, newExpectedSpacings.horizontal, "Wrong horizontalSpacing")
 
         // THEN - Publishers
         XCTAssertFalse(self.publishers.textColor.sinkCalled, "$textColor should not have been called")
