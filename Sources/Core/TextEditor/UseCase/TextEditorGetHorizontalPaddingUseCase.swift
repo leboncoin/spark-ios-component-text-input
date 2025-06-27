@@ -10,9 +10,7 @@ import Foundation
 import SparkTheming
 import SwiftUI
 
-// TODO: Test
-
-// sourcery: AutoMockable
+// sourcery: AutoMockable, AutoMockTest
 protocol TextEditorGetHorizontalPaddingUseCaseable {
     func execute(spacings: TextInputSpacings) -> CGFloat
 }

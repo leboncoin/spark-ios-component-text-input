@@ -106,13 +106,28 @@ public final class TextEditorUIView: UITextView {
     @ScaledUIMetric private var scaleCornerRadius: CGFloat = 0
     @ScaledUIMetric private var scaleBorderWidth: CGFloat = 0
 
+
+
+
+    @ScaledUIFrame var height: CGFloat = 0
+    @ScaledUIFrame var imageHeight: CGFloat = 0
+
+    @ScaledUIBorderRadius private var cornerRadius: CGFloat = 0
+    @ScaledUIBorderWidth private var borderWidth: CGFloat = 0
+
+
+
+
+
+
+
     private var heightConstraint: NSLayoutConstraint?
     private var placeholderVerticalPaddingConstraints: [NSLayoutConstraint] = []
     private var placeholderWidthConstraint: NSLayoutConstraint?
     private var placeholderCenterYAnchorConstraint: NSLayoutConstraint?
     private var placeholderCenterXAnchorConstraint: NSLayoutConstraint?
 
-    private let viewModel: TextEditorViewModelDeprecated
+    private let viewModel: TextEditorUIViewModel
 
     private var cancellables = Set<AnyCancellable>()
 

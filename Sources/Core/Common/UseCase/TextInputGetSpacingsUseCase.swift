@@ -9,13 +9,15 @@
 import Foundation
 import SparkTheming
 
-// sourcery: AutoMockable
+// sourcery: AutoMockable, AutoMockTest
 protocol TextInputGetSpacingsUseCaseable {
+    // sourcery: theme = "Identical"
     func execute(
         theme: Theme,
         borderStyle: TextInputBorderStyle
     ) -> TextInputSpacings
 
+    // sourcery: theme = "Identical"
     func execute(theme: Theme) -> TextInputSpacings
 }
 

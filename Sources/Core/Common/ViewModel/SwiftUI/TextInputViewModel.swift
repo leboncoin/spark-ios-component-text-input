@@ -11,6 +11,7 @@ import SwiftUI
 import SparkTheming
 
 /// UseCase only used by **SwiftUI** View.
+// sourcery: AutoPublisherTest, AutoViewModelStub
 internal class TextInputViewModel: ObservableObject {
 
     // MARK: - Published Properties
@@ -19,7 +20,7 @@ internal class TextInputViewModel: ObservableObject {
     @Published private(set) var colors = TextInputColors()
     @Published private(set) var dim: CGFloat = 1
     @Published private(set) var font: Font = .body
-    @Published var spacings = TextInputSpacings() {
+    @Published private(set) var spacings = TextInputSpacings() {
         didSet {
             self.spacingDidUpdate()
         }
@@ -73,20 +74,20 @@ internal class TextInputViewModel: ObservableObject {
 
     // MARK: - Use Case Properties
 
-    private let getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCaseable
-    private let getColorsUseCase: any TextInputGetColorsUseCaseable
-    private let getDimUseCase: any TextInputGetDimUseCaseable
-    private let getFontUseCase: any TextInputGetFontUseCaseable
-    private let getSpacingsUseCase: any TextInputGetSpacingsUseCaseable
+    private let getBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable
+    private let getColorsUseCase: TextInputGetColorsUseCaseable
+    private let getDimUseCase: TextInputGetDimUseCaseable
+    private let getFontUseCase: TextInputGetFontUseCaseable
+    private let getSpacingsUseCase: TextInputGetSpacingsUseCaseable
 
     // MARK: - Initialization
 
     init(
-        getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCaseable = TextInputGetBorderLayoutUseCase(),
-        getColorsUseCase: any TextInputGetColorsUseCaseable = TextInputGetColorsUseCase(),
-        getDimUseCase: any TextInputGetDimUseCaseable = TextInputGetDimUseCase(),
-        getFontUseCase: any TextInputGetFontUseCaseable = TextInputGetFontUseCase(),
-        getSpacingsUseCase: any TextInputGetSpacingsUseCaseable = TextInputGetSpacingsUseCase()
+        getBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable = TextInputGetBorderLayoutUseCase(),
+        getColorsUseCase: TextInputGetColorsUseCaseable = TextInputGetColorsUseCase(),
+        getDimUseCase: TextInputGetDimUseCaseable = TextInputGetDimUseCase(),
+        getFontUseCase: TextInputGetFontUseCaseable = TextInputGetFontUseCase(),
+        getSpacingsUseCase: TextInputGetSpacingsUseCaseable = TextInputGetSpacingsUseCase()
     ) {
         self.getBorderLayoutUseCase = getBorderLayoutUseCase
         self.getColorsUseCase = getColorsUseCase
@@ -174,7 +175,7 @@ internal class TextInputViewModel: ObservableObject {
             return
         }
 
-        self.font = self.getFontUseCase.execute(theme: theme).font
+        self.font = self.getFontUseCase.executeFont(theme: theme)
     }
 
     // MARK: - Update

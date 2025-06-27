@@ -10,7 +10,7 @@ import Foundation
 import SparkTheming
 import SwiftUI
 
-// sourcery: AutoMockable
+// sourcery: AutoMockable, AutoMockTest
 protocol TextFieldGetContentPaddingUseCaseable {
     func execute(spacings: TextInputSpacings, isClearButton: Bool) -> TextFieldContentPadding
 }

@@ -11,10 +11,10 @@ import SparkTheming
 import SwiftUI
 @_spi(SI_SPI) import SparkCommon
 
-// sourcery: AutoMockable
+// sourcery: AutoMockable, AutoMockTest
 protocol TextFieldGetAddonPaddingUseCaseable {
-    func executeLeft(spacings: TextInputSpacings, configuration: TextFieldAddonConfiguration) -> EdgeInsets
-    func executeRight(spacings: TextInputSpacings, configuration: TextFieldAddonConfiguration) -> EdgeInsets
+    func executeLeft(spacings: TextInputSpacings, configuration leftConfiguration: TextFieldAddonConfiguration) -> EdgeInsets
+    func executeRight(spacings: TextInputSpacings, configuration rightConfiguration: TextFieldAddonConfiguration) -> EdgeInsets
 }
 
 final class TextFieldGetAddonPaddingUseCase: TextFieldGetAddonPaddingUseCaseable {

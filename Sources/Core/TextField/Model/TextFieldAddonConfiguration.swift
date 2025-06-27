@@ -9,7 +9,7 @@
 import Foundation
 
 /// The view configuration for the TextField Addon for **SwiftUI**.
-public struct TextFieldAddonConfiguration: Equatable {
+struct TextFieldAddonConfiguration: Equatable {
 
     // MARK: - Properties
 
@@ -24,7 +24,9 @@ public struct TextFieldAddonConfiguration: Equatable {
     ///   - hasPadding: Add a padding or not on the addon. Default is **false**.
     ///   - hasSeparator: Add a separator on the addon. Default is **false**.
     ///   - layoutPriority: The layout priority of the addon. Default is **1**.
-    public init(hasPadding: Bool = false, hasSeparator: Bool = false, layoutPriority: CGFloat = 1.0) {
+    ///
+    /// Default values MUST be equals to the *sparkTextFieldLeftAddonConfiguration* and *sparkTextFieldRightAddonConfiguration* parameters.
+    init(hasPadding: Bool = false, hasSeparator: Bool = false, layoutPriority: CGFloat = 1.0) {
         self.hasPadding = hasPadding
         self.hasSeparator = hasSeparator
         self.layoutPriority = layoutPriority

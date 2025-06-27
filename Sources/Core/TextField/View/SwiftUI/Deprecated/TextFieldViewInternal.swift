@@ -17,7 +17,7 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
     @ScaledMetric private var height: CGFloat = TextInputConstants.height
     @ScaledMetric private var scaleFactor: CGFloat = 1.0
 
-    @ObservedObject private var viewModel: TextInputViewModelDeprecated
+    @ObservedObject private var viewModel: TextInputUIViewModel
     @Binding private var text: String
 
     @State var textFieldID: String = UUID().uuidString
@@ -34,7 +34,7 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
 
     init(titleKey: LocalizedStringKey,
          text: Binding<String>,
-         viewModel: TextInputViewModelDeprecated,
+         viewModel: TextInputUIViewModel,
          type: TextFieldViewType,
          leftView: @escaping (() -> LeftView),
          rightView: @escaping (() -> RightView)) {

@@ -1,5 +1,5 @@
 //
-//  TextInputViewModelDeprecatedTests.swift
+//  TextInputUIViewModelTests.swift
 //  SparkTextFieldUnitTests
 //
 //  Created by louis.borlee on 01/02/2024.
@@ -16,7 +16,7 @@ import SwiftUI
 @_spi(SI_SPI) import SparkThemingTesting
 import SparkTheming
 
-final class TextInputViewModelDeprecatedTests: XCTestCase {
+final class TextInputUIViewModelTests: XCTestCase {
 
     // MARK: - Properties
 
@@ -25,7 +25,7 @@ final class TextInputViewModelDeprecatedTests: XCTestCase {
     var getColorsUseCase: TextInputGetColorsUseCaseableGeneratedMock!
     var getBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseableGeneratedMock!
     var getSpacingsUseCase: TextInputGetSpacingsUseCaseableGeneratedMock!
-    private var viewModel: TextInputViewModelDeprecated!
+    private var viewModel: TextInputUIViewModel!
 
     let intent = TextInputIntent.success
     let borderStyle = TextInputBorderStyle.roundedRect

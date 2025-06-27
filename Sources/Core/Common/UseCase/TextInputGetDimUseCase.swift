@@ -9,8 +9,9 @@
 import Foundation
 import SparkTheming
 
-// sourcery: AutoMockable
+// sourcery: AutoMockable, AutoMockTest
 protocol TextInputGetDimUseCaseable {
+    // sourcery: theme = "Identical"
     func execute(theme: Theme, isEnabled: Bool) -> CGFloat
 }
 

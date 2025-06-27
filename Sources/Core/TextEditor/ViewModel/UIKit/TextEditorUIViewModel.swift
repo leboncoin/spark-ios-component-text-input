@@ -1,5 +1,5 @@
 //
-//  TextEditorViewModelDeprecated.swift
+//  TextEditorUIViewModel.swift
 //  SparkEditor
 //
 //  Created by robin.lemaire on 05/09/2024.
@@ -10,7 +10,8 @@ import Foundation
 import SparkTheming
 
 // sourcery: AutoPublisherTest, AutoViewModelStub
-final class TextEditorViewModelDeprecated: TextInputViewModelDeprecated {
+/// UseCase only used by **UIKit** TextEditor View.
+final class TextEditorUIViewModel: TextInputUIViewModel {
 
     // MARK: - Published Properties
 

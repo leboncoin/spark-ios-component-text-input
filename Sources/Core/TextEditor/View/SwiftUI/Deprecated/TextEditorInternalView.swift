@@ -22,14 +22,14 @@ internal struct TextEditorInternalView: View {
     @ScaledMetric private var horizontalPadding: CGFloat
     @ScaledMetric private var scaleFactor: CGFloat = 1.0
 
-    @ObservedObject private var viewModel: TextEditorViewModelDeprecated
+    @ObservedObject private var viewModel: TextEditorUIViewModel
 
     // MARK: - Initialization
 
     init(
         title: String,
         text: Binding<String>,
-        viewModel: TextEditorViewModelDeprecated
+        viewModel: TextEditorUIViewModel
     ) {
         self.title = title
         self._text = text
@@ -46,7 +46,7 @@ internal struct TextEditorInternalView: View {
     ) {
         self.title = title
         self._text = text
-        let viewModel = TextEditorViewModelDeprecated(
+        let viewModel = TextEditorUIViewModel(
             theme: theme,
             intent: intent
         )

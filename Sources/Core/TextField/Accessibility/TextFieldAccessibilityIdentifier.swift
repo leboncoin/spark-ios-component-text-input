@@ -6,11 +6,13 @@
 //  Copyright © 2024 Leboncoin. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 /// The accessibility identifiers for the textfield.
 public enum TextFieldAccessibilityIdentifier {
 
+    /// The textfield container accessibility identifier.
+    public static let container = "spark-textfield-container"
     /// The textfield accessibility identifier.
     public static let view = "spark-textfield"
     /// The textfield clear button accessibility identifier.

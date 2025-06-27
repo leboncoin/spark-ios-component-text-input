@@ -21,7 +21,7 @@ final class TextFieldViewModelForAddonsTests: XCTestCase {
 
     // MARK: - Properties
 
-    private let superTests: TextInputViewModelDeprecatedTests = .init()
+    private let superTests: TextInputUIViewModelTests = .init()
     private var viewModel: TextFieldViewModelForAddons!
 
     // MARK: - Setup

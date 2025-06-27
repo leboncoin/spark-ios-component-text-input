@@ -11,6 +11,7 @@ import SwiftUI
 import SparkTheming
 
 /// UseCase only used by **SwiftUI** TextField View.
+// sourcery: AutoPublisherTest, AutoViewModelStub
 internal final class TextFieldViewModel: TextInputViewModel {
 
     // MARK: - Published Properties
@@ -38,14 +39,14 @@ internal final class TextFieldViewModel: TextInputViewModel {
     var leftAddonConfiguration: TextFieldAddonConfiguration? {
         didSet {
             guard oldValue != self.leftAddonConfiguration, self.alreadyUpdateAll else { return }
-            self.setAddonPadding()
+            self.setLeftAddonPadding()
         }
     }
 
     var rightAddonConfiguration: TextFieldAddonConfiguration? {
         didSet {
             guard oldValue != self.rightAddonConfiguration, self.alreadyUpdateAll else { return }
-            self.setAddonPadding()
+            self.setRightAddonPadding()
         }
     }
 
@@ -53,22 +54,21 @@ internal final class TextFieldViewModel: TextInputViewModel {
         didSet {
             guard oldValue != self.isFocused, self.alreadyUpdateAll else { return }
             self.setIsClearButton()
-            // TODO: check if the didSet on parent is also called
         }
     }
 
     // MARK: - Use Case Properties
 
-    private let getAddonPaddingUseCase: any TextFieldGetAddonPaddingUseCaseable
-    private let getIsClearButtonUseCase: any TextFieldGetIsClearButtonUseCaseable
-    private let getContentPaddingUseCase: any TextFieldGetContentPaddingUseCaseable
+    private let getAddonPaddingUseCase: TextFieldGetAddonPaddingUseCaseable
+    private let getIsClearButtonUseCase: TextFieldGetIsClearButtonUseCaseable
+    private let getContentPaddingUseCase: TextFieldGetContentPaddingUseCaseable
 
     // MARK: - Initialization
 
     init(
-        getAddonPaddingUseCase: any TextFieldGetAddonPaddingUseCaseable = TextFieldGetAddonPaddingUseCase(),
-        getIsClearButtonUseCase: any TextFieldGetIsClearButtonUseCaseable = TextFieldGetIsClearButtonUseCase(),
-        getContentPaddingUseCase: any TextFieldGetContentPaddingUseCaseable = TextFieldGetContentPaddingUseCase()
+        getAddonPaddingUseCase: TextFieldGetAddonPaddingUseCaseable = TextFieldGetAddonPaddingUseCase(),
+        getIsClearButtonUseCase: TextFieldGetIsClearButtonUseCaseable = TextFieldGetIsClearButtonUseCase(),
+        getContentPaddingUseCase: TextFieldGetContentPaddingUseCaseable = TextFieldGetContentPaddingUseCase()
     ) {
         self.getAddonPaddingUseCase = getAddonPaddingUseCase
         self.getIsClearButtonUseCase = getIsClearButtonUseCase
@@ -97,6 +97,8 @@ internal final class TextFieldViewModel: TextInputViewModel {
             isEnabled: isEnabled
         )
 
+        self.setIsClearButton()
+
         self.alreadyUpdateAll = true
     }
 
@@ -120,14 +122,21 @@ internal final class TextFieldViewModel: TextInputViewModel {
         )
     }
 
-    private func setAddonPadding() {
+    private func setAddonsPadding() {
+        self.setLeftAddonPadding()
+        self.setRightAddonPadding()
+    }
+
+    private func setLeftAddonPadding() {
         if let leftAddonConfiguration {
             self.leftAddonPadding = self.getAddonPaddingUseCase.executeLeft(
                 spacings: self.spacings,
                 configuration: leftAddonConfiguration
             )
         }
+    }
 
+    private func setRightAddonPadding() {
         if let rightAddonConfiguration {
             self.rightAddonPadding = self.getAddonPaddingUseCase.executeRight(
                 spacings: self.spacings,
@@ -140,6 +149,6 @@ internal final class TextFieldViewModel: TextInputViewModel {
 
     override func spacingDidUpdate() {
         self.setContentPadding()
-        self.setAddonPadding()
+        self.setAddonsPadding()
     }
 }

@@ -12,7 +12,8 @@ import Combine
 @_spi(SI_SPI) import SparkCommon
 import SparkTheming
 
-class TextInputViewModelDeprecated: ObservableObject {
+/// UseCase only used by **UIKit** View.
+class TextInputUIViewModel: ObservableObject {
 
     // MARK: - Published Properties
 

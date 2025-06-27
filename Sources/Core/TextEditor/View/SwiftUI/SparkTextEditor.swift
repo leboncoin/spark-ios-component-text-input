@@ -10,8 +10,54 @@ import SwiftUI
 @_spi(SI_SPI) import SparkCommon
 import SparkTheming
 
-// TODO: comment
-// TODO: add example
+/// A **Spark** view that can display and edit long-form text.
+///
+/// A text editor view allows you to display and edit multiline, scrollable
+/// text in your app's user interface.
+///
+/// If you want to have a *clear button*, you must use the **Spark** **FormField**
+///
+/// **Default values** :
+/// - **intent**: .neutral
+/// - **readOnly**: false
+///
+/// Implementation example :
+/// ```swift
+/// struct MyView: View {
+///     let theme: SparkTheming.Theme = MyTheme()
+///     @State var text = ""
+///
+///     var body: some View {
+///         SparkTextEditor(
+///             "My placeholder",
+///             text: self.$text,
+///             theme: self.theme
+///         )
+///         .sparkTextEditorIntent(.success)
+///         .sparkTextEditorReadOnly(false)
+///     }
+/// }
+/// ```
+///
+/// Some environment values are used by the ``SparkTextEditor``:
+/// - Intent:
+/// ```swift
+/// SparkTextEditor(
+///     "My placeholder",
+///     text: self.$text,
+///     theme: self.theme
+/// )
+/// .sparkTextEditorIntent(.success)
+/// ```
+/// - Read Only:
+/// ```swift
+/// SparkTextEditor(
+///     "My placeholder",
+///     text: self.$text,
+///     theme: self.theme
+/// )
+/// .sparkTextEditorReadOnly(false)
+/// ```
 // TODO: add screenshot
 public struct SparkTextEditor: View {
 
@@ -22,9 +68,9 @@ public struct SparkTextEditor: View {
 
     @Binding private var text: String
 
-    @Environment(\.isEnabled) private var isEnabled: Bool
-    @Environment(\.textFieldIntent) private var intent // TODO: texEditor
-    @Environment(\.textFieldReadOnly) private var isReadOnly // TODO: texEditor
+    @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.textEditorIntent) private var intent
+    @Environment(\.textEditorReadOnly) private var isReadOnly
 
     @FocusState private var isFocused: Bool
 
@@ -39,7 +85,22 @@ public struct SparkTextEditor: View {
     ///   - title: The texteditor's current placeholder.
     ///   - text: The texteditor's text binding.
     ///   - theme: The texteditor's current theme.
-    // TODO: add example
+    ///
+    /// Implementation example :
+    /// ```swift
+    /// struct MyView: View {
+    ///     let theme: SparkTheming.Theme = MyTheme()
+    ///     @State var text = ""
+    ///
+    ///     var body: some View {
+    ///         SparkTextEditor(
+    ///             "My placeholder",
+    ///             text: self.$text,
+    ///             theme: self.theme
+    ///         )
+    ///     }
+    /// }
+    // TODO: add screenshot
     public init(
         _ title: String,
         text: Binding<String>,
@@ -58,7 +119,6 @@ public struct SparkTextEditor: View {
                 .foregroundStyle(self.viewModel.colors.placeholder)
                 .opacity(self.text.isEmpty ? 1.0 : 0.0)
                 .disabled(true)
-                .scaledFrame(minHeight: self.minHeight) // TODO: Needed ?!
 
             TextEditor(text: self.$text)
                 .foregroundStyle(self.viewModel.colors.text)
@@ -68,10 +128,9 @@ public struct SparkTextEditor: View {
         }
         .font(self.viewModel.font)
         .scaledFrame(minHeight: self.minHeight)
-        .padding(.zero) // TODO: Needed ?!
         .scrollContentBackground(.hidden)
         .scaledPadding(.horizontal, self.viewModel.horizontalPadding)
-        .background(self.viewModel.colors.background) // TODO: Not in the previous components
+        .background(self.viewModel.colors.background)
         .scaledBorder(
             width: self.viewModel.borderLayout.width,
             radius: self.viewModel.borderLayout.radius,
@@ -79,10 +138,11 @@ public struct SparkTextEditor: View {
         )
         .opacity(self.viewModel.dim)
         .allowsHitTesting(!self.isReadOnly)
+        .dynamicTypeSize(...DynamicTypeSize.accessibility3)
         .accessibilityElement()
-        .accessibilityIdentifier(TextEditorAccessibilityIdentifier.view)
         .accessibilityLabel(self.title)
         .accessibilityValue(self.text)
+        .accessibilityIdentifier(TextEditorAccessibilityIdentifier.view)
         .onAppear() {
             self.viewModel.updateAll(
                 theme: self.theme,

@@ -18,7 +18,7 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
     private let titleKey: LocalizedStringKey
     private let text: Binding<String>
     private let type: TextFieldViewType
-    private let viewModel: TextInputViewModelDeprecated
+    private let viewModel: TextInputUIViewModel
     private let leftView: () -> LeftView
     private let rightView: () -> RightView
 
@@ -30,7 +30,7 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
     init(
         titleKey: LocalizedStringKey,
         text: Binding<String>,
-        viewModel: TextInputViewModelDeprecated,
+        viewModel: TextInputUIViewModel,
         type: TextFieldViewType,
         leftView: @escaping (() -> LeftView),
         rightView: @escaping (() -> RightView)
@@ -54,7 +54,7 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
         leftView: @escaping (() -> LeftView),
         rightView: @escaping (() -> RightView)
     ) {
-        let viewModel = TextInputViewModelDeprecated(
+        let viewModel = TextInputUIViewModel(
             theme: theme,
             intent: intent,
             borderStyle: borderStyle

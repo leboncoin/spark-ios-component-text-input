@@ -10,7 +10,7 @@ import UIKit
 import Combine
 import SparkTheming
 
-final class TextFieldViewModelForAddons: TextInputViewModelDeprecated {
+final class TextFieldViewModelForAddons: TextInputUIViewModel {
 
     override var backgroundColor: any ColorToken {
         get {

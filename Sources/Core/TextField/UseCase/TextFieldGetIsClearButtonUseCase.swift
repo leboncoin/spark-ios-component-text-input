@@ -9,7 +9,7 @@
 import Foundation
 import SparkTheming
 
-// sourcery: AutoMockable
+// sourcery: AutoMockable, AutoMockTest
 protocol TextFieldGetIsClearButtonUseCaseable {
     func execute(clearMode: TextFieldClearMode, isFocused: Bool) -> Bool
 }

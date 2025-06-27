@@ -9,14 +9,16 @@
 import Foundation
 import SparkTheming
 
-// sourcery: AutoMockable
+// sourcery: AutoMockable, AutoMockTest
 protocol TextInputGetBorderLayoutUseCaseable {
+    // sourcery: theme = "Identical"
     func execute(
         theme: Theme,
         borderStyle: TextInputBorderStyle,
         isFocused: Bool
     ) -> TextInputBorderLayout
 
+    // sourcery: theme = "Identical"
     func execute(
         theme: Theme,
         isFocused: Bool

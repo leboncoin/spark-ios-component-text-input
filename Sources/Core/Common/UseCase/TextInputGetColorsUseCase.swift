@@ -9,8 +9,9 @@
 import Foundation
 import SparkTheming
 
-// sourcery: AutoMockable
+// sourcery: AutoMockable, AutoMockTest
 protocol TextInputGetColorsUseCaseable {
+    // sourcery: theme = "Identical"
     func execute(
         theme: Theme,
         intent: TextInputIntent,

@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Model only used by SwiftUI.
+/// Model only used by **SwiftUI**.
 struct TextFieldContentPadding: Equatable {
 
     // MARK: - Properties

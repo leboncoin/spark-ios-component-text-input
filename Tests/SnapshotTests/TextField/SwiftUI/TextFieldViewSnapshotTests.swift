@@ -102,3 +102,18 @@ private extension TextFieldAddonConfiguration {
         )
     }
 }
+
+private extension View {
+
+    func sparkTextFieldLeftAddonConfiguration(
+        _ configuration: TextFieldAddonConfiguration
+    ) -> some View {
+        return self.environment(\.textFieldLeftAddonConfiguration, configuration)
+    }
+
+    func sparkTextFieldRightAddonConfiguration(
+        _ configuration: TextFieldAddonConfiguration
+    ) -> some View {
+        return self.environment(\.textFieldRightAddonConfiguration, configuration)
+    }
+}

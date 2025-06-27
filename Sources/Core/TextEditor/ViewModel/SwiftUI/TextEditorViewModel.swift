@@ -11,6 +11,7 @@ import SwiftUI
 import SparkTheming
 
 /// UseCase only used by **SwiftUI** TextEditor View.
+// sourcery: AutoPublisherTest, AutoViewModelStub
 internal final class TextEditorViewModel: TextInputViewModel {
 
     // MARK: - Published Properties
@@ -19,12 +20,12 @@ internal final class TextEditorViewModel: TextInputViewModel {
 
     // MARK: - Use Case Properties
 
-    private let getHorizontalPaddingUseCase: any TextEditorGetHorizontalPaddingUseCaseable
+    private let getHorizontalPaddingUseCase: TextEditorGetHorizontalPaddingUseCaseable
 
     // MARK: - Initialization
 
     init(
-        getHorizontalPaddingUseCase: any TextEditorGetHorizontalPaddingUseCaseable = TextEditorGetHorizontalPaddingUseCase()
+        getHorizontalPaddingUseCase: TextEditorGetHorizontalPaddingUseCaseable = TextEditorGetHorizontalPaddingUseCase()
     ) {
         self.getHorizontalPaddingUseCase = getHorizontalPaddingUseCase
     }

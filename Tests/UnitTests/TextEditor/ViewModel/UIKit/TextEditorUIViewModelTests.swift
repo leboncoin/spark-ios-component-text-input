@@ -1,5 +1,5 @@
 //
-//  TextEditorViewModelDeprecatedTests.swift
+//  TextEditorUIViewModelTests.swift
 //  SparkTextEditorUnitTests
 //
 //  Created by robin.lemaire on 13/11/2023.
@@ -17,7 +17,7 @@ import SparkTheming
 import SparkTheme
 import Combine
 
-final class TextEditorViewModelDeprecatedTests: XCTestCase {
+final class TextEditorUIViewModelTests: XCTestCase {
 
     // MARK: - Properties
 
@@ -46,14 +46,14 @@ final class TextEditorViewModelDeprecatedTests: XCTestCase {
         // Published properties
 
         // Should Update Vertical Spacing
-        TextEditorViewModelDeprecatedPublisherTest.XCTAssert(
+        TextEditorUIViewModelPublisherTest.XCTAssert(
             updateVerticalSpacingCounter: stub.updateVerticalSpacingCounterPublisherMock,
             expectedNumberOfSinks: 1,
             expectedValue: 0
         )
 
         // Is Placeholder
-        TextEditorViewModelDeprecatedPublisherTest.XCTAssert(
+        TextEditorUIViewModelPublisherTest.XCTAssert(
             shouldShowPlaceholder: stub.shouldShowPlaceholderPublisherMock,
             expectedNumberOfSinks: 1,
             expectedValue: true
@@ -100,13 +100,13 @@ final class TextEditorViewModelDeprecatedTests: XCTestCase {
         // Published properties
 
         // Should Update Vertical Spacing
-        TextEditorViewModelDeprecatedPublisherTest.XCTSinksCount(
+        TextEditorUIViewModelPublisherTest.XCTSinksCount(
             updateVerticalSpacingCounter: stub.updateVerticalSpacingCounterPublisherMock,
             expectedNumberOfSinks: 0
         )
 
         // Is Placeholder
-        TextEditorViewModelDeprecatedPublisherTest.XCTAssert(
+        TextEditorUIViewModelPublisherTest.XCTAssert(
             shouldShowPlaceholder: stub.shouldShowPlaceholderPublisherMock,
             expectedNumberOfSinks: 1,
             expectedValue: expectedShouldShowPlaceholder
@@ -138,14 +138,14 @@ final class TextEditorViewModelDeprecatedTests: XCTestCase {
         // Published properties
 
         // Should Update Vertical Spacing
-        TextEditorViewModelDeprecatedPublisherTest.XCTAssert(
+        TextEditorUIViewModelPublisherTest.XCTAssert(
             updateVerticalSpacingCounter: stub.updateVerticalSpacingCounterPublisherMock,
             expectedNumberOfSinks: 1,
             expectedValue: 1
         )
 
         // Is Placeholder
-        TextEditorViewModelDeprecatedPublisherTest.XCTSinksCount(
+        TextEditorUIViewModelPublisherTest.XCTSinksCount(
             shouldShowPlaceholder: stub.shouldShowPlaceholderPublisherMock,
             expectedNumberOfSinks: 0
         )
@@ -181,13 +181,13 @@ final class TextEditorViewModelDeprecatedTests: XCTestCase {
         // Published properties
 
         // Should Update Vertical Spacing
-        TextEditorViewModelDeprecatedPublisherTest.XCTSinksCount(
+        TextEditorUIViewModelPublisherTest.XCTSinksCount(
             updateVerticalSpacingCounter: stub.updateVerticalSpacingCounterPublisherMock,
             expectedNumberOfSinks: 0
         )
 
         // Is Placeholder
-        TextEditorViewModelDeprecatedPublisherTest.XCTSinksCount(
+        TextEditorUIViewModelPublisherTest.XCTSinksCount(
             shouldShowPlaceholder: stub.shouldShowPlaceholderPublisherMock,
             expectedNumberOfSinks: 0
         )
@@ -204,7 +204,7 @@ final class TextEditorViewModelDeprecatedTests: XCTestCase {
     }
 }
 
-private final class Stub: TextEditorViewModelDeprecatedStub {
+private final class Stub: TextEditorUIViewModelStub {
 
     // MARK: - Properties
 
@@ -223,7 +223,7 @@ private final class Stub: TextEditorViewModelDeprecatedStub {
 
         // **
         // View Model
-        let viewModel = TextEditorViewModelDeprecated(
+        let viewModel = TextEditorUIViewModel(
             theme: self.themeMock,
             intent: .neutral,
             getVerticalSpacingUseCase: getVerticalSpacingUseCaseMock

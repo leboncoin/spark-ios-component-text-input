@@ -8,10 +8,15 @@
 
 import Foundation
 import SparkTheming
+import SwiftUI
 
-// sourcery: AutoMockable
+// sourcery: AutoMockable, AutoMockTest
 protocol TextInputGetFontUseCaseable {
+    // sourcery: theme = "Identical", return = "Identical"
     func execute(theme: Theme) -> any TypographyFontToken
+
+    // sourcery: theme = "Identical"
+    func executeFont(theme: Theme) -> Font
 }
 
 final class TextInputGetFontUseCase: TextInputGetFontUseCaseable {
@@ -20,5 +25,9 @@ final class TextInputGetFontUseCase: TextInputGetFontUseCaseable {
 
     func execute(theme: Theme) -> any TypographyFontToken {
         theme.typography.body1
+    }
+
+    func executeFont(theme: Theme) -> Font {
+        self.execute(theme: theme).font
     }
 }
