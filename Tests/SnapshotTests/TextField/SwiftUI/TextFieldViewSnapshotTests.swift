@@ -17,21 +17,21 @@ import SparkTheme
 import SwiftUI
 
 final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
-    
+
     // MARK: - Properties
-    
+
     private let theme: Theme = SparkTheme.shared
-    
+
     // MARK: - Tests
-    
+
     func test() throws {
         let scenarios = TextFieldScenarioSnapshotTests.allCases
-        
+
         for scenario in scenarios {
             let configurations: [TextFieldConfigurationSnapshotTests] = try scenario.configuration(
                 isSwiftUIComponent: true
             )
-            
+
             for configuration in configurations {
                 let view = SparkTextField(
                     LocalizedStringKey(configuration.placeholder.text ?? ""),
@@ -58,7 +58,7 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
                     .sparkTextFieldRightAddonConfiguration(.init(configuration: configuration))
                     .disabled(!configuration.state.isEnabled)
                     .style(forDocumentation: false)
-                
+
                 self.assertSnapshot(
                     matching: view,
                     modes: configuration.modes,
@@ -68,9 +68,9 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
             }
         }
     }
-    
+
     // MARK: - View Builder
-    
+
     @ViewBuilder
     private func sideView(from sideType: TextFieldSideViewType) -> some View {
         switch sideType {
@@ -87,7 +87,7 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
 // MARK: - Extension
 
 private extension TextFieldAddonConfiguration {
-    
+
     init(configuration: TextFieldConfigurationSnapshotTests) {
         self.init(
             hasPadding: configuration.isAddonsPadding,
@@ -97,19 +97,19 @@ private extension TextFieldAddonConfiguration {
 }
 
 private extension View {
-    
+
     func sparkTextFieldLeftAddonConfiguration(
         _ configuration: TextFieldAddonConfiguration
     ) -> some View {
         return self.environment(\.textFieldLeftAddonConfiguration, configuration)
     }
-    
+
     func sparkTextFieldRightAddonConfiguration(
         _ configuration: TextFieldAddonConfiguration
     ) -> some View {
         return self.environment(\.textFieldRightAddonConfiguration, configuration)
     }
-    
+
     @ViewBuilder
     func style(forDocumentation: Bool) -> some View {
         if forDocumentation {
