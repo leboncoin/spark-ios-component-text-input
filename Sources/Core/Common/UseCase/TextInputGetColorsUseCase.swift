@@ -9,18 +9,19 @@
 import Foundation
 import SparkTheming
 
-// sourcery: AutoMockable
-protocol TextInputGetColorsUseCasable {
+// sourcery: AutoMockable, AutoMockTest
+protocol TextInputGetColorsUseCaseable {
+    // sourcery: theme = "Identical"
     func execute(
         theme: Theme,
         intent: TextInputIntent,
         isFocused: Bool,
         isEnabled: Bool,
         isReadOnly: Bool
-    ) -> TextFieldColors
+    ) -> TextInputColors
 }
 
-struct TextInputGetColorsUseCase: TextInputGetColorsUseCasable {
+struct TextInputGetColorsUseCase: TextInputGetColorsUseCaseable {
 
     // MARK: - Methods
 
@@ -30,7 +31,7 @@ struct TextInputGetColorsUseCase: TextInputGetColorsUseCasable {
         isFocused: Bool,
         isEnabled: Bool,
         isReadOnly: Bool
-    ) -> TextFieldColors {
+    ) -> TextInputColors {
         let text = theme.colors.base.onSurface
         let placeholder = theme.colors.base.onSurface.opacity(theme.dims.dim1)
 

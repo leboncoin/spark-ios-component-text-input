@@ -32,9 +32,9 @@ final class TextFieldAddonsViewModel: ObservableObject, Updateable {
 
     init(theme: Theme,
          intent: TextInputIntent,
-         getColorsUseCase: TextInputGetColorsUseCasable = TextInputGetColorsUseCase(),
-         getBorderLayoutUseCase: TextInputGetBorderLayoutUseCasable = TextInputGetBorderLayoutUseCase(),
-         getSpacingsUseCase: TextInputGetSpacingsUseCasable = TextInputGetSpacingsUseCase()) {
+         getColorsUseCase: TextInputGetColorsUseCaseable = TextInputGetColorsUseCase(),
+         getBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable = TextInputGetBorderLayoutUseCase(),
+         getSpacingsUseCase: TextInputGetSpacingsUseCaseable = TextInputGetSpacingsUseCase()) {
         let viewModel = TextFieldViewModelForAddons(
             theme: theme,
             intent: intent,

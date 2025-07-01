@@ -1,5 +1,5 @@
 //
-//  TextInputGetColorsUseCasableGeneratedMock+ExtensionTests.swift
+//  TextInputGetColorsUseCaseableGeneratedMock+ExtensionTests.swift
 //  SparkTextFieldUnitTests
 //
 //  Created by louis.borlee on 01/02/2024.
@@ -9,9 +9,9 @@
 import Foundation
 @testable import SparkTextInput
 
-extension TextInputGetColorsUseCasableGeneratedMock {
-    static func mocked(returnedColors: TextFieldColors) -> TextInputGetColorsUseCasableGeneratedMock {
-        let mock = TextInputGetColorsUseCasableGeneratedMock()
+extension TextInputGetColorsUseCaseableGeneratedMock {
+    static func mocked(returnedColors: TextInputColors) -> TextInputGetColorsUseCaseableGeneratedMock {
+        let mock = TextInputGetColorsUseCaseableGeneratedMock()
         mock.executeWithThemeAndIntentAndIsFocusedAndIsEnabledAndIsReadOnlyReturnValue = returnedColors
         return mock
     }

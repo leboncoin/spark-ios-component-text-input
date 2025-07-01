@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(*, deprecated, message: "With SparkTextField, this PreferenceKey is no longer usefull.")
 struct TextFieldFocusPreferenceKey: PreferenceKey {
     static var defaultValue: Bool = false
 

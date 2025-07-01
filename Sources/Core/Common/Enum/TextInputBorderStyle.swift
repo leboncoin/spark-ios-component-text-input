@@ -1,6 +1,6 @@
 //
 //  TextInputBorderStyle.swift
-//  Spark
+//  SparkTextInputUnitTests
 //
 //  Created by Jacklyn Situmorang on 18.10.23.
 //  Copyright © 2023 Leboncoin. All rights reserved.
@@ -11,6 +11,12 @@ import UIKit
 enum TextInputBorderStyle: CaseIterable {
     case roundedRect
     case none
+
+    // MARK: - Properties
+
+    static var `default` = Self.roundedRect
+
+    // MARK: - Initialization
 
     init(_ borderStyle: UITextField.BorderStyle) {
         switch borderStyle {
@@ -23,6 +29,9 @@ enum TextInputBorderStyle: CaseIterable {
 }
 
 extension UITextField.BorderStyle {
+
+    // MARK: - Initialization
+
     init(_ borderStyle: TextInputBorderStyle) {
         switch borderStyle {
         case .roundedRect:
@@ -30,6 +39,5 @@ extension UITextField.BorderStyle {
         case .none:
             self = .none
         }
-
     }
 }
