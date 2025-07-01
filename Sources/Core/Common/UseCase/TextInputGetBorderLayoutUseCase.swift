@@ -9,32 +9,47 @@
 import Foundation
 import SparkTheming
 
-// sourcery: AutoMockable
-protocol TextInputGetBorderLayoutUseCasable {
+// sourcery: AutoMockable, AutoMockTest
+protocol TextInputGetBorderLayoutUseCaseable {
+    // sourcery: theme = "Identical"
     func execute(
         theme: Theme,
         borderStyle: TextInputBorderStyle,
         isFocused: Bool
     ) -> TextInputBorderLayout
+
+    // sourcery: theme = "Identical"
+    func execute(
+        theme: Theme,
+        isFocused: Bool
+    ) -> TextInputBorderLayout
 }
 
-final class TextInputGetBorderLayoutUseCase: TextInputGetBorderLayoutUseCasable {
+final class TextInputGetBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable {
+
     func execute(
         theme: Theme,
         borderStyle: TextInputBorderStyle,
         isFocused: Bool
     ) -> TextInputBorderLayout {
-        switch borderStyle {
+        return switch borderStyle {
         case .none:
-            return .init(
+            .init(
                 radius: theme.border.radius.none,
                 width: theme.border.width.none
             )
         case .roundedRect:
-            return .init(
-                radius: theme.border.radius.large,
-                width: isFocused ? theme.border.width.medium : theme.border.width.small
-            )
+            self.execute(theme: theme, isFocused: isFocused)
         }
+    }
+
+    func execute(
+        theme: Theme,
+        isFocused: Bool
+    ) -> TextInputBorderLayout {
+        return .init(
+            radius: theme.border.radius.large,
+            width: isFocused ? theme.border.width.medium : theme.border.width.small
+        )
     }
 }

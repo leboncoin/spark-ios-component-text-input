@@ -16,7 +16,7 @@ public final class TextFieldUIView: UITextField {
 
     // MARK: - Properties
 
-    private let viewModel: TextInputViewModel
+    private let viewModel: TextInputUIViewModel
     private var cancellables = Set<AnyCancellable>()
 
     @ScaledUIMetric private var height: CGFloat = TextInputConstants.height
@@ -77,7 +77,7 @@ public final class TextFieldUIView: UITextField {
 
     // MARK: - Initialization
 
-    internal init(viewModel: TextInputViewModel) {
+    internal init(viewModel: TextInputUIViewModel) {
         self.viewModel = viewModel
         super.init(frame: .init(origin: .zero, size: .init(width: 0, height: TextInputConstants.height)))
         self.adjustsFontForContentSizeCategory = true

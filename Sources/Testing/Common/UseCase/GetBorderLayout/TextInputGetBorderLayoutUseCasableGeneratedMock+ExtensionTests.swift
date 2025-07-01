@@ -1,5 +1,5 @@
 //
-//  TextInputGetBorderLayoutUseCasableGeneratedMock+ExtensionTests.swift
+//  TextInputGetBorderLayoutUseCaseableGeneratedMock+ExtensionTests.swift
 //  SparkTextFieldUnitTests
 //
 //  Created by louis.borlee on 01/02/2024.
@@ -9,10 +9,10 @@
 import Foundation
 @testable import SparkTextInput
 
-extension TextInputGetBorderLayoutUseCasableGeneratedMock {
+extension TextInputGetBorderLayoutUseCaseableGeneratedMock {
 
-    static func mocked(returnedBorderLayout: TextInputBorderLayout) -> TextInputGetBorderLayoutUseCasableGeneratedMock {
-        let mock = TextInputGetBorderLayoutUseCasableGeneratedMock()
+    static func mocked(returnedBorderLayout: TextInputBorderLayout) -> TextInputGetBorderLayoutUseCaseableGeneratedMock {
+        let mock = TextInputGetBorderLayoutUseCaseableGeneratedMock()
         mock.executeWithThemeAndBorderStyleAndIsFocusedReturnValue = returnedBorderLayout
         return mock
     }

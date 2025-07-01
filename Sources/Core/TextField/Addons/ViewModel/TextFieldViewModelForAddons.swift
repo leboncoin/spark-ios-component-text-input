@@ -10,7 +10,7 @@ import UIKit
 import Combine
 import SparkTheming
 
-final class TextFieldViewModelForAddons: TextInputViewModel {
+final class TextFieldViewModelForAddons: TextInputUIViewModel {
 
     override var backgroundColor: any ColorToken {
         get {
@@ -41,9 +41,9 @@ final class TextFieldViewModelForAddons: TextInputViewModel {
     init(
         theme: Theme,
         intent: TextFieldIntent,
-        getColorsUseCase: TextInputGetColorsUseCasable = TextInputGetColorsUseCase(),
-        getBorderLayoutUseCase: TextInputGetBorderLayoutUseCasable = TextInputGetBorderLayoutUseCase(),
-        getSpacingsUseCase: TextInputGetSpacingsUseCasable = TextInputGetSpacingsUseCase()
+        getColorsUseCase: TextInputGetColorsUseCaseable = TextInputGetColorsUseCase(),
+        getBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable = TextInputGetBorderLayoutUseCase(),
+        getSpacingsUseCase: TextInputGetSpacingsUseCaseable = TextInputGetSpacingsUseCase()
     ) {
         super.init(
             theme: theme,
@@ -73,8 +73,8 @@ final class TextFieldViewModelForAddons: TextInputViewModel {
         let spacings = self.getSpacingsUseCase.execute(
             theme: self.theme,
             borderStyle: .roundedRect)
-        self.addonsLeftSpacing = spacings.left
+        self.addonsLeftSpacing = spacings.horizontal
         self.addonsContentSpacing = spacings.content
-        self.addonsRightSpacing = spacings.right
+        self.addonsRightSpacing = spacings.horizontal
     }
 }
