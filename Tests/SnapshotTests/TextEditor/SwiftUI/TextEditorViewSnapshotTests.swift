@@ -43,8 +43,10 @@ final class TextEditorViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
                     theme: self.theme
                 )
                     .sparkTextEditorIntent(configuration.intent)
+                    .sparkTextEditorReadOnly(configuration.state.isReadOnly)
                     .disabled(!configuration.state.isEnabled)
                     .frame(width: Constants.width)
+                    .frame(height: configuration.height.value)
                     .style(forDocumentation: false)
 
                 self.assertSnapshot(
@@ -61,6 +63,15 @@ final class TextEditorViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
 // MARK: - Extension
 
 private extension View {
+
+//    @ViewBuilder
+//    func height(_ configuration: TextEditorConfigurationSnapshotTests) -> some View {
+//        if configuration.height.isFixed {
+//            self.frame(height: configuration.height.value)
+//        } else {
+//            
+//        }
+//    }
 
     @ViewBuilder
     func style(forDocumentation: Bool) -> some View {
