@@ -21,6 +21,7 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
     case test5
     case test6
     case test7
+//    case documentation
 
     // MARK: - Type Alias
 
@@ -44,6 +45,8 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
             return self.test6()
         case .test7:
             return self.test7()
+//        case .documentation:
+//            return self.documentation()
         }
     }
 
@@ -68,7 +71,7 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
     /// - a11y sizes : default
     /// - mode : default
     private func test1(isSwiftUIComponent: Bool) -> [TextFieldConfigurationSnapshotTests] {
-        let states = TextInputState.allCases(isSwiftUIComponent: isSwiftUIComponent)
+        let states = TextInputState.allCases
         let contentResiliences = TextInputContentResilience.allCases(isTextField: true)
 
         return states.flatMap { state in
@@ -358,5 +361,38 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
                 sizes: Constants.Sizes.all
             )
         ]
+    }
+
+    // MARK: - Documentation
+
+    // Used to generate screenshot for Documentation
+    private func documentation() -> [TextFieldConfigurationSnapshotTests] {
+        let withSideViews = Bool.allCases
+        let clearButtons = Bool.allCases
+        let isSecureEntries = Bool.allCases
+
+        return withSideViews.flatMap { withSideView in
+            clearButtons.flatMap { clearButton in
+                isSecureEntries.map { isSecureEntry in
+                    return .init(
+                        scenario: self,
+                        intent: .neutral,
+                        state: .enabled,
+                        content: .smallText,
+                        placeholder: .small,
+                        leftContent: withSideView ? .image : .empty,
+                        leftAddonContent: withSideView ? .button : .empty,
+                        rightContent: withSideView ? .image : .empty,
+                        rightAddonContent: withSideView ? .button : .empty,
+                        isAddonsPadding: true,
+                        isAddonsSeparator: true,
+                        isClearButton: clearButton,
+                        isFocused: false,
+                        isSecureEntry: isSecureEntry,
+                        modes: Constants.Modes.all
+                    )
+                }
+            }
+        }
     }
 }

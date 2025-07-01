@@ -11,14 +11,6 @@ enum TextInputState: String, CaseIterable {
     case disabled
     case readOnly
 
-    static func allCases(isSwiftUIComponent: Bool) -> [Self] {
-        var cases = Self.allCases
-        if isSwiftUIComponent {
-            cases.removeAll(where: { $0 == .readOnly })
-        }
-        return cases
-    }
-
     var isEnabled: Bool {
         switch self {
         case .enabled, .readOnly: true

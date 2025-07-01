@@ -15,7 +15,7 @@ extension EnvironmentValues {
 
 extension View {
 
-    func sparkTextFieldPlaceholderColor(_ token: (any ColorToken)?) -> some View {
+    func placeholderColor(_ token: (any ColorToken)?) -> some View {
         self.environment(\.textFieldPlaceholderColor, token?.color)
     }
 }

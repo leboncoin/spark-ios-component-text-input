@@ -37,15 +37,19 @@ final class TextEditorViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
             )
 
             for configuration in configurations {
-                let view = TextEditorView(
+                let view = SparkTextEditor(
                     configuration.placeholder.text ?? configuration.content.text,
                     text: .constant(configuration.content.text),
-                    theme: self.theme,
-                    intent: configuration.intent
+                    theme: self.theme
                 )
+                    .sparkTextEditorIntent(configuration.intent)
                     .disabled(!configuration.state.isEnabled)
                     .frame(width: Constants.width)
-                    .background(.background)
+                    .frame(height: 100) // Uncomment for documentation
+//                    .background(.background) // Comment for documentation
+//                    .padding(Constants.padding) // Comment for documentation
+                    .padding(4) // Uncomment for documentation
+//                    .background(Color(uiColor: .secondarySystemBackground)) // Comment for documentation
 
                 self.assertSnapshot(
                     matching: view,

@@ -1,78 +1,68 @@
-# ``SparkStepper``
+# ``SparkTextInput``
 
-TODO: 
+The Spark Text Input is composed by two components:
+- 1. TextField
+- 2. TextEditor
 
-The Spark Stepper allow users to quickly specify a numerical value within a given range.
+## TextEditor
 
-## Overview
+### Overview
 
-The component is available on **UIKit** and **SwiftUI** and requires at least **iOS 16**.
+The text editor is available on **UIKit** and **SwiftUI** and requires at least **iOS 16**.
 
-It can manage a simple numeric number or a complexe format (currency, percent, ...)
+It can display and edit long-form text.
 
-### Implementation
+#### Implementation
 
-- On SwiftUI, you need to use the ``SparkStepper`` View.
-- On UIKit, you need to use the ``SparkUIStepper`` which inherit from an UIControl.
+- On SwiftUI, you need to use the ``SparkTextEditor`` View.
+- On UIKit, you need to use the ``TextEditorUIView`` which inherit from an UITextView.
 
-### Rendering
+#### Rendering
 
-With a numeric number
-![Component rendering.](component.png)
+With a multiline text
+![Component rendering.](texteditor.png)
 
-With a currency 
-![Component rendering.](component_with_format.png)
+### A11y
 
-## A11y
+- The accessibility label is equals to the placeholder value. 
+- The accessibility value is equals to the text.
 
-Only the **decrement** and **increment** buttons are accessible. 
+### Resources
 
-The text between the two buttons is not accessible but the **value** of the text *is read by the buttons*.
+- Specification on [ZeroHeight](https://zeroheight.com/1186e1705/p/365c2e-text-area--text-view)
+- Design on [Figma](https://www.figma.com/design/0QchRdipAVuvVoDfTjLrgQ/Spark-Component-Specs?node-id=3661-22748)
 
-### Label
+## TextField
 
-#### Default Value
+### Overview
 
-The **decrement** and **increment** buttons *accessibility labels* using **localization** (english and french only).
+The textfield is available on **UIKit** and **SwiftUI** and requires at least **iOS 16**.
 
-The default values are :
+It displays an editable text interface.
 
-- Decrement : 
-    - English : **Decrement**
-    - French : **Décrémenter**
+#### Implementation
 
-- Increment : 
-    - English : **Increment**
-    - French : **Incrémenter**
+- On SwiftUI, you need to use the ``SparkTextField`` View.
+- On UIKit, you need to use the ``TextFieldUIView`` which inherit from an UITextField or ``TextFieldAddonsUIView`` which inherit from an UIControl.
 
-#### Override Value
+#### Rendering
 
-You can override the decrement and increment accessibilty labels with : 
-- UIKit :
-    - Decrement : ``SparkUIStepper/customDecrementAccessibilityLabel``
-    - Increment : ``SparkUIStepper/customIncrementAccessibilityLabel``
+With side views and addons
+![Component rendering.](textfield.png)
 
-- SwiftUI :
-    - Decrement : ``SparkStepper/SparkStepper/decrementAccessibilityLabel(_:)``
-    - Increment : ``SparkStepper/SparkStepper/incrementAccessibilityLabel(_:)`` 
+With without side view or addons
+![Component rendering.](textfield-without-addons.png)
 
----
+### A11y
 
-You can also add some **context** (the name of the stepper for example like *"Number of people"*):
-- UIKit : ``SparkUIStepper/contextAccessibilityLabel``
-- SwiftUI : ``SparkStepper/SparkStepper/contextAccessibilityLabel(_:)``
+- The accessibility label is equals to the placeholder value. 
+- The accessibility value is equals to the text.
 
-Example with a **context** setted to *Number of people* :
-- Decrement : 
-    - English : **Number of people, Decrement**
-    - French : **Nombre de personne, Décrémenter**
+#### Side Views & Addons
 
-- Increment : 
-    - English : **Number of people, Increment**
-    - French : **Nombre de personne, Incrémenter**
+- The accessibility label & value for side view and addons are managed by the consumer.
 
-## Resources
+### Resources
 
-- Specification on [ZeroHeight](https://zeroheight.com/1186e1705/p/95f37c-stepper)
-- Desing on [Figma](https://www.figma.com/design/0QchRdipAVuvVoDfTjLrgQ/Spark-Component-Specs?node-id=51908-6090)
-- Discussion on [Slack](https://adevinta.slack.com/archives/C07GGG6TUGP)
+- Specification on [ZeroHeight](https://zeroheight.com/1186e1705/p/773c60-input--text-field)
+- Design on [Figma](https://www.figma.com/design/0QchRdipAVuvVoDfTjLrgQ/Spark-Component-Specs?node-id=267-8336)

@@ -68,7 +68,7 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
 
     @ViewBuilder
     private func contentView() -> some View {
-        let showClearButton = self.clearMode.showClearButton(isFocused: self.isFocused)
+        let showClearButton = self.clearMode.mode.showClearButton(isFocused: self.isFocused)
 
         HStack(spacing: self.viewModel.contentSpacing) {
             // Left View

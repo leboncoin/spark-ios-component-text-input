@@ -38,6 +38,7 @@ import SparkTheming
 ///     }
 /// }
 /// ```
+/// ![TextEditor rendering with a multiline text.](texteditor.png)
 ///
 /// Some environment values are used by the ``SparkTextEditor``:
 /// - Intent:
@@ -58,7 +59,6 @@ import SparkTheming
 /// )
 /// .sparkTextEditorReadOnly(false)
 /// ```
-// TODO: add screenshot
 public struct SparkTextEditor: View {
 
     // MARK: - Properties
@@ -71,6 +71,9 @@ public struct SparkTextEditor: View {
     @Environment(\.isEnabled) private var isEnabled
     @Environment(\.textEditorIntent) private var intent
     @Environment(\.textEditorReadOnly) private var isReadOnly
+    @Environment(\.textEditorAccessibilityLabel) private var accessibilityLabel
+    @Environment(\.textEditorAccessibilityValue) private var accessibilityValue
+    @Environment(\.textEditorAccessibilityHint) private var accessibilityHint
 
     @FocusState private var isFocused: Bool
 
@@ -100,7 +103,8 @@ public struct SparkTextEditor: View {
     ///         )
     ///     }
     /// }
-    // TODO: add screenshot
+    /// ```
+    /// ![TextEditor rendering with a multiline text.](texteditor.png)
     public init(
         _ title: String,
         text: Binding<String>,
@@ -119,12 +123,16 @@ public struct SparkTextEditor: View {
                 .foregroundStyle(self.viewModel.colors.placeholder)
                 .opacity(self.text.isEmpty ? 1.0 : 0.0)
                 .disabled(true)
+                .accessibilityHidden(true)
 
             TextEditor(text: self.$text)
                 .foregroundStyle(self.viewModel.colors.text)
                 .tint(self.viewModel.colors.text)
                 .scrollIndicators(.visible)
                 .focused(self.$isFocused)
+                .accessibilityLabel(self.accessibilityLabel ?? self.title)
+                .accessibilityOptionalValue(self.accessibilityValue)
+                .accessibilityOptionalHint(self.accessibilityHint)
         }
         .font(self.viewModel.font)
         .scaledFrame(minHeight: self.minHeight)
@@ -139,9 +147,6 @@ public struct SparkTextEditor: View {
         .opacity(self.viewModel.dim)
         .allowsHitTesting(!self.isReadOnly)
         .dynamicTypeSize(...DynamicTypeSize.accessibility3)
-        .accessibilityElement()
-        .accessibilityLabel(self.title)
-        .accessibilityValue(self.text)
         .accessibilityIdentifier(TextEditorAccessibilityIdentifier.view)
         .onAppear() {
             self.viewModel.updateAll(

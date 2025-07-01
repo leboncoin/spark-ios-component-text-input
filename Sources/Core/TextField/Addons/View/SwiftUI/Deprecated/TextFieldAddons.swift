@@ -97,7 +97,7 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
     }
 
     private func getTextFieldPadding() -> EdgeInsets {
-        let showClearButton = self.clearMode.showClearButton(isFocused: self.isFocused)
+        let showClearButton = self.clearMode.mode.showClearButton(isFocused: self.isFocused)
         return EdgeInsets(
             top: .zero,
             leading: self.viewModel.leftSpacing,

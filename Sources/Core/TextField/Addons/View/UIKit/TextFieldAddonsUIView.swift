@@ -16,8 +16,8 @@ public final class TextFieldAddonsUIView: UIControl {
 
     // MARK: - Properties
 
-    @ScaledUIMetric private var scaleCornerRadius: CGFloat = 0
-    @ScaledUIMetric private var scaleBorderWidth: CGFloat = 0
+    @ScaledUIBorderRadius private var cornerRadius: CGFloat = 0
+    @ScaledUIBorderWidth private var borderWidth: CGFloat = 0
 
     /// Embbeded textField
     public let textField: TextFieldUIView
@@ -85,6 +85,8 @@ public final class TextFieldAddonsUIView: UIControl {
 
         self.accessibilityContainerType = .semanticGroup
         self.accessibilityIdentifier = TextFieldAddonsAccessibilityIdentifier.view
+        self.maximumContentSizeCategory = .accessibilityExtraExtraExtraLarge
+        self.updateAccessibilityElements()
     }
 
     required init?(coder: NSCoder) {
@@ -101,8 +103,8 @@ public final class TextFieldAddonsUIView: UIControl {
 
         self.stackView.translatesAutoresizingMaskIntoConstraints = false
         // Adding constant padding to set borders outline instead of inline
-        self.leadingConstraint = self.stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.scaleBorderWidth)
-        self.trailingConstraint = self.stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.scaleBorderWidth)
+        self.leadingConstraint = self.stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.borderWidth)
+        self.trailingConstraint = self.stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.borderWidth)
         NSLayoutConstraint.activate([
             self.leadingConstraint,
             self.trailingConstraint,
@@ -118,11 +120,11 @@ public final class TextFieldAddonsUIView: UIControl {
     private func setupSeparators() {
         self.leftAddonContainer.addSubview(self.leftSeparatorView)
         self.leftSeparatorView.translatesAutoresizingMaskIntoConstraints = false
-        self.leftSeparatorWidthConstraint = self.leftSeparatorView.widthAnchor.constraint(equalToConstant: self.scaleBorderWidth)
+        self.leftSeparatorWidthConstraint = self.leftSeparatorView.widthAnchor.constraint(equalToConstant: self.borderWidth)
 
         self.rightAddonContainer.addSubview(self.rightSeparatorView)
         self.rightSeparatorView.translatesAutoresizingMaskIntoConstraints = false
-        self.rightSeparatorWidthConstraint = self.rightSeparatorView.widthAnchor.constraint(equalToConstant: self.scaleBorderWidth)
+        self.rightSeparatorWidthConstraint = self.rightSeparatorView.widthAnchor.constraint(equalToConstant: self.borderWidth)
 
         NSLayoutConstraint.activate([
             self.leftSeparatorWidthConstraint,
@@ -159,34 +161,34 @@ public final class TextFieldAddonsUIView: UIControl {
         self.viewModel.$borderWidth.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] borderWidth in
             guard let self else { return }
 
-            self.scaleBorderWidth = borderWidth
-            self._scaleBorderWidth.update(traitCollection: self.traitCollection)
+            self.borderWidth = borderWidth
+            self._borderWidth.update(traitCollection: self.traitCollection)
 
-            self.setBorderWidthAndRefreshAddonsXCenter(self.scaleBorderWidth)
-            self.setLeftSpacing(self.viewModel.leftSpacing, borderWidth: self.scaleBorderWidth)
-            self.setRightSpacing(self.viewModel.rightSpacing, borderWidth: self.scaleBorderWidth)
-            self.leftSeparatorWidthConstraint.constant = self.scaleBorderWidth
-            self.rightSeparatorWidthConstraint.constant = self.scaleBorderWidth
+            self.setBorderWidthAndRefreshAddonsXCenter(self.borderWidth)
+            self.setLeftSpacing(self.viewModel.leftSpacing, borderWidth: self.borderWidth)
+            self.setRightSpacing(self.viewModel.rightSpacing, borderWidth: self.borderWidth)
+            self.leftSeparatorWidthConstraint.constant = self.borderWidth
+            self.rightSeparatorWidthConstraint.constant = self.borderWidth
         }
 
         self.viewModel.$borderRadius.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] borderRadius in
             guard let self else { return }
 
-            self.scaleCornerRadius = borderRadius
-            self._scaleCornerRadius.update(traitCollection: self.traitCollection)
+            self.cornerRadius = borderRadius
+            self._cornerRadius.update(traitCollection: self.traitCollection)
 
-            self.setCornerRadius(self.scaleCornerRadius)
+            self.setCornerRadius(self.cornerRadius)
         }
 
         self.viewModel.$leftSpacing.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] leftSpacing in
             guard let self else { return }
-            self.setLeftSpacing(leftSpacing, borderWidth: self.scaleBorderWidth)
+            self.setLeftSpacing(leftSpacing, borderWidth: self.borderWidth)
             self.setNeedsLayout()
         }
 
         self.viewModel.$rightSpacing.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] rightSpacing in
             guard let self else { return }
-            self.setRightSpacing(rightSpacing, borderWidth: self.scaleBorderWidth)
+            self.setRightSpacing(rightSpacing, borderWidth: self.borderWidth)
             self.setNeedsLayout()
         }
 
@@ -248,9 +250,11 @@ public final class TextFieldAddonsUIView: UIControl {
             ])
         }
         self.leftAddon = leftAddon
+        self.leftAddon?.maximumContentSizeCategory = .accessibilityExtraExtraExtraLarge
         self.leftAddonContainer.isHidden = self.leftAddon == nil
-        self.setLeftAddonCenterXConstant(borderWidth: self.scaleBorderWidth)
-        self.setLeftSpacing(self.viewModel.leftSpacing, borderWidth: self.scaleBorderWidth)
+        self.setLeftAddonCenterXConstant(borderWidth: self.borderWidth)
+        self.setLeftSpacing(self.viewModel.leftSpacing, borderWidth: self.borderWidth)
+        self.updateAccessibilityElements()
     }
 
     /// Set the textfield's right addon
@@ -274,9 +278,23 @@ public final class TextFieldAddonsUIView: UIControl {
             ])
         }
         self.rightAddon = rightAddon
+        self.rightAddon?.maximumContentSizeCategory = .accessibilityExtraExtraExtraLarge
         self.rightAddonContainer.isHidden = self.rightAddon == nil
-        self.setRightAddonCenterXConstant(borderWidth: self.scaleBorderWidth)
-        self.setRightSpacing(self.viewModel.rightSpacing, borderWidth: self.scaleBorderWidth)
+        self.setRightAddonCenterXConstant(borderWidth: self.borderWidth)
+        self.setRightSpacing(self.viewModel.rightSpacing, borderWidth: self.borderWidth)
+        self.updateAccessibilityElements()
+    }
+
+    // MARK: - Update
+
+    private func updateAccessibilityElements() {
+        let accessibilityElements = [
+            self.leftAddon,
+            self.textField,
+            self.rightAddon,
+        ].compactMap { $0 }
+
+        self.accessibilityElements = accessibilityElements
     }
 
     // MARK: - Trait Collection
@@ -290,15 +308,15 @@ public final class TextFieldAddonsUIView: UIControl {
 
         guard previousTraitCollection?.preferredContentSizeCategory != self.traitCollection.preferredContentSizeCategory else { return }
 
-        self._scaleCornerRadius.update(traitCollection: self.traitCollection)
-        self._scaleBorderWidth.update(traitCollection: self.traitCollection)
+        self._cornerRadius.update(traitCollection: self.traitCollection)
+        self._borderWidth.update(traitCollection: self.traitCollection)
 
-        self.setCornerRadius(self.scaleCornerRadius)
-        self.setBorderWidthAndRefreshAddonsXCenter(self.scaleBorderWidth)
-        self.setLeftSpacing(self.viewModel.leftSpacing, borderWidth: self.scaleBorderWidth)
-        self.setRightSpacing(self.viewModel.rightSpacing, borderWidth: self.scaleBorderWidth)
-        self.leftSeparatorWidthConstraint.constant = self.scaleBorderWidth
-        self.rightSeparatorWidthConstraint.constant = self.scaleBorderWidth
+        self.setCornerRadius(self.cornerRadius)
+        self.setBorderWidthAndRefreshAddonsXCenter(self.borderWidth)
+        self.setLeftSpacing(self.viewModel.leftSpacing, borderWidth: self.borderWidth)
+        self.setRightSpacing(self.viewModel.rightSpacing, borderWidth: self.borderWidth)
+        self.leftSeparatorWidthConstraint.constant = self.borderWidth
+        self.rightSeparatorWidthConstraint.constant = self.borderWidth
         self.invalidateIntrinsicContentSize()
     }
 }

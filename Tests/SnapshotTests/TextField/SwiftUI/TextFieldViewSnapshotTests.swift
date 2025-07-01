@@ -61,10 +61,11 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
                     .sparkTextFieldLeftAddonConfiguration(.init(configuration: configuration))
                     .sparkTextFieldRightAddonConfiguration(.init(configuration: configuration))
                     .disabled(!configuration.state.isEnabled)
-                    .background(.background)
+                    .background(.background) // Comment for documentation
                     .frame(width: Constants.width)
-                    .padding(Constants.padding)
-                    .background(Color(uiColor: .secondarySystemBackground))
+                    .padding(Constants.padding) // Comment for documentation
+//                    .padding(4) // Uncomment for documentation
+                    .background(Color(uiColor: .secondarySystemBackground)) // Comment for documentation
 
                 self.assertSnapshot(
                     matching: view,
