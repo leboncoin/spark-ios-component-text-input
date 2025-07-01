@@ -30,9 +30,10 @@ struct TextFieldConfigurationSnapshotTests {
     let rightContent: TextFieldSideViewType
     let rightAddonContent: TextFieldSideViewType
     let isAddonsPadding: Bool
+    let isAddonsSeparator: Bool
     let isClearButton: Bool
     let isFocused: Bool
-    let isSecureMode: Bool
+    let isSecureEntry: Bool
 
     let modes: [ComponentSnapshotTestMode]
     let sizes: [UIContentSizeCategory]
@@ -54,9 +55,10 @@ struct TextFieldConfigurationSnapshotTests {
         rightContent: TextFieldSideViewType,
         rightAddonContent: TextFieldSideViewType,
         isAddonsPadding: Bool,
+        isAddonsSeparator: Bool,
         isClearButton: Bool,
         isFocused: Bool,
-        isSecureMode: Bool,
+        isSecureEntry: Bool,
         modes: [ComponentSnapshotTestMode] = Constants.Modes.default,
         sizes: [UIContentSizeCategory] = Constants.Sizes.default
     ) {
@@ -70,9 +72,10 @@ struct TextFieldConfigurationSnapshotTests {
         self.rightContent = rightContent
         self.rightAddonContent = rightAddonContent
         self.isAddonsPadding = isAddonsPadding
+        self.isAddonsSeparator = isAddonsSeparator
         self.isClearButton = isClearButton
         self.isFocused = isFocused
-        self.isSecureMode = isSecureMode
+        self.isSecureEntry = isSecureEntry
         self.modes = modes
         self.sizes = sizes
     }
@@ -91,9 +94,10 @@ struct TextFieldConfigurationSnapshotTests {
             "\(self.rightContent)" + "RightContent",
             "\(self.rightAddonContent)" + "RightAddonContent",
             self.isAddonsPadding ? "isAddonsPadding" : nil,
+            self.isAddonsSeparator ? "isAddonsSeparator" : nil,
             self.isClearButton ? "isClearButton" : nil,
             self.isFocused ? "isFocused" : nil,
-            self.isSecureMode ? "isSecureMode" : nil,
+            self.isSecureEntry ? "isSecureEntry" : nil,
         ]
             .compactMap { $0 }
             .joined(separator: "-")

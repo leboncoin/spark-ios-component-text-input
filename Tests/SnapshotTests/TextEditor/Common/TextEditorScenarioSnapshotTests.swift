@@ -20,6 +20,7 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     case test4
     case test5
     case test6
+//        case documentation
 
     // MARK: - Type Alias
 
@@ -41,6 +42,8 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
             return self.test5(isSwiftUIComponent: isSwiftUIComponent)
         case .test6:
             return self.test6()
+//        case .documentation:
+//            return self.documentation()
         }
     }
 
@@ -60,7 +63,7 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     /// - intent: neutral
     /// - focus: none
     private func test1(isSwiftUIComponent: Bool) -> [TextEditorConfigurationSnapshotTests] {
-        let states = TextInputState.allCases(isSwiftUIComponent: isSwiftUIComponent)
+        let states = TextInputState.allCases
         let contentResiliences = TextInputContentResilience.allCases(isSwiftUIComponent: isSwiftUIComponent)
 
         return states.flatMap { state in
@@ -122,7 +125,7 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     /// - intent: neutral
     /// - focus: none
     private func test3(isSwiftUIComponent: Bool) -> [TextEditorConfigurationSnapshotTests] {
-        let states = TextInputState.allCases(isSwiftUIComponent: isSwiftUIComponent)
+        let states = TextInputState.allCases
 
         return states.map { state -> TextEditorConfigurationSnapshotTests in
                 .init(
@@ -184,7 +187,7 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     /// - intent: neutral
     /// - focus: none
     private func test5(isSwiftUIComponent: Bool) -> [TextEditorConfigurationSnapshotTests] {
-        let states = TextInputState.allCases(isSwiftUIComponent: isSwiftUIComponent)
+        let states = TextInputState.allCases
         let placeholders = TextInputPlaceholder.allCases(isSwiftUIComponent: isSwiftUIComponent)
 
         return states.flatMap { state in
@@ -227,6 +230,26 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
                 placeholder: .empty,
                 height: .flexible,
                 isFocused: true
+            )
+        }
+    }
+
+    // MARK: - Documentation
+
+    // Used to generate screenshot for Documentation
+    private func documentation() -> [TextEditorConfigurationSnapshotTests] {
+        let content = [TextInputContentResilience.smallText, .multilineText]
+
+        return content.map { content in
+            return .init(
+                scenario: self,
+                intent: .neutral,
+                state: .enabled,
+                content: content,
+                placeholder: .empty,
+                height: .flexible,
+                isFocused: true,
+                modes: Constants.Modes.all
             )
         }
     }

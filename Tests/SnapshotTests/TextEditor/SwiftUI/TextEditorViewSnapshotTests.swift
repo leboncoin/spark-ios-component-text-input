@@ -37,15 +37,17 @@ final class TextEditorViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
             )
 
             for configuration in configurations {
-                let view = TextEditorView(
+                let view = SparkTextEditor(
                     configuration.placeholder.text ?? configuration.content.text,
                     text: .constant(configuration.content.text),
-                    theme: self.theme,
-                    intent: configuration.intent
+                    theme: self.theme
                 )
+                    .sparkTextEditorIntent(configuration.intent)
+                    .sparkTextEditorReadOnly(configuration.state.isReadOnly)
                     .disabled(!configuration.state.isEnabled)
                     .frame(width: Constants.width)
-                    .background(.background)
+                    .frame(height: configuration.height.value)
+                    .style(forDocumentation: false)
 
                 self.assertSnapshot(
                     matching: view,
@@ -57,3 +59,30 @@ final class TextEditorViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
         }
     }
 }
+
+// MARK: - Extension
+
+private extension View {
+
+//    @ViewBuilder
+//    func height(_ configuration: TextEditorConfigurationSnapshotTests) -> some View {
+//        if configuration.height.isFixed {
+//            self.frame(height: configuration.height.value)
+//        } else {
+//            
+//        }
+//    }
+
+    @ViewBuilder
+    func style(forDocumentation: Bool) -> some View {
+        if forDocumentation {
+            self.frame(height: 100)
+                .padding(4)
+        } else {
+            self.background(.background)
+            .padding(TextEditorSnapshotConstants.padding)
+            .background(Color(uiColor: .secondarySystemBackground))
+        }
+    }
+}
+
