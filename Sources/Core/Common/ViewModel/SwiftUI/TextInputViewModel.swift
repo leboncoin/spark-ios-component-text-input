@@ -155,7 +155,7 @@ internal class TextInputViewModel: ObservableObject {
         }
 
         self.spacings = self.getSpacingsUseCase.execute(
-            theme: theme,
+            theme: theme
         )
     }
 
