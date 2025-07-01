@@ -173,7 +173,7 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
             isSideView.flatMap { isSideView in
                 isAddonsPaddings.flatMap { isAddonsPadding in
                     isAddonsSeparators.map { isAddonsSeparator in
-                        
+
                         return .init(
                             scenario: self,
                             intent: .neutral,

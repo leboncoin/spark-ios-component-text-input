@@ -5,7 +5,6 @@
 //  Created by robin.lemaire on 26/06/2025.
 //
 
-
 //
 //  TextFieldAccessibilitySortTests.swift
 //  SparkTextInputTests

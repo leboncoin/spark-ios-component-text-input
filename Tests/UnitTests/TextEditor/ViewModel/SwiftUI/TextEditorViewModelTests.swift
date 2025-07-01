@@ -15,7 +15,7 @@ import SparkTheming
 final class TextEditorViewModelTests: XCTestCase {
 
     // MARK: - Tests
-    
+
     func test_initialization_shouldUseDefaultValues() {
         // GIVEN
         let expectedPadding: CGFloat = 16.0
@@ -38,7 +38,7 @@ final class TextEditorViewModelTests: XCTestCase {
             "Wrong number of call on getHorizontalPaddingUseCase"
         )
     }
-    
+
     func test_spacingDidUpdate_shouldUpdateHorizontalPadding() {
         // GIVEN
         let initialPadding: CGFloat = 16.0

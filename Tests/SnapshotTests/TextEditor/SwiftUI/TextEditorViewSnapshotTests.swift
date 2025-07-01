@@ -45,11 +45,7 @@ final class TextEditorViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
                     .sparkTextEditorIntent(configuration.intent)
                     .disabled(!configuration.state.isEnabled)
                     .frame(width: Constants.width)
-                    .frame(height: 100) // Uncomment for documentation
-//                    .background(.background) // Comment for documentation
-//                    .padding(Constants.padding) // Comment for documentation
-                    .padding(4) // Uncomment for documentation
-//                    .background(Color(uiColor: .secondarySystemBackground)) // Comment for documentation
+                    .style(forDocumentation: false)
 
                 self.assertSnapshot(
                     matching: view,
@@ -61,3 +57,21 @@ final class TextEditorViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
         }
     }
 }
+
+// MARK: - Extension
+
+private extension View {
+
+    @ViewBuilder
+    func style(forDocumentation: Bool) -> some View {
+        if forDocumentation {
+            self.frame(height: 100)
+                .padding(4)
+        } else {
+            self.background(.background)
+            .padding(TextEditorSnapshotConstants.padding)
+            .background(Color(uiColor: .secondarySystemBackground))
+        }
+    }
+}
+

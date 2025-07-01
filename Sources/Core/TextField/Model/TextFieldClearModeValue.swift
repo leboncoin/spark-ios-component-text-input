@@ -9,7 +9,7 @@
 import Foundation
 
 struct TextFieldClearModeValue: Equatable {
-    
+
     // MARK: - Properties
 
     var mode: TextFieldClearMode = .default

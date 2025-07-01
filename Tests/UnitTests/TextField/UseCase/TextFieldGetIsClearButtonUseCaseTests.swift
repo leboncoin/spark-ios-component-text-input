@@ -141,7 +141,7 @@ final class TextFieldGetIsClearButtonUseCaseTests: XCTestCase {
     func test_execute_whenClearModeIsUnlessEditing_andIsFocusedIsFalse_shouldReturnTrue() {
         // GIVEN
         let useCase = TextFieldGetIsClearButtonUseCase()
-        
+
         let clearMode: TextFieldClearMode = .unlessEditing
         let isFocused = false
 

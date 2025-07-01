@@ -33,7 +33,7 @@ final class TextInputGetFontUseCaseTests: XCTestCase {
             result as? TypographyFontTokenGeneratedMock,
             "Couldn't unwrap result"
         )
-        
+
         XCTAssertIdentical(
             resultWrap,
             themeMock.typography.body1 as? TypographyFontTokenGeneratedMock

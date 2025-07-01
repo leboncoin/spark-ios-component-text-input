@@ -193,17 +193,17 @@ import SparkTheming
 /// .textFieldAccessibilityHint("Error, the email is invalid.")
 /// ```
 public struct SparkTextField<Value, Format, LeftView: View, RightView: View, LeftAddon: View, RightAddon: View, Content: View>: View {
-    
+
     // MARK: - Properties
-    
+
     private let theme: Theme
     private let titleKey: LocalizedStringKey
-    
+
     private let format: Format?
     private let formatter: Formatter?
-    
+
     @Binding private var value: Value
-    
+
     @Environment(\.isEnabled) private var isEnabled
     @Environment(\.textFieldIntent) private var intent
     @Environment(\.textFieldReadOnly) private var isReadOnly
@@ -215,20 +215,20 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
     @Environment(\.textFieldAccessibilityHint) private var accessibilityHint
 
     @FocusState private var isFocused: Bool
-    
+
     private let leftView: () -> LeftView
     private let rightView: () -> RightView
     private let leftAddon: () -> LeftAddon
     private let rightAddon: () -> RightAddon
-    
+
     private var height: CGFloat = TextInputConstants.height
-    
+
     @StateObject private var viewModel = TextFieldViewModel()
-    
+
     private let content: () -> Content
-    
+
     // MARK: - Initialization
-    
+
     /// SparkTextField initializer with **text**.
     /// - Parameters:
     ///   - titleKey: The textfield's current placeholder.
@@ -299,12 +299,12 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
         self.theme = theme
         self.formatter = nil
         self.format = nil
-        
+
         self.leftAddon = leftAddon
         self.leftView = leftView
         self.rightView = rightView
         self.rightAddon = rightAddon
-        
+
         self.content = {
             _DefaultTextField(
                 titleKey: titleKey,
@@ -312,7 +312,7 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
             )
         }
     }
-    
+
     /// SparkTextField initializer that applies a formatter to a bound value.
     /// - Parameters:
     ///   - titleKey: The textfield's current placeholder.
@@ -389,12 +389,12 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
         self.theme = theme
         self.formatter = formatter
         self.format = nil
-        
+
         self.leftAddon = leftAddon
         self.leftView = leftView
         self.rightView = rightView
         self.rightAddon = rightAddon
-        
+
         self.content = {
             _FormattedTextField(
                 titleKey: titleKey,
@@ -472,18 +472,18 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
         rightView: @escaping () -> RightView = { EmptyView() },
         leftAddon: @escaping () -> LeftAddon = { EmptyView() },
         rightAddon: @escaping () -> RightAddon = { EmptyView() }
-    ) where Format : ParseableFormatStyle, Format.FormatOutput == String, Format.FormatInput == Value, Content == _FormatTextField<Value, Format> {
+    ) where Format: ParseableFormatStyle, Format.FormatOutput == String, Format.FormatInput == Value, Content == _FormatTextField<Value, Format> {
         self.titleKey = titleKey
         self._value = value
         self.theme = theme
         self.formatter = nil
         self.format = format
-        
+
         self.leftAddon = leftAddon
         self.leftView = leftView
         self.rightView = rightView
         self.rightAddon = rightAddon
-        
+
         self.content = {
             _FormatTextField(
                 titleKey: titleKey,
@@ -492,9 +492,9 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
             )
         }
     }
-    
+
     // MARK: - View
-    
+
     public var body: some View {
         self.contentView()
         .background(self.viewModel.colors.background.color)
@@ -542,9 +542,9 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
             self.viewModel.isEnabled = isEnabled
         }
     }
-    
+
     // MARK: - Subviews
-    
+
     private func contentView() -> some View {
         HStack(spacing: .zero) {
             // Left Addon
@@ -552,19 +552,19 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
                 .scaledPadding(self.viewModel.leftAddonPadding)
                 .layoutPriority(self.leftAddonConfiguration.layoutPriority)
                 .accessibilitySort(.leftAddon)
-            
+
             // Separator
             if self.leftAddonConfiguration.hasSeparator {
                 self.separator()
             }
-            
+
             ScaledHStack(spacing: self.viewModel.spacings.content) {
                 // Left View
                 self.leftView()
                     .accessibilitySort(.leftView)
-                
+
                 HStack(spacing: 0) {
-                    
+
                     HStack(spacing: 0) {
                         // TextField
                         self.content()
@@ -582,8 +582,8 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
 
                         if self.viewModel.isClearButton {
                             TextFieldClearButton(action: self.clearMode.action ?? {
-                                if self.value is String {
-                                    self.value = "" as! Value
+                                if let test = self._value as? Binding<String> {
+                                    test.wrappedValue = ""
                                 }
                             })
                             .accessibilitySort(.clearButton)
@@ -591,7 +591,7 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
                     }
                     .frame(maxHeight: .infinity)
                     .scaledPadding(.trailing, self.viewModel.contentPadding.inputTrailing)
-                    
+
                     // Right View
                     self.rightView()
                         .scaledPadding(.trailing, self.viewModel.contentPadding.trailing)
@@ -601,12 +601,12 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
             .scaledPadding(.top, self.viewModel.contentPadding.top)
             .scaledPadding(.bottom, self.viewModel.contentPadding.bottom)
             .scaledPadding(.leading, self.viewModel.contentPadding.leading)
-            
+
             // Separator
             if self.rightAddonConfiguration.hasSeparator {
                 self.separator()
             }
-            
+
             // Right Addon
             self.rightAddon()
                 .scaledPadding(self.viewModel.rightAddonPadding)
@@ -614,11 +614,11 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
                 .accessibilitySort(.rightAddon)
         }
     }
-    
+
     private func prompt() -> Text {
         Text(self.titleKey).foregroundColor(self.viewModel.colors.placeholder)
     }
-    
+
     private func separator() -> some View {
         Divider()
             .scaledFrame(width: self.viewModel.borderLayout.width)

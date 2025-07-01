@@ -17,25 +17,21 @@ import SparkTheme
 import SwiftUI
 
 final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
-
-    // MARK: - Type Alias
-
-    private typealias Constants = TextFieldSnapshotConstants
-
+    
     // MARK: - Properties
-
+    
     private let theme: Theme = SparkTheme.shared
-
+    
     // MARK: - Tests
-
+    
     func test() throws {
         let scenarios = TextFieldScenarioSnapshotTests.allCases
-
+        
         for scenario in scenarios {
             let configurations: [TextFieldConfigurationSnapshotTests] = try scenario.configuration(
                 isSwiftUIComponent: true
             )
-
+            
             for configuration in configurations {
                 let view = SparkTextField(
                     LocalizedStringKey(configuration.placeholder.text ?? ""),
@@ -61,12 +57,8 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
                     .sparkTextFieldLeftAddonConfiguration(.init(configuration: configuration))
                     .sparkTextFieldRightAddonConfiguration(.init(configuration: configuration))
                     .disabled(!configuration.state.isEnabled)
-                    .background(.background) // Comment for documentation
-                    .frame(width: Constants.width)
-                    .padding(Constants.padding) // Comment for documentation
-//                    .padding(4) // Uncomment for documentation
-                    .background(Color(uiColor: .secondarySystemBackground)) // Comment for documentation
-
+                    .style(forDocumentation: false)
+                
                 self.assertSnapshot(
                     matching: view,
                     modes: configuration.modes,
@@ -76,9 +68,9 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
             }
         }
     }
-
+    
     // MARK: - View Builder
-
+    
     @ViewBuilder
     private func sideView(from sideType: TextFieldSideViewType) -> some View {
         switch sideType {
@@ -95,7 +87,7 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
 // MARK: - Extension
 
 private extension TextFieldAddonConfiguration {
-
+    
     init(configuration: TextFieldConfigurationSnapshotTests) {
         self.init(
             hasPadding: configuration.isAddonsPadding,
@@ -105,16 +97,29 @@ private extension TextFieldAddonConfiguration {
 }
 
 private extension View {
-
+    
     func sparkTextFieldLeftAddonConfiguration(
         _ configuration: TextFieldAddonConfiguration
     ) -> some View {
         return self.environment(\.textFieldLeftAddonConfiguration, configuration)
     }
-
+    
     func sparkTextFieldRightAddonConfiguration(
         _ configuration: TextFieldAddonConfiguration
     ) -> some View {
         return self.environment(\.textFieldRightAddonConfiguration, configuration)
+    }
+    
+    @ViewBuilder
+    func style(forDocumentation: Bool) -> some View {
+        if forDocumentation {
+            self.frame(width: TextFieldSnapshotConstants.width)
+                .padding(4)
+        } else {
+            self.background(.background)
+                .frame(width: TextFieldSnapshotConstants.width)
+                .padding(TextFieldSnapshotConstants.padding)
+                .background(Color(uiColor: .secondarySystemBackground))
+        }
     }
 }
