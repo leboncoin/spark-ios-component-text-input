@@ -192,15 +192,12 @@ import SparkTheming
 /// )
 /// .textFieldAccessibilityHint("Error, the email is invalid.")
 /// ```
-public struct SparkTextField<Value, Format, LeftView: View, RightView: View, LeftAddon: View, RightAddon: View, Content: View>: View {
+public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: View, RightAddon: View, Content: View>: View {
 
     // MARK: - Properties
 
     private let theme: Theme
     private let titleKey: LocalizedStringKey
-
-    private let format: Format?
-    private let formatter: Formatter?
 
     @Binding private var value: Value
 
@@ -293,12 +290,10 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
         rightView: @escaping () -> RightView = { EmptyView() },
         leftAddon: @escaping () -> LeftAddon = { EmptyView() },
         rightAddon: @escaping () -> RightAddon = { EmptyView() }
-    ) where Value == String, Format == Void, Content == _DefaultTextField {
+    ) where Value == String, Content == _DefaultTextField {
         self.titleKey = titleKey
         self._value = text
         self.theme = theme
-        self.formatter = nil
-        self.format = nil
 
         self.leftAddon = leftAddon
         self.leftView = leftView
@@ -383,12 +378,10 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
         rightView: @escaping () -> RightView = { EmptyView() },
         leftAddon: @escaping () -> LeftAddon = { EmptyView() },
         rightAddon: @escaping () -> RightAddon = { EmptyView() }
-    ) where Format == Void, Content == _FormattedTextField<Value> {
+    ) where Content == _FormattedTextField<Value> {
         self.titleKey = titleKey
         self._value = value
         self.theme = theme
-        self.formatter = formatter
-        self.format = nil
 
         self.leftAddon = leftAddon
         self.leftView = leftView
@@ -463,7 +456,7 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
     /// }
     /// ```
     /// ![TextField rendering without Addons and Side Views.](textfield-without-addons.png)
-    public init(
+    public init<Format>(
         _ titleKey: LocalizedStringKey,
         value: Binding<Format.FormatInput>,
         format: Format,
@@ -476,8 +469,6 @@ public struct SparkTextField<Value, Format, LeftView: View, RightView: View, Lef
         self.titleKey = titleKey
         self._value = value
         self.theme = theme
-        self.formatter = nil
-        self.format = format
 
         self.leftAddon = leftAddon
         self.leftView = leftView
