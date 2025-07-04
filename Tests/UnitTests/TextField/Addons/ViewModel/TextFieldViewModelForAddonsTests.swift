@@ -1,5 +1,5 @@
 //
-//  TextInputViewModelTests.swift
+//  TextFieldViewModelForAddonsTests.swift
 //  SparkTextFieldUnitTests
 //
 //  Created by louis.borlee on 01/02/2024.
@@ -21,7 +21,7 @@ final class TextFieldViewModelForAddonsTests: XCTestCase {
 
     // MARK: - Properties
 
-    private let superTests: TextInputViewModelTests = .init()
+    private let superTests: TextInputUIViewModelTests = .init()
     private var viewModel: TextFieldViewModelForAddons!
 
     // MARK: - Setup
@@ -108,21 +108,21 @@ final class TextFieldViewModelForAddonsTests: XCTestCase {
         self.superTests.publishers.reset()
         self.superTests.resetUseCases()
 
-        let newExpectedSpacings = TextInputSpacings.mocked(left: 2, content: 4, right: 3)
+        let newExpectedSpacings = TextInputSpacings.mocked(horizontal: 2, content: 4)
         self.superTests.getSpacingsUseCase.executeWithThemeAndBorderStyleReturnValue = newExpectedSpacings
 
         // WHEN
         self.viewModel.setSpacings()
 
         // THEN
-        XCTAssertEqual(self.viewModel.addonsLeftSpacing, newExpectedSpacings.left)
+        XCTAssertEqual(self.viewModel.addonsLeftSpacing, newExpectedSpacings.horizontal)
         XCTAssertEqual(self.viewModel.addonsContentSpacing, newExpectedSpacings.content)
-        XCTAssertEqual(self.viewModel.addonsRightSpacing, newExpectedSpacings.right)
+        XCTAssertEqual(self.viewModel.addonsRightSpacing, newExpectedSpacings.horizontal)
 
         // Spacings shouldn't change, the delegate takes charge
-        XCTAssertEqual(self.viewModel.leftSpacing, self.superTests.expectedSpacings.left)
+        XCTAssertEqual(self.viewModel.leftSpacing, self.superTests.expectedSpacings.horizontal)
         XCTAssertEqual(self.viewModel.contentSpacing, self.superTests.expectedSpacings.content)
-        XCTAssertEqual(self.viewModel.rightSpacing, self.superTests.expectedSpacings.right)
+        XCTAssertEqual(self.viewModel.rightSpacing, self.superTests.expectedSpacings.horizontal)
 
         XCTAssertEqual(self.superTests.getSpacingsUseCase.executeWithThemeAndBorderStyleCallsCount, 1, "getSpacingsUseCase.executeWithThemeAndBorderStyle should have been called once")
         let getSpacingsUseCaseReceivedArguments = try XCTUnwrap(self.superTests.getSpacingsUseCase.executeWithThemeAndBorderStyleReceivedArguments, "Couldn't unwrap getSpacingsUseCaseReceivedArguments")

@@ -1,6 +1,6 @@
 //
 //  TextInputIntent.swift
-//  Spark
+//  SparkTextInputUnitTests
 //
 //  Created by Quentin.richard on 21/09/2023.
 //  Copyright © 2023 Leboncoin. All rights reserved.
@@ -14,4 +14,8 @@ public enum TextInputIntent: CaseIterable {
     case alert
     case neutral
     case success
+
+    // MARK: - Properties
+
+    static var `default` = Self.neutral
 }

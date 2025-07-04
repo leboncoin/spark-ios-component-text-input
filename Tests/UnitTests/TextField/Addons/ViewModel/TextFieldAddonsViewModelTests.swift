@@ -22,15 +22,15 @@ final class TextFieldAddonsViewModelTests: XCTestCase {
 
     private var theme: ThemeGeneratedMock!
     private var publishers: TextFieldAddonsPublishers!
-    private var getColorsUseCase: TextInputGetColorsUseCasableGeneratedMock!
-    private var getBorderLayoutUseCase: TextInputGetBorderLayoutUseCasableGeneratedMock!
-    private var getSpacingsUseCase: TextInputGetSpacingsUseCasableGeneratedMock!
+    private var getColorsUseCase: TextInputGetColorsUseCaseableGeneratedMock!
+    private var getBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseableGeneratedMock!
+    private var getSpacingsUseCase: TextInputGetSpacingsUseCaseableGeneratedMock!
     private var viewModel: TextFieldAddonsViewModel!
 
     private let intent = TextInputIntent.success
     private let borderStyle = TextInputBorderStyle.roundedRect
 
-    private var expectedColors: TextFieldColors!
+    private var expectedColors: TextInputColors!
     private var expectedBorderLayout: TextInputBorderLayout!
     private var expectedSpacings: TextInputSpacings!
 
@@ -47,7 +47,7 @@ final class TextFieldAddonsViewModelTests: XCTestCase {
             background: .purple()
         )
         self.expectedBorderLayout = .mocked(radius: 1, width: 2)
-        self.expectedSpacings = .mocked(left: 1, content: 2, right: 3)
+        self.expectedSpacings = .mocked(horizontal: 1, content: 2)
 
         self.getColorsUseCase = .mocked(returnedColors: self.expectedColors)
         self.getBorderLayoutUseCase = .mocked(returnedBorderLayout: self.expectedBorderLayout)
@@ -92,9 +92,9 @@ final class TextFieldAddonsViewModelTests: XCTestCase {
         let getSpacingsUseCaseReceivedArguments = try XCTUnwrap(self.getSpacingsUseCase.executeWithThemeAndBorderStyleReceivedArguments, "Couldn't unwrap getSpacingsUseCaseReceivedArguments")
         XCTAssertIdentical(getSpacingsUseCaseReceivedArguments.theme as? ThemeGeneratedMock, self.theme, "Wrong getSpacingsUseCaseReceivedArguments.theme")
         XCTAssertEqual(getSpacingsUseCaseReceivedArguments.borderStyle, .roundedRect, "Wrong getSpacingsUseCaseReceivedArguments.borderStyle")
-        XCTAssertEqual(self.viewModel.leftSpacing, self.expectedSpacings.left, "Wrong leftSpacing")
+        XCTAssertEqual(self.viewModel.leftSpacing, self.expectedSpacings.horizontal, "Wrong horizontalSpacing")
         XCTAssertEqual(self.viewModel.contentSpacing, self.expectedSpacings.content, "Wrong contentSpacing")
-        XCTAssertEqual(self.viewModel.rightSpacing, self.expectedSpacings.right, "Wrong rightSpacing")
+        XCTAssertEqual(self.viewModel.rightSpacing, self.expectedSpacings.horizontal, "Wrong horizontalSpacing")
 
         XCTAssertEqual(self.viewModel.dim, self.theme.dims.none, "Wrong dim")
 
@@ -149,7 +149,7 @@ final class TextFieldAddonsViewModelTests: XCTestCase {
         self.publishers.reset() // Removes publishes from init
 
         // GIVEN
-        let newValue = TextInputSpacings(left: -1, content: -2, right: -3)
+        let newValue = TextInputSpacings(horizontal: -1, content: -2)
         self.getSpacingsUseCase.executeWithThemeAndBorderStyleReturnValue = newValue
 
         // WHEN
@@ -157,11 +157,11 @@ final class TextFieldAddonsViewModelTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(self.publishers.leftSpacing.sinkCount, 1, "leftSpacing should have been called once")
-        XCTAssertEqual(self.viewModel.leftSpacing, newValue.left, "Wrong leftSpacing")
+        XCTAssertEqual(self.viewModel.leftSpacing, newValue.horizontal, "Wrong horizontalSpacing")
         XCTAssertEqual(self.publishers.contentSpacing.sinkCount, 1, "contentSpacing should have been called once")
         XCTAssertEqual(self.viewModel.contentSpacing, newValue.content, "Wrong contentSpacing")
         XCTAssertEqual(self.publishers.rightSpacing.sinkCount, 1, "rightSpacing should have been called once")
-        XCTAssertEqual(self.viewModel.rightSpacing, newValue.right, "Wrong rightSpacing")
+        XCTAssertEqual(self.viewModel.rightSpacing, newValue.horizontal, "Wrong horizontalSpacing")
     }
 
     func test_set_dim() {

@@ -16,13 +16,17 @@ public final class TextFieldUIView: UITextField {
 
     // MARK: - Properties
 
-    private let viewModel: TextInputViewModel
+    private let viewModel: TextInputUIViewModel
     private var cancellables = Set<AnyCancellable>()
 
-    @ScaledUIMetric private var height: CGFloat = TextInputConstants.height
+    @ScaledUIFrame private var height: CGFloat = TextInputConstants.height
 
-    @ScaledUIMetric private var scaleCornerRadius: CGFloat = 0
-    @ScaledUIMetric private var scaleBorderWidth: CGFloat = 0
+    @ScaledUIBorderRadius private var cornerRadius: CGFloat = 0
+    @ScaledUIBorderWidth private var borderWidth: CGFloat = 0
+
+    @ScaledUIPadding private var leftSpacing: CGFloat = 0
+    @ScaledUIPadding private var contentSpacing: CGFloat = 0
+    @ScaledUIPadding private var rightSpacing: CGFloat = 0
 
     private let defaultClearButtonRightSpacing = 5.0
 
@@ -65,6 +69,7 @@ public final class TextFieldUIView: UITextField {
             self.viewModel.theme = newValue
         }
     }
+
     /// The textfield's current intent.
     public var intent: TextFieldIntent {
         get {
@@ -77,9 +82,9 @@ public final class TextFieldUIView: UITextField {
 
     // MARK: - Initialization
 
-    internal init(viewModel: TextInputViewModel) {
+    internal init(viewModel: TextInputUIViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .init(origin: .zero, size: .init(width: 0, height: TextInputConstants.height)))
+        super.init(frame: .zero)
         self.adjustsFontForContentSizeCategory = true
         self.adjustsFontSizeToFitWidth = false
         self.setupView()
@@ -125,6 +130,7 @@ public final class TextFieldUIView: UITextField {
     private func setupView() {
         self.subscribeToViewModel()
         self.setContentCompressionResistancePriority(.required, for: .vertical)
+
         self.accessibilityIdentifier = TextFieldAccessibilityIdentifier.view
     }
 
@@ -165,33 +171,39 @@ public final class TextFieldUIView: UITextField {
         self.viewModel.$borderWidth.subscribe(in: &self.cancellables) { [weak self] borderWidth in
             guard let self else { return }
 
-            self.scaleBorderWidth = borderWidth
-            self._scaleBorderWidth.update(traitCollection: self.traitCollection)
+            self.borderWidth = borderWidth
+            self._borderWidth.update(traitCollection: self.traitCollection)
 
-            self.setBorderWidth(self.scaleBorderWidth)
+            self.setBorderWidth(self.borderWidth)
         }
 
         self.viewModel.$borderRadius.subscribe(in: &self.cancellables) { [weak self] borderRadius in
             guard let self else { return }
 
-            self.scaleCornerRadius = borderRadius
-            self._scaleCornerRadius.update(traitCollection: self.traitCollection)
+            self.cornerRadius = borderRadius
+            self._cornerRadius.update(traitCollection: self.traitCollection)
 
-            self.setCornerRadius(self.scaleCornerRadius)
+            self.setCornerRadius(self.cornerRadius)
         }
 
         self.viewModel.$leftSpacing.subscribe(in: &self.cancellables) { [weak self] leftSpacing in
             guard let self else { return }
+            self.leftSpacing = leftSpacing
+            self._leftSpacing.update(traitCollection: self.traitCollection)
             self.setNeedsLayout()
         }
 
         self.viewModel.$rightSpacing.subscribe(in: &self.cancellables) { [weak self] rightSpacing in
             guard let self else { return }
+            self.rightSpacing = rightSpacing
+            self._rightSpacing.update(traitCollection: self.traitCollection)
             self.setNeedsLayout()
         }
 
         self.viewModel.$contentSpacing.subscribe(in: &self.cancellables) { [weak self] contentSpacing in
             guard let self else { return }
+            self.contentSpacing = contentSpacing
+            self._contentSpacing.update(traitCollection: self.traitCollection)
             self.setNeedsLayout()
         }
 
@@ -230,11 +242,11 @@ public final class TextFieldUIView: UITextField {
     private func setInsets(forBounds bounds: CGRect) -> CGRect {
         var totalInsets = UIEdgeInsets(
             top: 0,
-            left: self.viewModel.leftSpacing,
+            left: self.leftSpacing,
             bottom: 0,
-            right: self.viewModel.rightSpacing
+            right: self.rightSpacing
         )
-        let contentSpacing = self.viewModel.contentSpacing
+        let contentSpacing = self.contentSpacing
         if let leftView,
            leftView.isDescendant(of: self) {
             totalInsets.left += leftView.bounds.size.width + contentSpacing
@@ -264,7 +276,7 @@ public final class TextFieldUIView: UITextField {
     }
 
     private func getClearButtonXOffset() -> CGFloat {
-        return -self.viewModel.rightSpacing + self.defaultClearButtonRightSpacing
+        return -self.rightSpacing + self.defaultClearButtonRightSpacing
     }
 
     public override func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
@@ -274,12 +286,12 @@ public final class TextFieldUIView: UITextField {
 
     public override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
         return super.leftViewRect(forBounds: bounds)
-            .offsetBy(dx: self.viewModel.leftSpacing, dy: 0)
+            .offsetBy(dx: self.leftSpacing, dy: 0)
     }
 
     public override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
         return super.rightViewRect(forBounds: bounds)
-            .offsetBy(dx: -self.viewModel.rightSpacing, dy: 0)
+            .offsetBy(dx: -self.rightSpacing, dy: 0)
     }
 
     // MARK: - Responder
@@ -309,13 +321,14 @@ public final class TextFieldUIView: UITextField {
 
         self._height.update(traitCollection: self.traitCollection)
 
-        self._scaleCornerRadius.update(traitCollection: self.traitCollection)
-        self._scaleBorderWidth.update(traitCollection: self.traitCollection)
+        self._cornerRadius.update(traitCollection: self.traitCollection)
+        self._borderWidth.update(traitCollection: self.traitCollection)
 
-        self.setCornerRadius(self.scaleCornerRadius)
-        self.setBorderWidth(self.scaleBorderWidth)
+        self.setCornerRadius(self.cornerRadius)
+        self.setBorderWidth(self.borderWidth)
 
         self.invalidateIntrinsicContentSize()
+        self.setNeedsLayout()
     }
 
     // MARK: - Instrinsic Content Size

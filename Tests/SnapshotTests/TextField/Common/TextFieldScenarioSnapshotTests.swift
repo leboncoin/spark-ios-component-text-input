@@ -21,6 +21,7 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
     case test5
     case test6
     case test7
+//    case documentation
 
     // MARK: - Type Alias
 
@@ -35,7 +36,7 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
         case .test2:
             return self.test2(isSwiftUIComponent: isSwiftUIComponent)
         case .test3:
-            return self.test3()
+            return self.test3(isSwiftUIComponent: isSwiftUIComponent)
         case .test4:
             return self.test4(isSwiftUIComponent: isSwiftUIComponent)
         case .test5:
@@ -44,6 +45,8 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
             return self.test6()
         case .test7:
             return self.test7()
+//        case .documentation:
+//            return self.documentation()
         }
     }
 
@@ -64,11 +67,11 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
     /// - rightAddonContent: .image
     /// - isClearButton: false
     /// - isFocused: false
-    /// - isSecureMode: false
+    /// - isSecureEntry: false
     /// - a11y sizes : default
     /// - mode : default
     private func test1(isSwiftUIComponent: Bool) -> [TextFieldConfigurationSnapshotTests] {
-        let states = TextInputState.allCases(isSwiftUIComponent: isSwiftUIComponent)
+        let states = TextInputState.allCases
         let contentResiliences = TextInputContentResilience.allCases(isTextField: true)
 
         return states.flatMap { state in
@@ -85,9 +88,10 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
                     rightContent: .button,
                     rightAddonContent: .image,
                     isAddonsPadding: false,
+                    isAddonsSeparator: false,
                     isClearButton: false,
                     isFocused: false,
-                    isSecureMode: false
+                    isSecureEntry: false
                 )
             }
         }
@@ -108,7 +112,7 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
     /// - **rightAddonContent: button & none**
     /// - **isClearButton: all**
     /// - isFocused: false
-    /// - isSecureMode: false
+    /// - isSecureEntry: false
     /// - a11y sizes : default
     /// - mode : default
     private func test2(isSwiftUIComponent: Bool) -> [TextFieldConfigurationSnapshotTests] {
@@ -131,9 +135,10 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
                         rightContent: contentState.isRight ? .button : .empty,
                         rightAddonContent: isAddons ? .image : .empty,
                         isAddonsPadding: false,
+                        isAddonsSeparator: false,
                         isClearButton: isClearButton,
                         isFocused: false,
-                        isSecureMode: false
+                        isSecureEntry: false
                     )
                 }
             }
@@ -155,33 +160,37 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
     /// - **rightAddonContent: image & none**
     /// - isClearButton: false
     /// - isFocused: false
-    /// - isSecureMode: false
+    /// - isSecureEntry: false
     /// - a11y sizes : default
     /// - mode : default
-    private func test3() -> [TextFieldConfigurationSnapshotTests] {
+    private func test3(isSwiftUIComponent: Bool) -> [TextFieldConfigurationSnapshotTests] {
         let addonsContentStates = TextFieldSideViewState.allCases
         let isSideView = Bool.allCases
         let isAddonsPaddings = Bool.allCases
+        let isAddonsSeparators = isSwiftUIComponent ? Bool.allCases : [false]
 
         return addonsContentStates.flatMap { addonsContentState in
             isSideView.flatMap { isSideView in
-                isAddonsPaddings.map { isAddonsPadding in
+                isAddonsPaddings.flatMap { isAddonsPadding in
+                    isAddonsSeparators.map { isAddonsSeparator in
 
-                    return .init(
-                        scenario: self,
-                        intent: .neutral,
-                        state: .enabled,
-                        content: .smallText,
-                        placeholder: .small,
-                        leftContent: isSideView ? .image : .empty,
-                        leftAddonContent: addonsContentState.isLeft ? .button : .empty,
-                        rightContent: isSideView ? .button : .empty,
-                        rightAddonContent: addonsContentState.isRight ? .image : .empty,
-                        isAddonsPadding: isAddonsPadding,
-                        isClearButton: false,
-                        isFocused: false,
-                        isSecureMode: false
-                    )
+                        return .init(
+                            scenario: self,
+                            intent: .neutral,
+                            state: .enabled,
+                            content: .smallText,
+                            placeholder: .small,
+                            leftContent: isSideView ? .image : .empty,
+                            leftAddonContent: addonsContentState.isLeft ? .button : .empty,
+                            rightContent: isSideView ? .button : .empty,
+                            rightAddonContent: addonsContentState.isRight ? .image : .empty,
+                            isAddonsPadding: isAddonsPadding,
+                            isAddonsSeparator: isAddonsSeparator,
+                            isClearButton: false,
+                            isFocused: false,
+                            isSecureEntry: false
+                        )
+                    }
                 }
             }
         }
@@ -202,7 +211,7 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
     /// - rightAddonContent: .image
     /// - isClearButton: false
     /// - **isFocused: true**
-    /// - isSecureMode: false
+    /// - isSecureEntry: false
     /// - a11y sizes : default
     /// - mode : default
     private func test4(isSwiftUIComponent: Bool) -> [TextFieldConfigurationSnapshotTests] {
@@ -225,9 +234,10 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
                     rightContent: .empty,
                     rightAddonContent: .image,
                     isAddonsPadding: false,
+                    isAddonsSeparator: false,
                     isClearButton: true,
                     isFocused: true,
-                    isSecureMode: false,
+                    isSecureEntry: false,
                     modes: [.dark]
                 )
             ]
@@ -249,7 +259,7 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
     /// - rightAddonContent: .none
     /// - isClearButton: false
     /// - isFocused: false
-    /// - **isSecureMode: true**
+    /// - **isSecureEntry: true**
     /// - a11y sizes : default
     /// - mode : default
     private func test5() -> [TextFieldConfigurationSnapshotTests] {
@@ -265,9 +275,10 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
                 rightContent: .empty,
                 rightAddonContent: .empty,
                 isAddonsPadding: false,
+                isAddonsSeparator: false,
                 isClearButton: true,
                 isFocused: false,
-                isSecureMode: true
+                isSecureEntry: true
             )
         ]
     }
@@ -287,7 +298,7 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
     /// - rightAddonContent: .image
     /// - isClearButton: false
     /// - isFocused: false
-    /// - isSecureMode: false
+    /// - isSecureEntry: false
     /// - a11y sizes : default
     /// - **mode : dark**
     private func test6() -> [TextFieldConfigurationSnapshotTests] {
@@ -303,9 +314,10 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
                 rightContent: .empty,
                 rightAddonContent: .empty,
                 isAddonsPadding: false,
+                isAddonsSeparator: false,
                 isClearButton: true,
                 isFocused: false,
-                isSecureMode: false,
+                isSecureEntry: false,
                 modes: [.dark]
             )
         ]
@@ -326,7 +338,7 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
     /// - rightAddonContent: .none
     /// - isClearButton: false
     /// - isFocused: false
-    /// - isSecureMode: false 
+    /// - isSecureEntry: false 
     /// - **a11y sizes : all**
     /// - mode : default
     private func test7() -> [TextFieldConfigurationSnapshotTests] {
@@ -342,11 +354,45 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
                 rightContent: .empty,
                 rightAddonContent: .empty,
                 isAddonsPadding: false,
+                isAddonsSeparator: false,
                 isClearButton: true,
                 isFocused: false,
-                isSecureMode: false,
+                isSecureEntry: false,
                 sizes: Constants.Sizes.all
             )
         ]
+    }
+
+    // MARK: - Documentation
+
+    // Used to generate screenshot for Documentation
+    private func documentation() -> [TextFieldConfigurationSnapshotTests] {
+        let withSideViews = Bool.allCases
+        let clearButtons = Bool.allCases
+        let isSecureEntries = Bool.allCases
+
+        return withSideViews.flatMap { withSideView in
+            clearButtons.flatMap { clearButton in
+                isSecureEntries.map { isSecureEntry in
+                    return .init(
+                        scenario: self,
+                        intent: .neutral,
+                        state: .enabled,
+                        content: .smallText,
+                        placeholder: .small,
+                        leftContent: withSideView ? .image : .empty,
+                        leftAddonContent: withSideView ? .button : .empty,
+                        rightContent: withSideView ? .image : .empty,
+                        rightAddonContent: withSideView ? .button : .empty,
+                        isAddonsPadding: true,
+                        isAddonsSeparator: true,
+                        isClearButton: clearButton,
+                        isFocused: false,
+                        isSecureEntry: isSecureEntry,
+                        modes: Constants.Modes.all
+                    )
+                }
+            }
+        }
     }
 }

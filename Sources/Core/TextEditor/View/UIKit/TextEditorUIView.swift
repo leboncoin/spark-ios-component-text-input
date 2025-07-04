@@ -101,10 +101,14 @@ public final class TextEditorUIView: UITextView {
 
     // MARK: - Private Properties
 
-    @ScaledUIMetric private var scaleHeight: CGFloat = TextInputConstants.height
+    @ScaledUIFrame var height: CGFloat = TextInputConstants.height
 
-    @ScaledUIMetric private var scaleCornerRadius: CGFloat = 0
-    @ScaledUIMetric private var scaleBorderWidth: CGFloat = 0
+    @ScaledUIBorderRadius private var cornerRadius: CGFloat = 0
+    @ScaledUIBorderWidth private var borderWidth: CGFloat = 0
+
+    @ScaledUIPadding private var leftSpacing: CGFloat = 0
+    @ScaledUIPadding private var verticalSpacing: CGFloat = 0
+    @ScaledUIPadding private var rightSpacing: CGFloat = 0
 
     private var heightConstraint: NSLayoutConstraint?
     private var placeholderVerticalPaddingConstraints: [NSLayoutConstraint] = []
@@ -112,7 +116,7 @@ public final class TextEditorUIView: UITextView {
     private var placeholderCenterYAnchorConstraint: NSLayoutConstraint?
     private var placeholderCenterXAnchorConstraint: NSLayoutConstraint?
 
-    private let viewModel: TextEditorViewModel
+    private let viewModel: TextEditorUIViewModel
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -186,7 +190,7 @@ public final class TextEditorUIView: UITextView {
     private func setupViewConstraints() {
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        self.heightConstraint = self.heightAnchor.constraint(greaterThanOrEqualToConstant: self.scaleHeight)
+        self.heightConstraint = self.heightAnchor.constraint(greaterThanOrEqualToConstant: self.height)
         self.heightConstraint?.isActive = true
     }
 
@@ -246,8 +250,8 @@ public final class TextEditorUIView: UITextView {
         self.viewModel.$borderWidth.subscribe(in: &self.cancellables) { [weak self] borderWidth in
             guard let self else { return }
 
-            self.scaleBorderWidth = borderWidth
-            self._scaleBorderWidth.update(traitCollection: self.traitCollection)
+            self.borderWidth = borderWidth
+            self._borderWidth.update(traitCollection: self.traitCollection)
 
             self.updateBorder()
         }
@@ -255,8 +259,8 @@ public final class TextEditorUIView: UITextView {
         self.viewModel.$borderRadius.subscribe(in: &self.cancellables) { [weak self] borderRadius in
             guard let self else { return }
 
-            self.scaleCornerRadius = borderRadius
-            self._scaleCornerRadius.update(traitCollection: self.traitCollection)
+            self.cornerRadius = borderRadius
+            self._cornerRadius.update(traitCollection: self.traitCollection)
 
             self.updateBorder()
         }
@@ -326,25 +330,28 @@ public final class TextEditorUIView: UITextView {
         leftSpacing: CGFloat? = nil,
         rightSpacing: CGFloat? = nil
     ) {
-        let leftSpacing = leftSpacing ?? self.viewModel.leftSpacing
-        let verticalSpacing = self.viewModel.getVerticalSpacing(from: self.scaleHeight)
-        let rightSpacing = rightSpacing ?? self.viewModel.rightSpacing
+        self.leftSpacing = leftSpacing ?? self.viewModel.leftSpacing
+        self._leftSpacing.update(traitCollection: self.traitCollection)
+        self.verticalSpacing = self.viewModel.getVerticalSpacing(from: self.height)
+        self._verticalSpacing.update(traitCollection: self.traitCollection)
+        self.rightSpacing = rightSpacing ?? self.viewModel.rightSpacing
+        self._rightSpacing.update(traitCollection: self.traitCollection)
 
-        // Containerzaoipjoi
+        // Container
         self.textContainerInset = UIEdgeInsets(
-            top: verticalSpacing,
-            left: leftSpacing,
-            bottom: verticalSpacing,
-            right: rightSpacing
+            top: self.verticalSpacing,
+            left: self.leftSpacing,
+            bottom: self.verticalSpacing,
+            right: self.rightSpacing
         )
 
         // Placeholder
         if let placeholderWidthConstraint {
-            placeholderWidthConstraint.constant = -(leftSpacing + rightSpacing)
+            placeholderWidthConstraint.constant = -(self.leftSpacing + self.rightSpacing)
         }
 
         for constraint in self.placeholderVerticalPaddingConstraints {
-            constraint.constant = verticalSpacing
+            constraint.constant = self.verticalSpacing
         }
 
         self.placeholderLabel.sizeToFit()
@@ -352,8 +359,8 @@ public final class TextEditorUIView: UITextView {
     }
 
     private func updateBorder() {
-        self.setCornerRadius(self.scaleCornerRadius)
-        self.setBorderWidth(self.scaleBorderWidth)
+        self.setCornerRadius(self.cornerRadius)
+        self.setBorderWidth(self.borderWidth)
     }
 
     // MARK: - Action
@@ -400,12 +407,16 @@ public final class TextEditorUIView: UITextView {
         guard previousTraitCollection?.preferredContentSizeCategory != self.traitCollection.preferredContentSizeCategory else { return }
 
         // Update all Scaled variables
-        self._scaleHeight.update(traitCollection: self.traitCollection)
+        self._height.update(traitCollection: self.traitCollection)
 
-        self._scaleCornerRadius.update(traitCollection: self.traitCollection)
-        self._scaleBorderWidth.update(traitCollection: self.traitCollection)
+        self._cornerRadius.update(traitCollection: self.traitCollection)
+        self._borderWidth.update(traitCollection: self.traitCollection)
 
-        self.heightConstraint?.constant = self.scaleHeight
+        self._leftSpacing.update(traitCollection: self.traitCollection)
+        self._verticalSpacing.update(traitCollection: self.traitCollection)
+        self._rightSpacing.update(traitCollection: self.traitCollection)
+
+        self.heightConstraint?.constant = self.height
         self.updateConstraintsIfNeeded()
 
         self.updateBorder()
