@@ -10,7 +10,7 @@ import SwiftUI
 
 /// This view is implemented only by ``SparkTextField``.
 /// No init is **public**.
-public struct _FormattedTextField<Value>: View {
+public struct _FormattedTextField<Value>: _TextField {
 
     // MARK: - Properties
 
