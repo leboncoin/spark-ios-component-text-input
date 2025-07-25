@@ -10,7 +10,7 @@ import SwiftUI
 
 /// This view is implemented only by ``SparkTextField``.
 /// No init is **public**.
-public struct _FormatTextField<Value, Format>: View where Format: ParseableFormatStyle, Format.FormatOutput == String, Format.FormatInput == Value {
+public struct _FormatTextField<Value, Format>: _TextField where Format: ParseableFormatStyle, Format.FormatOutput == String, Format.FormatInput == Value {
 
     // MARK: - Properties
 

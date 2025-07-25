@@ -192,7 +192,7 @@ import SparkTheming
 /// )
 /// .textFieldAccessibilityHint("Error, the email is invalid.")
 /// ```
-public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: View, RightAddon: View, Content: View>: View {
+public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: View, RightAddon: View, Content: _TextField>: View {
 
     // MARK: - Properties
 
@@ -571,11 +571,9 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
                             .accessibilityOptionalValue(self.accessibilityValue)
                             .accessibilityOptionalHint(self.accessibilityHint)
 
-                        if self.viewModel.isClearButton {
+                        if self.viewModel.isClearButton && !self.content().isEmptyContent() {
                             TextFieldClearButton(action: self.clearMode.action ?? {
-                                if let test = self._value as? Binding<String> {
-                                    test.wrappedValue = ""
-                                }
+                                self.content().clearAction()
                             })
                             .accessibilitySort(.clearButton)
                         }
