@@ -48,7 +48,7 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
     public init(
         _ titleKey: LocalizedStringKey,
         text: Binding<String>,
-        theme: Theme,
+        theme: any Theme,
         intent: TextInputIntent,
         type: TextFieldViewType = .standard(),
         isReadOnly: Bool,

@@ -1,6 +1,6 @@
 //
 //  _TextField.swift
-//  SparkTextInput
+//  SparkComponentTextInput
 //
 //  Created by robin.lemaire on 25/07/2025.
 //

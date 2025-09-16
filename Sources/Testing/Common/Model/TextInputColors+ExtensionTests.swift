@@ -7,7 +7,7 @@
 //
 
 import Foundation
-@testable import SparkTextInput
+@testable import SparkComponentTextInput
 @_spi(SI_SPI) import SparkThemingTesting
 
 extension TextInputColors {

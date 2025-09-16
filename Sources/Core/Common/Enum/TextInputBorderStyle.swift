@@ -1,6 +1,6 @@
 //
 //  TextInputBorderStyle.swift
-//  SparkTextInputUnitTests
+//  SparkComponentTextInputUnitTests
 //
 //  Created by Jacklyn Situmorang on 18.10.23.
 //  Copyright © 2023 Leboncoin. All rights reserved.

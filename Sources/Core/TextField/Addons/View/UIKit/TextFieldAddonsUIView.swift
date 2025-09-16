@@ -66,7 +66,7 @@ public final class TextFieldAddonsUIView: UIControl {
     ///   - theme: The textfield's current theme
     ///   - intent: The textfield's current intent
     public init(
-        theme: Theme,
+        theme: any Theme,
         intent: TextInputIntent
     ) {
         let viewModel = TextFieldAddonsViewModel(

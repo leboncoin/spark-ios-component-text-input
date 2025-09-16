@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SparkTextInput
+@testable import SparkComponentTextInput
 @_spi(SI_SPI) import SparkTheming
 
 final class TextInputColorsTests: XCTestCase {

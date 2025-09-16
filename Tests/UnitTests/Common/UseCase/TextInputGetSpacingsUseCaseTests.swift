@@ -8,7 +8,7 @@
 
 import XCTest
 import SparkTheming
-@testable import SparkTextInput
+@testable import SparkComponentTextInput
 @_spi(SI_SPI) import SparkThemingTesting
 
 final class TextInputGetSpacingsUseCaseTests: XCTestCase {

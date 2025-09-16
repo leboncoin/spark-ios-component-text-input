@@ -1,6 +1,6 @@
 //
 //  TextEditorViewModel.swift
-//  SparkTextInput
+//  SparkComponentTextInput
 //
 //  Created by robin.lemaire on 16/06/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
@@ -20,12 +20,12 @@ internal final class TextEditorViewModel: TextInputViewModel {
 
     // MARK: - Use Case Properties
 
-    private let getHorizontalPaddingUseCase: TextEditorGetHorizontalPaddingUseCaseable
+    private let getHorizontalPaddingUseCase: any TextEditorGetHorizontalPaddingUseCaseable
 
     // MARK: - Initialization
 
     init(
-        getHorizontalPaddingUseCase: TextEditorGetHorizontalPaddingUseCaseable = TextEditorGetHorizontalPaddingUseCase()
+        getHorizontalPaddingUseCase: any TextEditorGetHorizontalPaddingUseCaseable = TextEditorGetHorizontalPaddingUseCase()
     ) {
         self.getHorizontalPaddingUseCase = getHorizontalPaddingUseCase
     }

@@ -1,6 +1,6 @@
 //
 //  SparkTextEditor.swift
-//  SparkTextInput
+//  SparkComponentTextInput
 //
 //  Created by robin.lemaire on 20/06/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
@@ -63,7 +63,7 @@ public struct SparkTextEditor: View {
 
     // MARK: - Properties
 
-    private let theme: Theme
+    private let theme: any Theme
     private let title: String
 
     @Binding private var text: String
@@ -108,7 +108,7 @@ public struct SparkTextEditor: View {
     public init(
         _ title: String,
         text: Binding<String>,
-        theme: Theme
+        theme: any Theme
     ) {
         self.title = title
         self._text = text

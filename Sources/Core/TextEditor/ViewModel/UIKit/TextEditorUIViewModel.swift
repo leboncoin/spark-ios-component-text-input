@@ -20,14 +20,14 @@ final class TextEditorUIViewModel: TextInputUIViewModel {
 
     // MARK: - Private Properties
 
-    private let getVerticalSpacingUseCase: TextEditorGetVerticalSpacingUseCaseable
+    private let getVerticalSpacingUseCase: any TextEditorGetVerticalSpacingUseCaseable
 
     // MARK: - Initialization
 
     init(
-        theme: Theme,
+        theme: any Theme,
         intent: TextEditorIntent,
-        getVerticalSpacingUseCase: TextEditorGetVerticalSpacingUseCaseable = TextEditorGetVerticalSpacingUseCase()
+        getVerticalSpacingUseCase: any TextEditorGetVerticalSpacingUseCaseable = TextEditorGetVerticalSpacingUseCase()
     ) {
         self.getVerticalSpacingUseCase = getVerticalSpacingUseCase
 

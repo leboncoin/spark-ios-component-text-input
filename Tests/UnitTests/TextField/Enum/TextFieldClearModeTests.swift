@@ -1,13 +1,13 @@
 //
 //  TextFieldClearModeTests.swift
-//  SparkTextInputTests
+//  SparkComponentTextInputTests
 //
 //  Created on 05/06/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
 import XCTest
-@testable import SparkTextInput
+@testable import SparkComponentTextInput
 
 final class TextFieldClearModeTests: XCTestCase {
 

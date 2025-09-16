@@ -7,7 +7,7 @@
 //
 
 import Foundation
-@testable import SparkTextInput
+@testable import SparkComponentTextInput
 
 extension TextInputSpacings {
     static func mocked(horizontal: CGFloat, content: CGFloat) -> TextInputSpacings {

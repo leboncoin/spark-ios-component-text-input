@@ -1,6 +1,6 @@
 //
 //  _FormattedTextField.swift
-//  SparkTextInput
+//  SparkComponentTextInput
 //
 //  Created by robin.lemaire on 30/06/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.

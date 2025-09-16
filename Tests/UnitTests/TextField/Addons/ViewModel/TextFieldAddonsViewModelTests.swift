@@ -9,8 +9,8 @@
 import XCTest
 import SwiftUI
 import Combine
-@testable import SparkTextInput
-@_spi(SI_SPI) @testable import SparkTextInputTesting
+@testable import SparkComponentTextInput
+@_spi(SI_SPI) @testable import SparkComponentTextInputTesting
 @_spi(SI_SPI) import SparkCommon
 @_spi(SI_SPI) import SparkCommonTesting
 import SparkTheming

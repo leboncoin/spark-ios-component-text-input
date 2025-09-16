@@ -5,18 +5,18 @@ import PackageDescription
 
 // swiftlint:disable all
 let package = Package(
-    name: "SparkTextInput",
+    name: "SparkComponentTextInput",
     platforms: [
         .iOS(.v16)
     ],
     products: [
         .library(
-            name: "SparkTextInput",
-            targets: ["SparkTextInput"]
+            name: "SparkComponentTextInput",
+            targets: ["SparkComponentTextInput"]
         ),
         .library(
-            name: "SparkTextInputTesting",
-            targets: ["SparkTextInputTesting"]
+            name: "SparkComponentTextInputTesting",
+            targets: ["SparkComponentTextInputTesting"]
         )
     ],
     dependencies: [
@@ -33,7 +33,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SparkTextInput",
+            name: "SparkComponentTextInput",
             dependencies: [
                 .product(
                     name: "SparkCommon",
@@ -47,9 +47,9 @@ let package = Package(
             path: "Sources/Core"
         ),
         .target(
-            name: "SparkTextInputTesting",
+            name: "SparkComponentTextInputTesting",
             dependencies: [
-                "SparkTextInput",
+                "SparkComponentTextInput",
                 .product(
                     name: "SparkCommon",
                     package: "spark-ios-common"
@@ -70,10 +70,10 @@ let package = Package(
             path: "Sources/Testing"
         ),
         .testTarget(
-            name: "SparkTextInputUnitTests",
+            name: "SparkComponentTextInputUnitTests",
             dependencies: [
-                "SparkTextInput",
-                "SparkTextInputTesting",
+                "SparkComponentTextInput",
+                "SparkComponentTextInputTesting",
                 .product(
                     name: "SparkCommonTesting",
                     package: "spark-ios-common"
@@ -86,10 +86,10 @@ let package = Package(
             path: "Tests/UnitTests"
         ),
         .testTarget(
-            name: "SparkTextInputSnapshotTests",
+            name: "SparkComponentTextInputSnapshotTests",
             dependencies: [
-                "SparkTextInput",
-                "SparkTextInputTesting",
+                "SparkComponentTextInput",
+                "SparkComponentTextInputTesting",
                 .product(
                     name: "SparkCommonSnapshotTesting",
                     package: "spark-ios-common"

@@ -8,7 +8,7 @@
 
 import XCTest
 
-@testable import SparkTextInput
+@testable import SparkComponentTextInput
 import SparkTheming
 @_spi(SI_SPI) import SparkThemingTesting
 

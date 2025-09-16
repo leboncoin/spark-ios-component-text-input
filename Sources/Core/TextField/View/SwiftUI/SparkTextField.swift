@@ -1,6 +1,6 @@
 //
 //  SparkTextField.swift
-//  SparkTextInput
+//  SparkComponentTextInput
 //
 //  Created by robin.lemaire on 10/06/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
@@ -196,7 +196,7 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
 
     // MARK: - Properties
 
-    private let theme: Theme
+    private let theme: any Theme
     private let titleKey: LocalizedStringKey
 
     @Binding private var value: Value
@@ -285,7 +285,7 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
     public init(
         _ titleKey: LocalizedStringKey,
         text: Binding<String>,
-        theme: Theme,
+        theme: any Theme,
         leftView: @escaping () -> LeftView = { EmptyView() },
         rightView: @escaping () -> RightView = { EmptyView() },
         leftAddon: @escaping () -> LeftAddon = { EmptyView() },
@@ -373,7 +373,7 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
         _ titleKey: LocalizedStringKey,
         value: Binding<Value>,
         formatter: Formatter,
-        theme: Theme,
+        theme: any Theme,
         leftView: @escaping () -> LeftView = { EmptyView() },
         rightView: @escaping () -> RightView = { EmptyView() },
         leftAddon: @escaping () -> LeftAddon = { EmptyView() },
@@ -460,7 +460,7 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
         _ titleKey: LocalizedStringKey,
         value: Binding<Format.FormatInput>,
         format: Format,
-        theme: Theme,
+        theme: any Theme,
         leftView: @escaping () -> LeftView = { EmptyView() },
         rightView: @escaping () -> RightView = { EmptyView() },
         leftAddon: @escaping () -> LeftAddon = { EmptyView() },

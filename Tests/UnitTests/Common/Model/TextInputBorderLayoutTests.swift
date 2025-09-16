@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SparkTextInput
+@testable import SparkComponentTextInput
 
 final class TextInputBorderLayoutTests: XCTestCase {
 

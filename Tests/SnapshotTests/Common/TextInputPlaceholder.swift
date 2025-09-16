@@ -1,6 +1,6 @@
 //
 //  TextInputPlaceholder.swift
-//  SparkTextInput
+//  SparkComponentTextInput
 //
 //  Created by robin.lemaire on 05/06/2025.
 //  Copyright © 2023 Leboncoin. All rights reserved.

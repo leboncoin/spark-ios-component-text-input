@@ -1,6 +1,6 @@
 //
 //  TextInputGetBorderLayoutUseCase.swift
-//  SparkTextInput
+//  SparkComponentTextInput
 //
 //  Created by louis.borlee on 25/09/2023.
 //  Copyright © 2023 Leboncoin. All rights reserved.
@@ -13,14 +13,14 @@ import SparkTheming
 protocol TextInputGetBorderLayoutUseCaseable {
     // sourcery: theme = "Identical"
     func execute(
-        theme: Theme,
+        theme: any Theme,
         borderStyle: TextInputBorderStyle,
         isFocused: Bool
     ) -> TextInputBorderLayout
 
     // sourcery: theme = "Identical"
     func execute(
-        theme: Theme,
+        theme: any Theme,
         isFocused: Bool
     ) -> TextInputBorderLayout
 }
@@ -28,7 +28,7 @@ protocol TextInputGetBorderLayoutUseCaseable {
 final class TextInputGetBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable {
 
     func execute(
-        theme: Theme,
+        theme: any Theme,
         borderStyle: TextInputBorderStyle,
         isFocused: Bool
     ) -> TextInputBorderLayout {
@@ -44,7 +44,7 @@ final class TextInputGetBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable
     }
 
     func execute(
-        theme: Theme,
+        theme: any Theme,
         isFocused: Bool
     ) -> TextInputBorderLayout {
         return .init(

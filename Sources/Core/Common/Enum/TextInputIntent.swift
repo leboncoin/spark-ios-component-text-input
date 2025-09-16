@@ -1,6 +1,6 @@
 //
 //  TextInputIntent.swift
-//  SparkTextInputUnitTests
+//  SparkComponentTextInputUnitTests
 //
 //  Created by Quentin.richard on 21/09/2023.
 //  Copyright © 2023 Leboncoin. All rights reserved.

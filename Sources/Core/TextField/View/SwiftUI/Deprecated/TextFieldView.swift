@@ -46,7 +46,7 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
     init(
         _ titleKey: LocalizedStringKey,
         text: Binding<String>,
-        theme: Theme,
+        theme: any Theme,
         intent: TextFieldIntent,
         borderStyle: TextInputBorderStyle,
         type: TextFieldViewType,
@@ -83,7 +83,7 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
     public init(
         _ titleKey: LocalizedStringKey,
         text: Binding<String>,
-        theme: Theme,
+        theme: any Theme,
         intent: TextFieldIntent,
         type: TextFieldViewType = .standard(),
         isReadOnly: Bool = false,

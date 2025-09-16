@@ -61,7 +61,7 @@ public final class TextFieldUIView: UITextField {
     }
 
     /// The textfield's current theme.
-    public var theme: Theme {
+    public var theme: any Theme {
         get {
             return self.viewModel.theme
         }
@@ -91,7 +91,7 @@ public final class TextFieldUIView: UITextField {
     }
 
     internal convenience init(
-        theme: Theme,
+        theme: any Theme,
         intent: TextFieldIntent,
         borderStyle: TextInputBorderStyle
     ) {
@@ -109,7 +109,7 @@ public final class TextFieldUIView: UITextField {
     ///   - theme: The textfield's current theme
     ///   - intent: The textfield's current intent
     public convenience init(
-        theme: Theme,
+        theme: any Theme,
         intent: TextFieldIntent
     ) {
         self.init(
@@ -231,7 +231,7 @@ public final class TextFieldUIView: UITextField {
         )
     }
 
-    private func setPlaceholder(_ placeholder: String?, foregroundColor: any ColorToken, font: TypographyFontToken) {
+    private func setPlaceholder(_ placeholder: String?, foregroundColor: any ColorToken, font: any TypographyFontToken) {
         if let placeholder {
             self.setAttributedPlaceholder(string: placeholder, foregroundColor: foregroundColor.uiColor, font: font.uiFont)
         } else {

@@ -13,19 +13,19 @@ import SparkTheming
 protocol TextInputGetSpacingsUseCaseable {
     // sourcery: theme = "Identical"
     func execute(
-        theme: Theme,
+        theme: any Theme,
         borderStyle: TextInputBorderStyle
     ) -> TextInputSpacings
 
     // sourcery: theme = "Identical"
-    func execute(theme: Theme) -> TextInputSpacings
+    func execute(theme: any Theme) -> TextInputSpacings
 }
 
 final class TextInputGetSpacingsUseCase: TextInputGetSpacingsUseCaseable {
 
     // MARK: - Methods
 
-    func execute(theme: Theme, borderStyle: TextInputBorderStyle) -> TextInputSpacings {
+    func execute(theme: any Theme, borderStyle: TextInputBorderStyle) -> TextInputSpacings {
         return switch borderStyle {
         case .none:
             .init(
@@ -37,7 +37,7 @@ final class TextInputGetSpacingsUseCase: TextInputGetSpacingsUseCaseable {
         }
     }
 
-    func execute(theme: Theme) -> TextInputSpacings {
+    func execute(theme: any Theme) -> TextInputSpacings {
         return .init(
             horizontal: theme.layout.spacing.large,
             content: theme.layout.spacing.medium
