@@ -1,6 +1,6 @@
 //
 //  TextInputViewModel.swift
-//  SparkTextInput
+//  SparkComponentTextInput
 //
 //  Created by robin.lemaire on 16/06/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
@@ -74,20 +74,20 @@ internal class TextInputViewModel: ObservableObject {
 
     // MARK: - Use Case Properties
 
-    private let getBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable
-    private let getColorsUseCase: TextInputGetColorsUseCaseable
-    private let getDimUseCase: TextInputGetDimUseCaseable
-    private let getFontUseCase: TextInputGetFontUseCaseable
-    private let getSpacingsUseCase: TextInputGetSpacingsUseCaseable
+    private let getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCaseable
+    private let getColorsUseCase: any TextInputGetColorsUseCaseable
+    private let getDimUseCase: any TextInputGetDimUseCaseable
+    private let getFontUseCase: any TextInputGetFontUseCaseable
+    private let getSpacingsUseCase: any TextInputGetSpacingsUseCaseable
 
     // MARK: - Initialization
 
     init(
-        getBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable = TextInputGetBorderLayoutUseCase(),
-        getColorsUseCase: TextInputGetColorsUseCaseable = TextInputGetColorsUseCase(),
-        getDimUseCase: TextInputGetDimUseCaseable = TextInputGetDimUseCase(),
-        getFontUseCase: TextInputGetFontUseCaseable = TextInputGetFontUseCase(),
-        getSpacingsUseCase: TextInputGetSpacingsUseCaseable = TextInputGetSpacingsUseCase()
+        getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCaseable = TextInputGetBorderLayoutUseCase(),
+        getColorsUseCase: any TextInputGetColorsUseCaseable = TextInputGetColorsUseCase(),
+        getDimUseCase: any TextInputGetDimUseCaseable = TextInputGetDimUseCase(),
+        getFontUseCase: any TextInputGetFontUseCaseable = TextInputGetFontUseCase(),
+        getSpacingsUseCase: any TextInputGetSpacingsUseCaseable = TextInputGetSpacingsUseCase()
     ) {
         self.getBorderLayoutUseCase = getBorderLayoutUseCase
         self.getColorsUseCase = getColorsUseCase
@@ -97,7 +97,7 @@ internal class TextInputViewModel: ObservableObject {
     }
 
     func updateAll(
-        theme: Theme,
+        theme: any Theme,
         intent: TextInputIntent,
         isReadOnly: Bool,
         isFocused: Bool,

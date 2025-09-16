@@ -7,7 +7,7 @@
 //
 
 import Foundation
-@testable import SparkTextInput
+@testable import SparkComponentTextInput
 
 extension TextInputGetSpacingsUseCaseableGeneratedMock {
     static func mocked(returnedSpacings: TextInputSpacings) -> TextInputGetSpacingsUseCaseableGeneratedMock {

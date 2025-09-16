@@ -28,7 +28,7 @@ public final class TextEditorUIView: UITextView {
     // MARK: - Public Properties
 
     /// The textview's current theme.
-    public var theme: Theme {
+    public var theme: any Theme {
         get {
             return self.viewModel.theme
         }
@@ -133,7 +133,7 @@ public final class TextEditorUIView: UITextView {
     ///   - theme: The textviews's current theme
     ///   - intent: The textviews's current intent
     public init(
-        theme: Theme,
+        theme: any Theme,
         intent: TextEditorIntent
     ) {
         self.viewModel = .init(theme: theme, intent: intent)

@@ -39,7 +39,7 @@ final class TextFieldViewModelForAddons: TextInputUIViewModel {
     @Published private(set) var addonsDim: CGFloat = 1.0
 
     init(
-        theme: Theme,
+        theme: any Theme,
         intent: TextFieldIntent,
         getColorsUseCase: TextInputGetColorsUseCaseable = TextInputGetColorsUseCase(),
         getBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable = TextInputGetBorderLayoutUseCase(),

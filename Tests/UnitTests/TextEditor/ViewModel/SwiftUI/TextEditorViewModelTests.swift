@@ -1,14 +1,14 @@
 //
 //  TextEditorViewModelTests.swift
-//  SparkTextInputTests
+//  SparkComponentTextInputTests
 //
 //  Created on 26/06/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
 import XCTest
-@testable import SparkTextInput
-@_spi(SI_SPI) @testable import SparkTextInputTesting
+@testable import SparkComponentTextInput
+@_spi(SI_SPI) @testable import SparkComponentTextInputTesting
 @_spi(SI_SPI) import SparkCommon
 import SparkTheming
 

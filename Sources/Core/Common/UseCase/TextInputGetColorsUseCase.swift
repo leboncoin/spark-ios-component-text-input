@@ -13,7 +13,7 @@ import SparkTheming
 protocol TextInputGetColorsUseCaseable {
     // sourcery: theme = "Identical"
     func execute(
-        theme: Theme,
+        theme: any Theme,
         intent: TextInputIntent,
         isFocused: Bool,
         isEnabled: Bool,
@@ -26,7 +26,7 @@ struct TextInputGetColorsUseCase: TextInputGetColorsUseCaseable {
     // MARK: - Methods
 
     func execute(
-        theme: Theme,
+        theme: any Theme,
         intent: TextInputIntent,
         isFocused: Bool,
         isEnabled: Bool,

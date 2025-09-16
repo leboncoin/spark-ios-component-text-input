@@ -42,7 +42,7 @@ class TextInputUIViewModel: ObservableObject {
     let getBorderLayoutUseCase: any TextInputGetBorderLayoutUseCaseable
     let getSpacingsUseCase: any TextInputGetSpacingsUseCaseable
 
-    var theme: Theme {
+    var theme: any Theme {
         didSet {
             self.setColors()
             self.setBorderLayout()
@@ -93,7 +93,7 @@ class TextInputUIViewModel: ObservableObject {
     // MARK: - Initialization
 
     init(
-        theme: Theme,
+        theme: any Theme,
         intent: TextInputIntent,
         borderStyle: TextInputBorderStyle,
         getColorsUseCase: any TextInputGetColorsUseCaseable = TextInputGetColorsUseCase(),

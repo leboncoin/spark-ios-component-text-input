@@ -1,6 +1,6 @@
 //
 //  TextFieldGetAddonPaddingUseCaseTests.swift
-//  SparkTextInputTests
+//  SparkComponentTextInputTests
 //
 //  Created by robin.lemaire on 20/06/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 import SwiftUI
-@testable import SparkTextInput
+@testable import SparkComponentTextInput
 
 final class TextFieldGetAddonPaddingUseCaseTests: XCTestCase {
 

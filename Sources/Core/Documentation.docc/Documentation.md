@@ -1,4 +1,4 @@
-# ``SparkTextInput``
+# ``SparkComponentTextInput``
 
 The Spark Text Input is composed by two components:
 - 1. TextField

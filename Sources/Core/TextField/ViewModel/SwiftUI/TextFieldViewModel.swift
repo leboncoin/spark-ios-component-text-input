@@ -1,6 +1,6 @@
 //
 //  TextFieldViewModel.swift
-//  SparkTextInput
+//  SparkComponentTextInput
 //
 //  Created by robin.lemaire on 16/06/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
@@ -59,16 +59,16 @@ internal final class TextFieldViewModel: TextInputViewModel {
 
     // MARK: - Use Case Properties
 
-    private let getAddonPaddingUseCase: TextFieldGetAddonPaddingUseCaseable
-    private let getIsClearButtonUseCase: TextFieldGetIsClearButtonUseCaseable
-    private let getContentPaddingUseCase: TextFieldGetContentPaddingUseCaseable
+    private let getAddonPaddingUseCase: any TextFieldGetAddonPaddingUseCaseable
+    private let getIsClearButtonUseCase: any TextFieldGetIsClearButtonUseCaseable
+    private let getContentPaddingUseCase: any TextFieldGetContentPaddingUseCaseable
 
     // MARK: - Initialization
 
     init(
-        getAddonPaddingUseCase: TextFieldGetAddonPaddingUseCaseable = TextFieldGetAddonPaddingUseCase(),
-        getIsClearButtonUseCase: TextFieldGetIsClearButtonUseCaseable = TextFieldGetIsClearButtonUseCase(),
-        getContentPaddingUseCase: TextFieldGetContentPaddingUseCaseable = TextFieldGetContentPaddingUseCase()
+        getAddonPaddingUseCase: any TextFieldGetAddonPaddingUseCaseable = TextFieldGetAddonPaddingUseCase(),
+        getIsClearButtonUseCase: any TextFieldGetIsClearButtonUseCaseable = TextFieldGetIsClearButtonUseCase(),
+        getContentPaddingUseCase: any TextFieldGetContentPaddingUseCaseable = TextFieldGetContentPaddingUseCase()
     ) {
         self.getAddonPaddingUseCase = getAddonPaddingUseCase
         self.getIsClearButtonUseCase = getIsClearButtonUseCase
@@ -76,7 +76,7 @@ internal final class TextFieldViewModel: TextInputViewModel {
     }
 
     func updateAll(
-        theme: Theme,
+        theme: any Theme,
         intent: TextInputIntent,
         isReadOnly: Bool,
         clearMode: TextFieldClearMode,

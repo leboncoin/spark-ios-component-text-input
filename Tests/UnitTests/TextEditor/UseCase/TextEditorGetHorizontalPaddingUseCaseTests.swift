@@ -1,6 +1,6 @@
 //
 //  TextEditorGetHorizontalPaddingUseCaseTests.swift
-//  SparkTextInputTests
+//  SparkComponentTextInputTests
 //
 //  Created on 26/06/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 import SparkTheming
-@testable import SparkTextInput
+@testable import SparkComponentTextInput
 
 final class TextEditorGetHorizontalPaddingUseCaseTests: XCTestCase {
 

@@ -26,7 +26,7 @@ You are a developer ? A technical documentation in _DocC_ is available [here](ht
 
 ### Swift Package Manager
 
-_Note: Instructions below are for using **SPM** without the Xcode UI. It's the easiest to go to your Project Settings -> Swift Packages and add SparkTextInput from there._
+_Note: Instructions below are for using **SPM** without the Xcode UI. It's the easiest to go to your Project Settings -> Swift Packages and add SparkComponentTextInput from there._
 
 To integrate using Apple's Swift package manager, without Xcode integration, add the following as a dependency to your `Package.swift`:
 
@@ -34,7 +34,7 @@ To integrate using Apple's Swift package manager, without Xcode integration, add
 .package(url: "https://github.com/leboncoin/spark-ios-component-text-input.git", .upToNextMajor(from: "1.0.0"))
 ```
 
-and then specify `SparkTextInput` as a dependency of the Target in which you wish to use the SparkTextInput.
+and then specify `SparkComponentTextInput` as a dependency of the Target in which you wish to use the SparkComponentTextInput.
 
 Here's an example `Package.swift`:
 
@@ -63,7 +63,7 @@ let package = Package(
             name: "MyPackage",
             dependencies: [
                 .product(
-                    name: "SparkTextInput",
+                    name: "SparkComponentTextInput",
                     package: "spark-ios-component-text-input"
                 ),
             ]

@@ -8,7 +8,7 @@
 
 import XCTest
 import SnapshotTesting
-@testable import SparkTextInput
+@testable import SparkComponentTextInput
 @_spi(SI_SPI) import SparkCommon
 @_spi(SI_SPI) import SparkCommonSnapshotTesting
 @_spi(SI_SPI) import SparkThemingTesting
@@ -24,7 +24,7 @@ final class TextEditorViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
     // MARK: - Properties
 
-    private let theme: Theme = SparkTheme.shared
+    private let theme: any Theme = SparkTheme.shared
 
     // MARK: - Tests
 

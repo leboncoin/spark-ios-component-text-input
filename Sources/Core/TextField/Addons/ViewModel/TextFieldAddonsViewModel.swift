@@ -30,7 +30,7 @@ final class TextFieldAddonsViewModel: ObservableObject, Updateable {
 
     var textFieldViewModel: TextFieldViewModelForAddons
 
-    init(theme: Theme,
+    init(theme: any Theme,
          intent: TextInputIntent,
          getColorsUseCase: TextInputGetColorsUseCaseable = TextInputGetColorsUseCase(),
          getBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable = TextInputGetBorderLayoutUseCase(),

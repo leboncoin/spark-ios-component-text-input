@@ -10,8 +10,8 @@ import XCTest
 import Combine
 import UIKit
 import SwiftUI
-@testable import SparkTextInput
-@_spi(SI_SPI) @testable import SparkTextInputTesting
+@testable import SparkComponentTextInput
+@_spi(SI_SPI) @testable import SparkComponentTextInputTesting
 @_spi(SI_SPI) import SparkCommonTesting
 @_spi(SI_SPI) import SparkThemingTesting
 import SparkTheming
@@ -125,7 +125,7 @@ final class TextInputUIViewModelTests: XCTestCase {
         XCTAssertEqual(self.publishers.font.sinkCount, 1, "$font should have been called once")
     }
 
-    // MARK: Theme
+    // MARK: any Theme
     func test_theme_didSet() throws {
         // GIVEN - Inits from setUp()
         let newTheme = ThemeGeneratedMock()
