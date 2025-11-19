@@ -17,5 +17,5 @@ public enum TextInputIntent: CaseIterable {
 
     // MARK: - Properties
 
-    public static var `default` = Self.neutral
+    public static let `default`: Self = .neutral
 }
