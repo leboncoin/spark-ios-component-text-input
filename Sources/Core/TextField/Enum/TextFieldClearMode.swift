@@ -19,7 +19,7 @@ public enum TextFieldClearMode: CaseIterable {
 
     // MARK: - Properties
 
-    internal static var `default`: Self = .never
+    public static var `default`: Self = .never
 
     // MARK: - Methods
 

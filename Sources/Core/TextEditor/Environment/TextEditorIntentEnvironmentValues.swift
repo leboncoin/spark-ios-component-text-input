@@ -14,7 +14,7 @@ extension EnvironmentValues {
 
 public extension View {
 
-    /// Set the **intent** on the``SparkTextEditor``.
+    /// Set the **intent** on the ``SparkTextEditor``.
     ///
     /// The default value for this property is *TextEditorIntent.neutral*.
     func sparkTextEditorIntent(_ intent: TextEditorIntent) -> some View {

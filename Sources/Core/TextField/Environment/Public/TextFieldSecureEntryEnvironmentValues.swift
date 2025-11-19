@@ -14,7 +14,7 @@ extension EnvironmentValues {
 
 public extension View {
 
-    /// Set the **secure mode**  on the``SparkTextField``.
+    /// Set the **secure mode**  on the ``SparkTextField``.
     ///
     /// If the secure mode is *true*, the text will be replaced by dots. The default value for this property is *false*.
     ///
