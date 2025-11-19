@@ -15,7 +15,7 @@ extension EnvironmentValues {
 
 public extension View {
 
-    /// Add a **configuration** properties on **left addon**  on the``SparkTextField``.
+    /// Add a **configuration** properties on **left addon**  on the ``SparkTextField``.
     ///
     /// - Parameters:
     ///   - hasPadding: Add a padding or not on the addon. Default is **false**.
@@ -35,7 +35,7 @@ public extension View {
         return self.environment(\.textFieldLeftAddonConfiguration, configuration)
     }
 
-    /// Add a **configuration** properties on **right addon**  on the``SparkTextField``.
+    /// Add a **configuration** properties on **right addon**  on the ``SparkTextField``.
     ///
     /// - Parameters:
     ///   - hasPadding: Add a padding or not on the addon. Default is **false**.
