@@ -543,6 +543,7 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
                 .scaledPadding(self.viewModel.leftAddonPadding)
                 .layoutPriority(self.leftAddonConfiguration.layoutPriority)
                 .accessibilitySort(.leftAddon)
+                .accessibilityRespondsToUserInteraction(true)
 
             // Separator
             if self.leftAddonConfiguration.hasSeparator {
@@ -553,6 +554,7 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
                 // Left View
                 self.leftView()
                     .accessibilitySort(.leftView)
+                    .accessibilityRespondsToUserInteraction(true)
 
                 HStack(spacing: 0) {
 
@@ -566,6 +568,7 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
                             .tint(self.viewModel.colors.text)
                             .focused(self.$isFocused)
                             .accessibilitySort(.textField)
+                            .accessibilityRespondsToUserInteraction(true)
                             .accessibilityIdentifier(TextFieldAccessibilityIdentifier.view)
                             .accessibilityOptionalLabel(self.accessibilityLabel)
                             .accessibilityOptionalValue(self.accessibilityValue)
@@ -576,6 +579,7 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
                                 self.content().clearAction()
                             })
                             .accessibilitySort(.clearButton)
+                            .accessibilityRespondsToUserInteraction(true)
                         }
                     }
                     .frame(maxHeight: .infinity)
@@ -585,6 +589,7 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
                     self.rightView()
                         .scaledPadding(.trailing, self.viewModel.contentPadding.trailing)
                         .accessibilitySort(.rightView)
+                        .accessibilityRespondsToUserInteraction(true)
                 }
             }
             .scaledPadding(.top, self.viewModel.contentPadding.top)
@@ -601,6 +606,7 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
                 .scaledPadding(self.viewModel.rightAddonPadding)
                 .layoutPriority(self.rightAddonConfiguration.layoutPriority)
                 .accessibilitySort(.rightAddon)
+                .accessibilityRespondsToUserInteraction(true)
         }
     }
 
