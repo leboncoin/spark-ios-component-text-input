@@ -125,7 +125,8 @@ class TextInputUIViewModel: ObservableObject {
         let borderLayout = getBorderLayoutUseCase.execute(
             theme: theme,
             borderStyle: borderStyle,
-            isFocused: self.isFocused)
+            isFocused: self.isFocused
+        )
         self.borderWidth = borderLayout.width
         self.borderRadius = borderLayout.radius
 

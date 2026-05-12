@@ -11,6 +11,7 @@ import SnapshotTesting
 @testable import SparkComponentTextInput
 @_spi(SI_SPI) import SparkCommonSnapshotTesting
 @_spi(SI_SPI) import SparkCommon
+@_spi(SI_SPI) import SparkCommonTesting
 @_spi(SI_SPI) import SparkThemingTesting
 import SparkTheming
 import SparkTheme
@@ -35,6 +36,11 @@ final class TextEditorUIViewSnapshotTests: UIKitComponentSnapshotTestCase {
                 isSwiftUIComponent: false
             )
             for configuration in configurations {
+
+                let service = SparkFeatureToggleServicingGeneratedMock()
+                service.rebranding = configuration.rebrandingFeatureToggle
+                SparkFeatureToggleService.shared = service
+
                 let textEditor: TextEditorUIView = .init(
                     theme: self.theme,
                     intent: configuration.intent

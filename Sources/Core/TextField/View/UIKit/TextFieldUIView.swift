@@ -174,7 +174,7 @@ public final class TextFieldUIView: UITextField {
             self.borderWidth = borderWidth
             self._borderWidth.update(traitCollection: self.traitCollection)
 
-            self.setBorderWidth(self.borderWidth)
+            self.updateBorder()
         }
 
         self.viewModel.$borderRadius.subscribe(in: &self.cancellables) { [weak self] borderRadius in
@@ -183,7 +183,7 @@ public final class TextFieldUIView: UITextField {
             self.cornerRadius = borderRadius
             self._cornerRadius.update(traitCollection: self.traitCollection)
 
-            self.setCornerRadius(self.cornerRadius)
+            self.updateBorder()
         }
 
         self.viewModel.$leftSpacing.subscribe(in: &self.cancellables) { [weak self] leftSpacing in
@@ -217,6 +217,21 @@ public final class TextFieldUIView: UITextField {
             self.font = font.uiFont
             self.setPlaceholder(self.placeholder, foregroundColor: self.viewModel.placeholderColor, font: font)
         }
+    }
+
+    // MARK: - Layout
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+
+        self.updateBorder()
+    }
+
+    // MARK: - Update
+
+    private func updateBorder() {
+        self.setCornerRadius(self.cornerRadius)
+        self.setBorderWidth(self.borderWidth)
     }
 
     // MARK: - Setter
@@ -324,8 +339,7 @@ public final class TextFieldUIView: UITextField {
         self._cornerRadius.update(traitCollection: self.traitCollection)
         self._borderWidth.update(traitCollection: self.traitCollection)
 
-        self.setCornerRadius(self.cornerRadius)
-        self.setBorderWidth(self.borderWidth)
+        self.updateBorder()
 
         self.invalidateIntrinsicContentSize()
         self.setNeedsLayout()

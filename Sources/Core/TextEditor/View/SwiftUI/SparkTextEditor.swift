@@ -63,12 +63,16 @@ public struct SparkTextEditor: View {
 
     // MARK: - Properties
 
-    private let theme: any Theme
+    @available(*, deprecated, message: "Remove the deprecated and this property ASAP. (02/02/2026)")
+    private var deprecatedTheme: (any Theme)?
+
     private let title: String
 
     @Binding private var text: String
 
+    @Environment(\.theme) private var theme
     @Environment(\.isEnabled) private var isEnabled
+
     @Environment(\.textEditorIntent) private var intent
     @Environment(\.textEditorReadOnly) private var isReadOnly
     @Environment(\.textEditorAccessibilityLabel) private var accessibilityLabel
@@ -87,19 +91,16 @@ public struct SparkTextEditor: View {
     /// - Parameters:
     ///   - title: The texteditor's current placeholder.
     ///   - text: The texteditor's text binding.
-    ///   - theme: The texteditor's current theme.
     ///
     /// Implementation example :
     /// ```swift
     /// struct MyView: View {
-    ///     let theme: SparkTheming.Theme = MyTheme()
     ///     @State var text = ""
     ///
     ///     var body: some View {
     ///         SparkTextEditor(
     ///             "My placeholder",
-    ///             text: self.$text,
-    ///             theme: self.theme
+    ///             text: self.$text
     ///         )
     ///     }
     /// }
@@ -107,12 +108,28 @@ public struct SparkTextEditor: View {
     /// ![TextEditor rendering with a multiline text.](texteditor.png)
     public init(
         _ title: String,
-        text: Binding<String>,
-        theme: any Theme
+        text: Binding<String>
     ) {
         self.title = title
         self._text = text
-        self.theme = theme
+    }
+
+    // MARK: - Initialization
+
+    /// SparkTextEditor initializer.
+    /// - Parameters:
+    ///   - title: The texteditor's current placeholder.
+    ///   - text: The texteditor's text binding.
+    ///   - theme: The texteditor's current theme.
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
+        _ title: String,
+        text: Binding<String>,
+        theme: any Theme
+    ) {
+        self.deprecatedTheme = theme
+        self.title = title
+        self._text = text
     }
 
     // MARK: - View
@@ -135,13 +152,13 @@ public struct SparkTextEditor: View {
                 .accessibilityOptionalHint(self.accessibilityHint)
         }
         .font(self.viewModel.font)
-        .scaledFrame(minHeight: self.minHeight)
+        .sparkFrame(minHeight: self.minHeight)
         .scrollContentBackground(.hidden)
-        .scaledPadding(.horizontal, self.viewModel.horizontalPadding)
+        .sparkPadding(.horizontal, self.viewModel.horizontalPadding)
         .background(self.viewModel.colors.background)
-        .scaledBorder(
+        .sparkBorder(
             width: self.viewModel.borderLayout.width,
-            radius: self.viewModel.borderLayout.radius,
+            radius: .textEditorRadius(self.viewModel.borderLayout.radius),
             colorToken: self.viewModel.colors.border
         )
         .opacity(self.viewModel.dim)
@@ -150,12 +167,15 @@ public struct SparkTextEditor: View {
         .accessibilityIdentifier(TextEditorAccessibilityIdentifier.view)
         .onAppear() {
             self.viewModel.updateAll(
-                theme: self.theme,
+                theme: self.deprecatedTheme ?? self.theme.value,
                 intent: self.intent,
                 isReadOnly: self.isReadOnly,
                 isFocused: self.isFocused,
                 isEnabled: self.isEnabled
             )
+        }
+        .onChange(of: self.theme) { newTheme in
+            self.viewModel.theme = newTheme.value
         }
         .onChange(of: self.intent) { intent in
             self.viewModel.intent = intent

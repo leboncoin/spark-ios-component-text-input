@@ -196,12 +196,16 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
 
     // MARK: - Properties
 
-    private let theme: any Theme
+    @available(*, deprecated, message: "Remove the deprecated and this property ASAP. (02/02/2026)")
+    private var deprecatedTheme: (any Theme)?
+
     private let titleKey: LocalizedStringKey
 
     @Binding private var value: Value
 
     @Environment(\.isEnabled) private var isEnabled
+
+    @Environment(\.theme) private var theme
     @Environment(\.textFieldIntent) private var intent
     @Environment(\.textFieldReadOnly) private var isReadOnly
     @Environment(\.textFieldClearMode) private var clearMode
@@ -230,7 +234,6 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
     /// - Parameters:
     ///   - titleKey: The textfield's current placeholder.
     ///   - text: The textfield's text binding.
-    ///   - theme: The textfield's current theme.
     ///   - leftView: The textField's left view, default is `EmptyView`.
     ///   - rightView: The textField's right view, default is `EmptyView`.
     ///   - leftAddon: The textField's left addon, default is `EmptyView`.
@@ -240,14 +243,12 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
     /// - With all side views :
     /// ```swift
     /// struct MyView: View {
-    ///     let theme: SparkTheming.Theme = MyTheme()
     ///     @State var text = ""
     ///
     ///     var body: some View {
     ///         SparkTextField(
     ///             "My placeholder",
     ///             text: self.$text,
-    ///             theme: self.theme,
     ///             leftView: {
     ///                 Text("Hello")
     ///             },
@@ -269,19 +270,215 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
     /// - Without side views
     /// ```swift
     /// struct MyView: View {
-    ///     let theme: SparkTheming.Theme = MyTheme()
     ///     @State var text = ""
     ///
     ///     var body: some View {
     ///         SparkTextField(
     ///             "My placeholder",
-    ///             text: self.$text,
-    ///             theme: self.theme
+    ///             text: self.$text
     ///         )
     ///     }
     /// }
     /// ```
     /// ![TextField rendering without Addons and Side Views.](textfield-without-addons.png)
+    public init(
+        _ titleKey: LocalizedStringKey,
+        text: Binding<String>,
+        leftView: @escaping () -> LeftView = { EmptyView() },
+        rightView: @escaping () -> RightView = { EmptyView() },
+        leftAddon: @escaping () -> LeftAddon = { EmptyView() },
+        rightAddon: @escaping () -> RightAddon = { EmptyView() }
+    ) where Value == String, Content == _DefaultTextField {
+        self.titleKey = titleKey
+        self._value = text
+
+        self.leftAddon = leftAddon
+        self.leftView = leftView
+        self.rightView = rightView
+        self.rightAddon = rightAddon
+
+        self.content = {
+            _DefaultTextField(
+                titleKey: titleKey,
+                text: text
+            )
+        }
+    }
+
+    /// SparkTextField initializer that applies a formatter to a bound value.
+    /// - Parameters:
+    ///   - titleKey: The textfield's current placeholder.
+    ///   - value: The textfield's value binding.
+    ///   - formatter: The textfield's value formatter.
+    ///   - leftView: The textField's left view, default is `EmptyView`.
+    ///   - rightView: The textField's right view, default is `EmptyView`.
+    ///   - leftAddon: The textField's left addon, default is `EmptyView`.
+    ///   - rightAddon: The textField's right addon, default is `EmptyView`.
+    ///
+    /// Implementation example :
+    /// - With all side views :
+    /// ```swift
+    /// struct MyView: View {
+    ///     let numberFormatter = NumberFormatter()
+    ///     @State var value: Double = 5
+    ///
+    ///     var body: some View {
+    ///         SparkTextField(
+    ///             "My placeholder",
+    ///             value: self.$value,
+    ///             formatter: self.numberFormatter,
+    ///             leftView: {
+    ///                 Text("Hello")
+    ///             },
+    ///             rightView: {
+    ///                 Image(systemName: "circle")
+    ///             },
+    ///             leftAddon: {
+    ///                 Button("In", action: {})
+    ///             },
+    ///             rightAddon: {
+    ///                 Button("Out", action: {})
+    ///             }
+    ///         )
+    ///     }
+    /// }
+    /// ```
+    /// ![TextField rendering without Addons and Side Views.](textfield.png)
+    ///
+    /// - Without side views
+    /// ```swift
+    /// struct MyView: View {
+    ///     let numberFormatter = NumberFormatter()
+    ///     @State var value: Double = 5
+    ///
+    ///     var body: some View {
+    ///         SparkTextField(
+    ///             "My placeholder",
+    ///             value: self.$value,
+    ///             formatter: self.numberFormatter
+    ///         )
+    ///     }
+    /// }
+    /// ```
+    /// ![TextField rendering without Addons and Side Views.](textfield-without-addons.png)
+    public init(
+        _ titleKey: LocalizedStringKey,
+        value: Binding<Value>,
+        formatter: Formatter,
+        leftView: @escaping () -> LeftView = { EmptyView() },
+        rightView: @escaping () -> RightView = { EmptyView() },
+        leftAddon: @escaping () -> LeftAddon = { EmptyView() },
+        rightAddon: @escaping () -> RightAddon = { EmptyView() }
+    ) where Content == _FormattedTextField<Value> {
+        self.titleKey = titleKey
+        self._value = value
+
+        self.leftAddon = leftAddon
+        self.leftView = leftView
+        self.rightView = rightView
+        self.rightAddon = rightAddon
+
+        self.content = {
+            _FormattedTextField(
+                titleKey: titleKey,
+                value: value,
+                formatter: formatter
+            )
+        }
+    }
+
+    /// SparkTextField initializer  that applies a format style to a bound value.
+    /// - Parameters:
+    ///   - titleKey: The textfield's current placeholder.
+    ///   - value: The textfield's value binding.
+    ///   - format: The textfield's value formatter.
+    ///   - leftView: The textField's left view, default is `EmptyView`.
+    ///   - rightView: The textField's right view, default is `EmptyView`.
+    ///   - leftAddon: The textField's left addon, default is `EmptyView`.
+    ///   - rightAddon: The textField's right addon, default is `EmptyView`.
+    ///
+    /// Implementation example :
+    /// - With all side views :
+    /// ```swift
+    /// struct MyView: View {
+    ///     @State var price: Double = 12
+    ///
+    ///     var body: some View {
+    ///         SparkTextField(
+    ///             "My placeholder",
+    ///             value: self.$price,
+    ///             format: .currency(code: "EUR"),
+    ///             leftView: {
+    ///                 Text("Hello")
+    ///             },
+    ///             rightView: {
+    ///                 Image(systemName: "circle")
+    ///             },
+    ///             leftAddon: {
+    ///                 Button("In", action: {})
+    ///             },
+    ///             rightAddon: {
+    ///                 Button("Out", action: {})
+    ///             }
+    ///         )
+    ///     }
+    /// }
+    /// ```
+    /// ![TextField rendering without Addons and Side Views.](textfield.png)
+    ///
+    /// - Without side views
+    /// ```swift
+    /// struct MyView: View {
+    ///     @State var price: Double = 12
+    ///
+    ///     var body: some View {
+    ///         SparkTextField(
+    ///             "My placeholder",
+    ///             value: self.$price,
+    ///             format: .currency(code: "EUR")
+    ///         )
+    ///     }
+    /// }
+    /// ```
+    /// ![TextField rendering without Addons and Side Views.](textfield-without-addons.png)
+    public init<Format>(
+        _ titleKey: LocalizedStringKey,
+        value: Binding<Format.FormatInput>,
+        format: Format,
+        leftView: @escaping () -> LeftView = { EmptyView() },
+        rightView: @escaping () -> RightView = { EmptyView() },
+        leftAddon: @escaping () -> LeftAddon = { EmptyView() },
+        rightAddon: @escaping () -> RightAddon = { EmptyView() }
+    ) where Format: ParseableFormatStyle, Format.FormatOutput == String, Format.FormatInput == Value, Content == _FormatTextField<Value, Format> {
+        self.titleKey = titleKey
+        self._value = value
+
+        self.leftAddon = leftAddon
+        self.leftView = leftView
+        self.rightView = rightView
+        self.rightAddon = rightAddon
+
+        self.content = {
+            _FormatTextField(
+                titleKey: titleKey,
+                value: value,
+                format: format
+            )
+        }
+    }
+
+    // MARK: - Deprecated Initialization
+
+    /// SparkTextField initializer with **text**.
+    /// - Parameters:
+    ///   - titleKey: The textfield's current placeholder.
+    ///   - text: The textfield's text binding.
+    ///   - theme: The textfield's current theme.
+    ///   - leftView: The textField's left view, default is `EmptyView`.
+    ///   - rightView: The textField's right view, default is `EmptyView`.
+    ///   - leftAddon: The textField's left addon, default is `EmptyView`.
+    ///   - rightAddon: The textField's right addon, default is `EmptyView`.
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
     public init(
         _ titleKey: LocalizedStringKey,
         text: Binding<String>,
@@ -291,9 +488,9 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
         leftAddon: @escaping () -> LeftAddon = { EmptyView() },
         rightAddon: @escaping () -> RightAddon = { EmptyView() }
     ) where Value == String, Content == _DefaultTextField {
+        self.deprecatedTheme = theme
         self.titleKey = titleKey
         self._value = text
-        self.theme = theme
 
         self.leftAddon = leftAddon
         self.leftView = leftView
@@ -318,57 +515,7 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
     ///   - rightView: The textField's right view, default is `EmptyView`.
     ///   - leftAddon: The textField's left addon, default is `EmptyView`.
     ///   - rightAddon: The textField's right addon, default is `EmptyView`.
-    ///
-    /// Implementation example :
-    /// - With all side views :
-    /// ```swift
-    /// struct MyView: View {
-    ///     let theme: SparkTheming.Theme = MyTheme()
-    ///     let numberFormatter = NumberFormatter()
-    ///     @State var value: Double = 5
-    ///
-    ///     var body: some View {
-    ///         SparkTextField(
-    ///             "My placeholder",
-    ///             value: self.$value,
-    ///             formatter: self.numberFormatter,
-    ///             theme: self.theme,
-    ///             leftView: {
-    ///                 Text("Hello")
-    ///             },
-    ///             rightView: {
-    ///                 Image(systemName: "circle")
-    ///             },
-    ///             leftAddon: {
-    ///                 Button("In", action: {})
-    ///             },
-    ///             rightAddon: {
-    ///                 Button("Out", action: {})
-    ///             }
-    ///         )
-    ///     }
-    /// }
-    /// ```
-    /// ![TextField rendering without Addons and Side Views.](textfield.png)
-    ///
-    /// - Without side views
-    /// ```swift
-    /// struct MyView: View {
-    ///     let theme: SparkTheming.Theme = MyTheme()
-    ///     let numberFormatter = NumberFormatter()
-    ///     @State var value: Double = 5
-    ///
-    ///     var body: some View {
-    ///         SparkTextField(
-    ///             "My placeholder",
-    ///             value: self.$value,
-    ///             formatter: self.numberFormatter,
-    ///             theme: self.theme
-    ///         )
-    ///     }
-    /// }
-    /// ```
-    /// ![TextField rendering without Addons and Side Views.](textfield-without-addons.png)
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
     public init(
         _ titleKey: LocalizedStringKey,
         value: Binding<Value>,
@@ -379,9 +526,9 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
         leftAddon: @escaping () -> LeftAddon = { EmptyView() },
         rightAddon: @escaping () -> RightAddon = { EmptyView() }
     ) where Content == _FormattedTextField<Value> {
+        self.deprecatedTheme = theme
         self.titleKey = titleKey
         self._value = value
-        self.theme = theme
 
         self.leftAddon = leftAddon
         self.leftView = leftView
@@ -407,55 +554,7 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
     ///   - rightView: The textField's right view, default is `EmptyView`.
     ///   - leftAddon: The textField's left addon, default is `EmptyView`.
     ///   - rightAddon: The textField's right addon, default is `EmptyView`.
-    ///
-    /// Implementation example :
-    /// - With all side views :
-    /// ```swift
-    /// struct MyView: View {
-    ///     let theme: SparkTheming.Theme = MyTheme()
-    ///     @State var price: Double = 12
-    ///
-    ///     var body: some View {
-    ///         SparkTextField(
-    ///             "My placeholder",
-    ///             value: self.$price,
-    ///             format: .currency(code: "EUR"),
-    ///             theme: self.theme,
-    ///             leftView: {
-    ///                 Text("Hello")
-    ///             },
-    ///             rightView: {
-    ///                 Image(systemName: "circle")
-    ///             },
-    ///             leftAddon: {
-    ///                 Button("In", action: {})
-    ///             },
-    ///             rightAddon: {
-    ///                 Button("Out", action: {})
-    ///             }
-    ///         )
-    ///     }
-    /// }
-    /// ```
-    /// ![TextField rendering without Addons and Side Views.](textfield.png)
-    ///
-    /// - Without side views
-    /// ```swift
-    /// struct MyView: View {
-    ///     let theme: SparkTheming.Theme = MyTheme()
-    ///     @State var price: Double = 12
-    ///
-    ///     var body: some View {
-    ///         SparkTextField(
-    ///             "My placeholder",
-    ///             value: self.$price,
-    ///             format: .currency(code: "EUR"),
-    ///             theme: self.theme
-    ///         )
-    ///     }
-    /// }
-    /// ```
-    /// ![TextField rendering without Addons and Side Views.](textfield-without-addons.png)
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
     public init<Format>(
         _ titleKey: LocalizedStringKey,
         value: Binding<Format.FormatInput>,
@@ -466,9 +565,9 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
         leftAddon: @escaping () -> LeftAddon = { EmptyView() },
         rightAddon: @escaping () -> RightAddon = { EmptyView() }
     ) where Format: ParseableFormatStyle, Format.FormatOutput == String, Format.FormatInput == Value, Content == _FormatTextField<Value, Format> {
+        self.deprecatedTheme = theme
         self.titleKey = titleKey
         self._value = value
-        self.theme = theme
 
         self.leftAddon = leftAddon
         self.leftView = leftView
@@ -501,7 +600,7 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
         .accessibilityElement(children: .contain)
         .onAppear() {
             self.viewModel.updateAll(
-                theme: self.theme,
+                theme: self.deprecatedTheme ?? self.theme.value,
                 intent: self.intent,
                 isReadOnly: self.isReadOnly,
                 clearMode: self.clearMode.mode,
@@ -510,6 +609,9 @@ public struct SparkTextField<Value, LeftView: View, RightView: View, LeftAddon: 
                 isFocused: self.isFocused,
                 isEnabled: self.isEnabled
             )
+        }
+        .onChange(of: self.theme) { newTheme in
+            self.viewModel.theme = newTheme.value
         }
         .onChange(of: self.intent) { intent in
             self.viewModel.intent = intent

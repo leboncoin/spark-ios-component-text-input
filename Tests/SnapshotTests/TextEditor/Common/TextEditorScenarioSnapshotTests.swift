@@ -20,6 +20,7 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
     case test4
     case test5
     case test6
+    case test7
 //        case documentation
 
     // MARK: - Type Alias
@@ -42,6 +43,8 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
             return self.test5(isSwiftUIComponent: isSwiftUIComponent)
         case .test6:
             return self.test6()
+        case .test7:
+            return self.test7()
 //        case .documentation:
 //            return self.documentation()
         }
@@ -230,6 +233,37 @@ enum TextEditorScenarioSnapshotTests: String, CaseIterable {
                 placeholder: .empty,
                 height: .flexible,
                 isFocused: true
+            )
+        }
+    }
+
+    /// Test 7
+    ///
+    /// Description: To test rebrandingFeatureToggle
+    ///
+    /// Content:
+    /// - states : enabled
+    /// - content resilience : small
+    /// - a11y sizes : default
+    /// - mode : default
+    /// - height : flexible
+    /// - placeholder: empty
+    /// - intent: neutral
+    /// - focus: none
+    /// - **rebrandingFeatureToggle: all**
+    private func test7() -> [TextEditorConfigurationSnapshotTests] {
+        let rebrandingFeatureToggles = Bool.allCases
+
+        return rebrandingFeatureToggles.map { rebrandingFeatureToggle in
+            return .init(
+                scenario: self,
+                intent: .neutral,
+                state: .enabled,
+                content: .smallText,
+                placeholder: .empty,
+                height: .flexible,
+                isFocused: false,
+                rebrandingFeatureToggle: rebrandingFeatureToggle
             )
         }
     }
