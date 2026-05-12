@@ -10,6 +10,7 @@ import XCTest
 import SnapshotTesting
 @testable import SparkComponentTextInput
 @_spi(SI_SPI) import SparkCommon
+@_spi(SI_SPI) import SparkCommonTesting
 @_spi(SI_SPI) import SparkCommonSnapshotTesting
 @_spi(SI_SPI) import SparkThemingTesting
 import SparkTheming
@@ -33,10 +34,13 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
             )
 
             for configuration in configurations {
+                let service = SparkFeatureToggleServicingGeneratedMock()
+                service.rebranding = configuration.rebrandingFeatureToggle
+                SparkFeatureToggleService.shared = service
+
                 let view = SparkTextField(
                     LocalizedStringKey(configuration.placeholder.text ?? ""),
                     text: .constant(configuration.content.text),
-                    theme: self.theme,
                     leftView: {
                         self.sideView(from: configuration.leftContent)
                     },
@@ -50,6 +54,7 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
                         self.sideView(from: configuration.rightAddonContent)
                     }
                 )
+                    .sparkTheme(self.theme)
                     .sparkTextFieldIntent(configuration.intent)
                     .sparkTextFieldReadOnly(configuration.state.isReadOnly)
                     .sparkTextFieldClearMode(configuration.isClearButton ? .always : .never)
@@ -116,8 +121,7 @@ private extension View {
             self.frame(width: TextFieldSnapshotConstants.width)
                 .padding(4)
         } else {
-            self.background(.background)
-                .frame(width: TextFieldSnapshotConstants.width)
+            self.frame(width: TextFieldSnapshotConstants.width)
                 .padding(TextFieldSnapshotConstants.padding)
                 .background(Color(uiColor: .secondarySystemBackground))
         }

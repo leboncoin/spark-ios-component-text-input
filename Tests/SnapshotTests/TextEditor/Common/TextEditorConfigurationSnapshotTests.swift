@@ -28,6 +28,7 @@ struct TextEditorConfigurationSnapshotTests {
     let placeholder: TextInputPlaceholder
     let height: TextEditorHeight
     let isFocused: Bool
+    let rebrandingFeatureToggle: Bool
 
     let modes: [ComponentSnapshotTestMode]
     let sizes: [UIContentSizeCategory]
@@ -42,6 +43,7 @@ struct TextEditorConfigurationSnapshotTests {
         placeholder: TextInputPlaceholder,
         height: TextEditorHeight,
         isFocused: Bool,
+        rebrandingFeatureToggle: Bool = false,
         modes: [ComponentSnapshotTestMode] = Constants.Modes.default,
         sizes: [UIContentSizeCategory] = Constants.Sizes.default
     ) {
@@ -52,6 +54,7 @@ struct TextEditorConfigurationSnapshotTests {
         self.placeholder = placeholder
         self.height = height
         self.isFocused = isFocused
+        self.rebrandingFeatureToggle = rebrandingFeatureToggle
         self.modes = modes
         self.sizes = sizes
     }
@@ -67,6 +70,7 @@ struct TextEditorConfigurationSnapshotTests {
             "\(self.placeholder)" + "Placeholder",
             "\(self.height)" + "Height",
             self.isFocused ? "isFocused" : nil,
+            self.rebrandingFeatureToggle ? "rebrandingFeatureToggle" : nil,
         ]
             .compactMap { $0 }
             .joined(separator: "-")

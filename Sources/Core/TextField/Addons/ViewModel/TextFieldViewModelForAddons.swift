@@ -63,7 +63,8 @@ final class TextFieldViewModelForAddons: TextInputUIViewModel {
         let borderLayout = self.getBorderLayoutUseCase.execute(
             theme: self.theme,
             borderStyle: .roundedRect,
-            isFocused: self.isFocused)
+            isFocused: self.isFocused
+        )
 
         self.addonsBorderWidth = borderLayout.width
         self.addonsBorderRadius = borderLayout.radius

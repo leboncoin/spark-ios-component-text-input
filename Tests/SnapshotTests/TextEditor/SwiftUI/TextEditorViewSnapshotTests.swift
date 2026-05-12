@@ -10,6 +10,7 @@ import XCTest
 import SnapshotTesting
 @testable import SparkComponentTextInput
 @_spi(SI_SPI) import SparkCommon
+@_spi(SI_SPI) import SparkCommonTesting
 @_spi(SI_SPI) import SparkCommonSnapshotTesting
 @_spi(SI_SPI) import SparkThemingTesting
 import SparkTheming
@@ -37,11 +38,15 @@ final class TextEditorViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
             )
 
             for configuration in configurations {
+                let service = SparkFeatureToggleServicingGeneratedMock()
+                service.rebranding = configuration.rebrandingFeatureToggle
+                SparkFeatureToggleService.shared = service
+
                 let view = SparkTextEditor(
                     configuration.placeholder.text ?? configuration.content.text,
-                    text: .constant(configuration.content.text),
-                    theme: self.theme
+                    text: .constant(configuration.content.text)
                 )
+                    .sparkTheme(self.theme)
                     .sparkTextEditorIntent(configuration.intent)
                     .sparkTextEditorReadOnly(configuration.state.isReadOnly)
                     .disabled(!configuration.state.isEnabled)
@@ -79,8 +84,7 @@ private extension View {
             self.frame(height: 100)
                 .padding(4)
         } else {
-            self.background(.background)
-            .padding(TextEditorSnapshotConstants.padding)
+            self.padding(TextEditorSnapshotConstants.padding)
             .background(Color(uiColor: .secondarySystemBackground))
         }
     }

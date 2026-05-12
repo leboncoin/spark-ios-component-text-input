@@ -77,7 +77,7 @@ internal struct TextEditorInternalView: View {
         .padding(.horizontal, self.horizontalPadding)
         .border(
             width: self.viewModel.borderWidth * self.scaleFactor,
-            radius: self.viewModel.borderRadius * self.scaleFactor,
+            radius: .textEditorRadius(self.viewModel.borderRadius) * self.scaleFactor,
             colorToken: self.viewModel.borderColor
         )
         .opacity(self.viewModel.dim)

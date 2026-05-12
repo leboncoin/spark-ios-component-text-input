@@ -179,6 +179,15 @@ public final class TextEditorUIView: UITextView {
         self.setupSubscriptions()
     }
 
+    // MARK: - Layout
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+
+        self.updateBorder()
+        self.updatePaddings()
+    }
+
     // MARK: - Constraints
 
     private func setupConstraints() {
@@ -359,7 +368,7 @@ public final class TextEditorUIView: UITextView {
     }
 
     private func updateBorder() {
-        self.setCornerRadius(self.cornerRadius)
+        self.setCornerRadius(.textEditorRadius(self.cornerRadius))
         self.setBorderWidth(self.borderWidth)
     }
 
@@ -385,14 +394,6 @@ public final class TextEditorUIView: UITextView {
     public override func resignFirstResponder() -> Bool {
         self.viewModel.isFocused = false
         return super.resignFirstResponder()
-    }
-
-    // MARK: - Layout Subview
-
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-
-        self.updatePaddings()
     }
 
     // MARK: - Trait Collection

@@ -9,6 +9,7 @@
 @testable import SparkComponentTextInput
 @_spi(SI_SPI) import SparkCommonSnapshotTesting
 @_spi(SI_SPI) import SparkCommon
+@_spi(SI_SPI) import SparkCommonTesting
 import XCTest
 
 struct TextFieldConfigurationSnapshotTests {
@@ -34,6 +35,7 @@ struct TextFieldConfigurationSnapshotTests {
     let isClearButton: Bool
     let isFocused: Bool
     let isSecureEntry: Bool
+    let rebrandingFeatureToggle: Bool
 
     let modes: [ComponentSnapshotTestMode]
     let sizes: [UIContentSizeCategory]
@@ -59,6 +61,7 @@ struct TextFieldConfigurationSnapshotTests {
         isClearButton: Bool,
         isFocused: Bool,
         isSecureEntry: Bool,
+        rebrandingFeatureToggle: Bool = false,
         modes: [ComponentSnapshotTestMode] = Constants.Modes.default,
         sizes: [UIContentSizeCategory] = Constants.Sizes.default
     ) {
@@ -76,6 +79,7 @@ struct TextFieldConfigurationSnapshotTests {
         self.isClearButton = isClearButton
         self.isFocused = isFocused
         self.isSecureEntry = isSecureEntry
+        self.rebrandingFeatureToggle = rebrandingFeatureToggle
         self.modes = modes
         self.sizes = sizes
     }
@@ -98,6 +102,7 @@ struct TextFieldConfigurationSnapshotTests {
             self.isClearButton ? "isClearButton" : nil,
             self.isFocused ? "isFocused" : nil,
             self.isSecureEntry ? "isSecureEntry" : nil,
+            self.rebrandingFeatureToggle ? "rebrandingFeatureToggle" : nil,
         ]
             .compactMap { $0 }
             .joined(separator: "-")

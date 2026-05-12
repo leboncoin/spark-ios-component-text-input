@@ -7,6 +7,7 @@
 //
 
 import Foundation
+@_spi(SI_SPI) import SparkCommon
 import SparkTheming
 
 // sourcery: AutoMockable, AutoMockTest
@@ -27,6 +28,18 @@ protocol TextInputGetBorderLayoutUseCaseable {
 
 final class TextInputGetBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable {
 
+    // MARK: - Properties
+
+    private let featureTogglesService: any SparkFeatureToggleServicing
+
+    // MARK: - Initialization
+
+    init(featureTogglesService: any SparkFeatureToggleServicing = SparkFeatureToggleService.shared) {
+        self.featureTogglesService = featureTogglesService
+    }
+
+    // MARK: - Methods
+
     func execute(
         theme: any Theme,
         borderStyle: TextInputBorderStyle,
@@ -39,7 +52,10 @@ final class TextInputGetBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable
                 width: theme.border.width.none
             )
         case .roundedRect:
-            self.execute(theme: theme, isFocused: isFocused)
+            self.execute(
+                theme: theme,
+                isFocused: isFocused
+            )
         }
     }
 
@@ -47,8 +63,9 @@ final class TextInputGetBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable
         theme: any Theme,
         isFocused: Bool
     ) -> TextInputBorderLayout {
+        let radius = self.featureTogglesService.rebranding ? theme.border.radius.full : theme.border.radius.large
         return .init(
-            radius: theme.border.radius.large,
+            radius: radius,
             width: isFocused ? theme.border.width.medium : theme.border.width.small
         )
     }
