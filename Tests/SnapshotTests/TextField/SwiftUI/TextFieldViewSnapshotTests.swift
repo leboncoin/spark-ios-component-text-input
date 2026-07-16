@@ -34,10 +34,6 @@ final class TextFieldViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
             )
 
             for configuration in configurations {
-                let service = SparkFeatureToggleServicingGeneratedMock()
-                service.rebranding = configuration.rebrandingFeatureToggle
-                SparkFeatureToggleService.shared = service
-
                 let view = SparkTextField(
                     LocalizedStringKey(configuration.placeholder.text ?? ""),
                     text: .constant(configuration.content.text),

@@ -21,7 +21,6 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
     case test5
     case test6
     case test7
-    case test8
 //    case documentation
 
     // MARK: - Type Alias
@@ -46,8 +45,6 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
             return self.test6()
         case .test7:
             return self.test7()
-        case .test8:
-            return self.test8()
 //        case .documentation:
 //            return self.documentation()
         }
@@ -364,49 +361,6 @@ enum TextFieldScenarioSnapshotTests: String, CaseIterable {
                 sizes: Constants.Sizes.all
             )
         ]
-    }
-
-    /// Test 8
-    ///
-    /// Description: To test rebrandingFeatureToggle
-    ///
-    /// Content:
-    /// - intent: .neutral
-    /// - state: .enabled
-    /// - content: .smallText
-    /// - placeholder: .small
-    /// - leftContent: .none
-    /// - leftAddonContent: .none
-    /// - rightContent: .none
-    /// - rightAddonContent: .none
-    /// - isClearButton: false
-    /// - isFocused: false
-    /// - isSecureEntry: false
-    /// - **rebrandingFeatureToggle: all**
-    /// - a11y sizes : default
-    /// - mode : default
-    private func test8() -> [TextFieldConfigurationSnapshotTests] {
-        let rebrandingFeatureToggles = Bool.allCases
-
-        return rebrandingFeatureToggles.map { rebrandingFeatureToggle in
-            .init(
-                scenario: self,
-                intent: .neutral,
-                state: .enabled,
-                content: .smallText,
-                placeholder: .small,
-                leftContent: .empty,
-                leftAddonContent: .empty,
-                rightContent: .empty,
-                rightAddonContent: .empty,
-                isAddonsPadding: false,
-                isAddonsSeparator: false,
-                isClearButton: false,
-                isFocused: false,
-                isSecureEntry: false,
-                rebrandingFeatureToggle: rebrandingFeatureToggle
-            )
-        }
     }
 
     // MARK: - Documentation

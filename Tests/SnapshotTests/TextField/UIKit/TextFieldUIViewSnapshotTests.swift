@@ -37,10 +37,6 @@ final class TextFieldUIViewSnapshotTests: UIKitComponentSnapshotTestCase {
             )
             for configuration in configurations {
 
-                let service = SparkFeatureToggleServicingGeneratedMock()
-                service.rebranding = configuration.rebrandingFeatureToggle
-                SparkFeatureToggleService.shared = service
-
                 let component: UIView
                 let textField: UITextField
 
