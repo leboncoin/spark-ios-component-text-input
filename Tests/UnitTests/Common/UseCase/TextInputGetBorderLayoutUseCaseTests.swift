@@ -55,7 +55,7 @@ final class TextInputGetBorderLayoutUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(result.radius, self.themeMock.border.radius.large)
+        XCTAssertEqual(result.radius, self.themeMock.border.radius.full)
         XCTAssertEqual(result.width, self.themeMock.border.width.medium)
     }
 
@@ -74,7 +74,7 @@ final class TextInputGetBorderLayoutUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(result.radius, self.themeMock.border.radius.large)
+        XCTAssertEqual(result.radius, self.themeMock.border.radius.full)
         XCTAssertEqual(result.width, self.themeMock.border.width.small)
     }
 
@@ -93,7 +93,7 @@ final class TextInputGetBorderLayoutUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(result.radius, self.themeMock.border.radius.large)
+        XCTAssertEqual(result.radius, self.themeMock.border.radius.full)
         XCTAssertEqual(result.width, self.themeMock.border.width.medium)
     }
 
@@ -110,55 +110,13 @@ final class TextInputGetBorderLayoutUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(result.radius, self.themeMock.border.radius.large)
-        XCTAssertEqual(result.width, self.themeMock.border.width.small)
-    }
-
-    // MARK: - Tests for rebranding feature toggle
-
-    func test_execute_withRebrandingFeatureToggleTrue_whenFocused_shouldReturnFullRadius() {
-        // GIVEN
-        let service = SparkFeatureToggleServicingGeneratedMock()
-        service.rebranding = true
-        let useCase = TextInputGetBorderLayoutUseCase(featureTogglesService: service)
-
-        let isFocused = true
-
-        // WHEN
-        let result = useCase.execute(
-            theme: self.themeMock,
-            isFocused: isFocused
-        )
-
-        // THEN
-        XCTAssertEqual(result.radius, self.themeMock.border.radius.full)
-        XCTAssertEqual(result.width, self.themeMock.border.width.medium)
-    }
-
-    func test_execute_withRebrandingFeatureToggleTrue_whenNotFocused_shouldReturnFullRadius() {
-        // GIVEN
-        let service = SparkFeatureToggleServicingGeneratedMock()
-        service.rebranding = true
-        let useCase = TextInputGetBorderLayoutUseCase(featureTogglesService: service)
-
-        let isFocused = false
-
-        // WHEN
-        let result = useCase.execute(
-            theme: self.themeMock,
-            isFocused: isFocused
-        )
-
-        // THEN
         XCTAssertEqual(result.radius, self.themeMock.border.radius.full)
         XCTAssertEqual(result.width, self.themeMock.border.width.small)
     }
 
-    func test_execute_withRebrandingFeatureToggleTrue_withNoneBorderStyle_shouldReturnNone() {
+    func test_execute_withNoneBorderStyle_shouldReturnNone() {
         // GIVEN
-        let service = SparkFeatureToggleServicingGeneratedMock()
-        service.rebranding = true
-        let useCase = TextInputGetBorderLayoutUseCase(featureTogglesService: service)
+        let useCase = TextInputGetBorderLayoutUseCase()
 
         let borderStyle = TextInputBorderStyle.none
         let isFocused = true

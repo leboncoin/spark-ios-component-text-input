@@ -38,10 +38,6 @@ final class TextEditorViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
             )
 
             for configuration in configurations {
-                let service = SparkFeatureToggleServicingGeneratedMock()
-                service.rebranding = configuration.rebrandingFeatureToggle
-                SparkFeatureToggleService.shared = service
-
                 let view = SparkTextEditor(
                     configuration.placeholder.text ?? configuration.content.text,
                     text: .constant(configuration.content.text)

@@ -28,16 +28,6 @@ protocol TextInputGetBorderLayoutUseCaseable {
 
 final class TextInputGetBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable {
 
-    // MARK: - Properties
-
-    private let featureTogglesService: any SparkFeatureToggleServicing
-
-    // MARK: - Initialization
-
-    init(featureTogglesService: any SparkFeatureToggleServicing = SparkFeatureToggleService.shared) {
-        self.featureTogglesService = featureTogglesService
-    }
-
     // MARK: - Methods
 
     func execute(
@@ -63,9 +53,8 @@ final class TextInputGetBorderLayoutUseCase: TextInputGetBorderLayoutUseCaseable
         theme: any Theme,
         isFocused: Bool
     ) -> TextInputBorderLayout {
-        let radius = self.featureTogglesService.rebranding ? theme.border.radius.full : theme.border.radius.large
         return .init(
-            radius: radius,
+            radius: theme.border.radius.full,
             width: isFocused ? theme.border.width.medium : theme.border.width.small
         )
     }
